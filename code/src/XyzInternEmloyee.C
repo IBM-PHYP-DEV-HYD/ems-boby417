@@ -15,6 +15,11 @@ XyzInternEmloyee::XyzInternEmloyee(string nameParam,string genderParam,string do
     mEmpType = TYPE_INTERN;    
 }
 
+XyzInternEmloyee::~XyzInternEmloyee()
+{
+    mNextEmproll--;
+}
+
 ostream& operator<<(ostream& ostreamDataParam, XyzInternEmloyee& iEmpDataParam)
 {
     /* Print all the relevant data */

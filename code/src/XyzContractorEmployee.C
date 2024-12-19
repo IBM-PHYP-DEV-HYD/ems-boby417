@@ -15,6 +15,11 @@ XyzContractorEmployee::XyzContractorEmployee(string nameParam,string genderParam
     mEmpType = TYPE_CONTRACTOR;
 }
 
+XyzContractorEmployee::~XyzContractorEmployee()
+{
+    mNextEmproll--;
+}
+
 ostream& operator<<(ostream& ostreamDataParam, XyzContractorEmployee& cEmpDataParam)
 { 
     /* Print all the relevant data */

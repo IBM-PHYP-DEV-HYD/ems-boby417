@@ -16,6 +16,10 @@ XyzFullTimeEmployee::XyzFullTimeEmployee(string nameParam,string genderParam,str
     mEmpType = TYPE_FULL;
 }
 
+XyzFullTimeEmployee::~XyzFullTimeEmployee()
+{
+    mNextEmproll--;
+}
 
 ostream& operator<<(ostream& ostreamDataParam, const XyzFullTimeEmployee& fEmpDataParam)
 {

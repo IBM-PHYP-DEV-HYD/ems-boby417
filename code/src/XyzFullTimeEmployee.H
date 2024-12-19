@@ -7,6 +7,7 @@ class XyzFullTimeEmployee : public XyzEmployee
 {
 public:
     XyzFullTimeEmployee();
+    ~XyzFullTimeEmployee();
     XyzFullTimeEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus statusParam);
     
     int mEmpNOL; /* Number of Leaves */
