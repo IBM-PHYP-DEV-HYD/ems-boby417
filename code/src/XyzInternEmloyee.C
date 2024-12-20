@@ -12,17 +12,20 @@ XyzInternEmloyee::XyzInternEmloyee(string nameParam,string genderParam,string do
     mNextEmproll++;
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"I";
-    mEmpType = TYPE_INTERN;    
+    mEmpType = TYPE_INTERN;
+    /* Default values*/
+    mEmpCollege = getInternCollegeAgencyFromEnum(COLLEGE_IIT);
+    mEmpBranch = getInternBranchFromEnum(BRANCH_ECE);
 }
 
 XyzInternEmloyee::~XyzInternEmloyee()
 {
-    mNextEmproll--;
 }
 
 ostream& operator<<(ostream& ostreamDataParam, XyzInternEmloyee& iEmpDataParam)
 {
     /* Print all the relevant data */
+    cout<<"\n\nIntern Employee Data:"<<endl;
     printElementIndividual("Employee Name:",iEmpDataParam.mEmpName,20);
     printElementIndividual("Id:",iEmpDataParam.mEmpid,20);
     printElementIndividual("Type:",getEmploymentTypeFromEnum(iEmpDataParam.mEmpType),20);

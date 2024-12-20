@@ -4,6 +4,8 @@
 #include "iostream"
 #include <sstream>
 #include <iomanip>
+#include <ctime>
+#include <random>
 
 using namespace std;
 
@@ -170,6 +172,25 @@ inline string toString(int valParam,int digitsCountParam)
     ostringstream sOstringStreamObj;
     sOstringStreamObj<<setfill('0')<<setw(digitsCountParam)<<valParam;
     return sOstringStreamObj.str();
+}
+
+inline int getRandomNumber(int startNumParm,
+                    int endNumParm)
+{
+    random_device sRandomDevice;
+    mt19937 sRandomNumberGenerator(sRandomDevice());
+    uniform_int_distribution<int> sGenerate(startNumParm, endNumParm);
+    int sRandomNumber = sGenerate(sRandomNumberGenerator);
+    return sRandomNumber;
+}
+inline string generateRandomDate(int startYearParam, int endYearParam) {
+    int sYear = getRandomNumber(startYearParam,endYearParam);
+    int sMonth = getRandomNumber(1,12);
+    int sDaysInMonth = getMaxDateOfMonth(sYear,sMonth);
+    int sDateOfMonth = getRandomNumber(1,sDaysInMonth);
+    // Output the randomly generated date in format: DD-MM-YYYY
+    string sCompleteDateString = toString(sDateOfMonth,2)+" "+toString(sMonth,2)+" "+toString(sYear,4);
+    return sCompleteDateString;
 }
 
 template<typename TN> void printElement(TN templateParam,int width)

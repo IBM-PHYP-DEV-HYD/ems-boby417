@@ -52,8 +52,16 @@ int main(int argc, const char * argv[]) {
     
     //dummyEDLLTest();
     XyzEmployeeManager *sEmpManger = new XyzEmployeeManager();
-    sEmpManger->addNewFullTimeEmployee();
-    sEmpManger->addNewInternEmployee();
-    sEmpManger->addNewContractorEmployee();
+    // sEmpManger->addNewFullTimeEmployee();
+    // sEmpManger->addNewInternEmployee();
+    // sEmpManger->addNewContractorEmployee();
+    // sEmpManger->printAllEmployeesSummary();
+    sEmpManger->testEmployeeGeneration();
     sEmpManger->printAllEmployeesSummary();
+    sEmpManger->removeEmployee();
+    sEmpManger->printAllEmployeesSummary();
+    sEmpManger->displayEmployeeDetails();
+    sEmpManger->printAllContractorEmployees();
+    sEmpManger->printAllFullTimeEmployees();
+    sEmpManger->printAllInternEmployees();
 }

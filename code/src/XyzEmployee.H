@@ -49,8 +49,6 @@ public:
     virtual void setBranch(string branchParam);
     virtual string getCollege();
     virtual string getBranch();
-
-    friend ostream& operator<<(ostream& ostreamDataParam, XyzEmployee& objParam);
 };
 
 class ResignedEmployee : public XyzEmployee

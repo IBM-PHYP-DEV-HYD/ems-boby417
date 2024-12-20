@@ -14,16 +14,18 @@ XyzFullTimeEmployee::XyzFullTimeEmployee(string nameParam,string genderParam,str
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"F";
     mEmpType = TYPE_FULL;
+    /* Default values*/
+    mEmpNOL = 24;
 }
 
 XyzFullTimeEmployee::~XyzFullTimeEmployee()
 {
-    mNextEmproll--;
 }
 
 ostream& operator<<(ostream& ostreamDataParam, const XyzFullTimeEmployee& fEmpDataParam)
 {
     /* Print all the relevant data */
+    cout<<"\n\nFull-Time Employee Data:"<<endl;
     printElementIndividual("Employee Name:",fEmpDataParam.mEmpName,20);
     printElementIndividual("Id:",fEmpDataParam.mEmpid,20);
     printElementIndividual("Type:",getEmploymentTypeFromEnum(fEmpDataParam.mEmpType),20);

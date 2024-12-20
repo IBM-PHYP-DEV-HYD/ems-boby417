@@ -13,16 +13,18 @@ XyzContractorEmployee::XyzContractorEmployee(string nameParam,string genderParam
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"C";
     mEmpType = TYPE_CONTRACTOR;
+    /* Default values*/
+    mEmpAgency = getContractorAgencyFromEnum(AGENCY_X);
 }
 
 XyzContractorEmployee::~XyzContractorEmployee()
 {
-    mNextEmproll--;
 }
 
 ostream& operator<<(ostream& ostreamDataParam, XyzContractorEmployee& cEmpDataParam)
 { 
     /* Print all the relevant data */
+    cout<<"\n\nContractor Employee Data:"<<endl;
     printElementIndividual("Employee Name:",cEmpDataParam.mEmpName,20);
     printElementIndividual("Id:",cEmpDataParam.mEmpid,20);
     printElementIndividual("Type:",getEmploymentTypeFromEnum(cEmpDataParam.mEmpType),20);
