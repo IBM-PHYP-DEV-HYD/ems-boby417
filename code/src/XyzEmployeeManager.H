@@ -13,40 +13,26 @@
 class XyzEmployeeManager
 {
 public:
-
-    int mFulltimeEmployeeCount;
-    int mContractorEmployeeCount;
-    int mInterEmployeeCount;
-
-
     XyzEmployeeManager();
     ~XyzEmployeeManager(){};
     EDLL<XyzEmployeeIF> *mEmployeeDequePtr;
     
     /* Adding new employees */
-    void addNewFullTimeEmployee(XyzEmployeeIF *empPtrParam);
-    void addNewContractorEmployee(XyzEmployeeIF *empPtrParam);
-    void addNewInternEmployee(XyzEmployeeIF *empPtrParam);
+    void addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTypeParam = TYPE_FULL);
 
-    /* Print all employees summary*/
-    void printAllEmployeesSummary();
+    void printEmployeeSummaryByType(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam = STATUS_NONE);
+    void printEmployeeSummaryByGender(int empGenderParam);
+    void printEmployeeSummaryByStatus(EmpStatus empStatusParam);
 
-    void printAllFullTimeEmployees();
-    void printAllContractorEmployees();
-    void printAllInternEmployees();
-
-    void removeEmployee();
-    void removeFullTimeEmployeeByID(string empIDParam);
-    void removeContractorEmployeeByID(string empIDParam);
-    void removeInternEmployeeByID(string empIDParam);
-    void displayEmployeeDetails();
+    void removeEmployeeByID(string empIDParam);
+    
+    void printEmployeeDetailsById();
 
     /* Test code generating some random employee data*/
-    void testEmployeeGeneration();
+    void addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam= TYPE_NONE);
 
 private:
     void initializeEmployeeDeque();
-    void printEmployeeSummaryByType(EmpType empTypeParam, int startPosParam,int endPositionParam);
     XyzEmployeeIF* createAndGetEmployeeType(int empChoiceParam);
 };
 

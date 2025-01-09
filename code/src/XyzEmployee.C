@@ -74,6 +74,18 @@ string XyzEmployee::getEmployeeId()
     return mEmpid;
 }
 
+void XyzEmployee::printAllEmployeeDetails(bool printExtraInfoParam)
+{
+    printElement(this->getEmployeeName(),25);
+    printElement(this->getEmployeeId(),15);
+    printElement(getEmploymentTypeFromEnum(this->getEmployeeType()),20);
+    printElement(getEmploymentStatusFromEnum(this->getEmployeeStatus()),20);
+    printElement(this->getEmployeeGender(),20);
+    printElement(this->getEmployeeDOB(),20);
+    printElement(this->getEmployeeDOJ(),20);
+    printElement(this->getEmployeeDOL(),20);
+}
+
 void XyzEmployee::setNoOfLeaves(int nolParam) {}
 
 int XyzEmployee::getNoOfLeaves() {return 0; }

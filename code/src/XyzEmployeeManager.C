@@ -223,63 +223,25 @@ XyzEmployeeIF* XyzEmployeeManager::createAndGetEmployeeType(int empChoiceParam)
     return sEmpIFPtr;
 }
 
-void XyzEmployeeManager::addNewFullTimeEmployee(XyzEmployeeIF *empPtrParam)
+void XyzEmployeeManager::addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTypeParam)
 {
     XyzEmployeeIF *sEmpPtr = NULL;
     if(!empPtrParam)
     {
         ADD_PRINT("ADDING FULL TIME EMPLOYEE")
-        sEmpPtr = createAndGetEmployeeType(TYPE_FULL);
+        sEmpPtr = createAndGetEmployeeType(empTypeParam);
     }
     else
     {
         sEmpPtr = empPtrParam;
     }
     initializeEmployeeDeque();
-    int sPos = mFulltimeEmployeeCount;
-    mFulltimeEmployeeCount++;
-    mEmployeeDequePtr->addElementAtPosition(sPos,sEmpPtr);
+    mEmployeeDequePtr->pushBack(sEmpPtr);
 }
 
-void XyzEmployeeManager::addNewContractorEmployee(XyzEmployeeIF *empPtrParam)
+void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam=STATUS_NONE)
 {
-    XyzEmployeeIF *sEmpPtr = NULL;
-    if(!empPtrParam)
-    {
-        ADD_PRINT("ADDING CONTRACTOR EMPLOYEE")
-        sEmpPtr = createAndGetEmployeeType(TYPE_CONTRACTOR);
-    }
-    else
-    {
-        sEmpPtr = empPtrParam;
-    }
-    initializeEmployeeDeque();
-    int sPos = mFulltimeEmployeeCount+mContractorEmployeeCount;
-    mContractorEmployeeCount++;
-    mEmployeeDequePtr->addElementAtPosition(sPos,sEmpPtr);   
-}
-
-void XyzEmployeeManager::addNewInternEmployee(XyzEmployeeIF *empPtrParam)
-{
-    XyzEmployeeIF *sEmpPtr = NULL;
-    if(!empPtrParam)
-    {
-        ADD_PRINT("ADDING INTERN EMPLOYEE")
-        sEmpPtr = createAndGetEmployeeType(TYPE_INTERN);
-    }
-    else
-    {
-        sEmpPtr = empPtrParam;
-    }
-    initializeEmployeeDeque();
-    int sPos = mFulltimeEmployeeCount+mContractorEmployeeCount+mInterEmployeeCount;
-    mInterEmployeeCount++;
-    mEmployeeDequePtr->addElementAtPosition(sPos,sEmpPtr);   
-}
-
-void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam, int startPosParam,int endPositionParam)
-{
-    cout<<"\n\n\n\n"<<endl;
+     cout<<"\n\n"<<endl;
 
     /* Print the Header */
     printElement("Employee Name",25);
@@ -290,163 +252,141 @@ void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam, int st
     printElement("Date of birth",20);
     printElement("Date of joining",20);
     printElement("Date of Leaving",20);
-    if(empTypeParam == TYPE_FULL)
+    if(empStatusParam != STATUS_RESIGNED)
     {
-        printElement("Number of Leaves",20);
-    }
-    else if(empTypeParam == TYPE_CONTRACTOR)
-    {
-        printElement("Agency",20);
-    }
-    else
-    {
-        printElement("College",20);
-        printElement("Branch",20);
-    }
-    cout<<endl;
-    cout << left << setw(220) << setfill('-') <<"-";
-    cout<<endl;
-    //Form Employee ID
-    for(int itr = startPosParam;itr < endPositionParam; itr++)
-    {
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeName(),25);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeId(),15);
-        printElement(getEmploymentTypeFromEnum((*mEmployeeDequePtr)[itr]->getEmployeeType()),20);
-        printElement(getEmploymentStatusFromEnum((*mEmployeeDequePtr)[itr]->getEmployeeStatus()),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeGender(),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeDOB(),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeDOJ(),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeDOL(),20);
-        if(empTypeParam == TYPE_FULL)
+        if(empTypeParam != TYPE_NONE)
         {
-            printElement((*mEmployeeDequePtr)[itr]->getNoOfLeaves(),20);
-        }
-        else if(empTypeParam == TYPE_CONTRACTOR)
-        {
-            printElement((*mEmployeeDequePtr)[itr]->getAgency(),20);
+            if(empTypeParam == TYPE_FULL)
+            {
+                
+                printElement("Number of Leaves",15);
+            }
+            else if(empTypeParam == TYPE_CONTRACTOR)
+            {
+                printElement("Agency",20);
+            }
+            else
+            {
+                printElement("College",20);
+                printElement("Branch",20);
+            }
+            cout<<endl;
+            cout << left << setw(220) << setfill('-') <<"-";
+            
         }
         else
         {
-            printElement((*mEmployeeDequePtr)[itr]->getCollege(),20);
-            printElement((*mEmployeeDequePtr)[itr]->getBranch(),20);
+            printElement("No of Leaves",15);
+            printElement("Agency",20);
+            printElement("College",20);
+            printElement("Branch",20);
+            cout<<endl;
+            cout << left << setw(240) << setfill('-') <<"-";
         }
-        cout<<endl;
     }
+    else
+    {
+        cout<<endl;
+        cout << left << setw(180) << setfill('-') <<"-";
+    }
+    cout<<endl;
+   
 }
 
-void XyzEmployeeManager::printAllEmployeesSummary()
+void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam,EmpStatus empStatusParam)
 {
+   
     int sSizeofDeque = mEmployeeDequePtr?mEmployeeDequePtr->size():0;
 
-    cout<<"\n\n\n\n"<<endl;
+    printHeader(empTypeParam,empStatusParam);
 
-    /* Print the Header */
-    printElement("Employee Name",25);
-    printElement("ID",15);
-    printElement("Type",20);
-    printElement("Status",20);
-    printElement("Gender",20);
-    printElement("Date of birth",20);
-    printElement("Date of joining",20);
-    printElement("Date of Leaving",20);
-    cout<<endl;
-    cout << left << setw(180) << setfill('-') <<"-";
-    cout<<endl;
-    //Form Employee ID
     for(int itr = 0;itr < sSizeofDeque; itr++)
     {
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeName(),25);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeId(),15);
-        printElement(getEmploymentTypeFromEnum((*mEmployeeDequePtr)[itr]->getEmployeeType()),20);
-        printElement(getEmploymentStatusFromEnum((*mEmployeeDequePtr)[itr]->getEmployeeStatus()),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeGender(),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeDOB(),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeDOJ(),20);
-        printElement((*mEmployeeDequePtr)[itr]->getEmployeeDOL(),20);
-        cout<<endl;
+        if((empTypeParam == TYPE_NONE)  && (empStatusParam == STATUS_NONE))
+        {
+            if((*mEmployeeDequePtr)[itr]->getEmployeeStatus() != STATUS_RESIGNED)
+            {
+                (*mEmployeeDequePtr)[itr]->printAllEmployeeDetails(true);
+                cout<<endl;
+            } 
+        }
+        else if(empStatusParam == STATUS_RESIGNED)
+        {
+            if((*mEmployeeDequePtr)[itr]->getEmployeeStatus() == STATUS_RESIGNED)
+            {
+                (*mEmployeeDequePtr)[itr]->printAllEmployeeDetails(true);
+                cout<<endl;
+            }
+        }
+        else
+        {
+            EmpType sEmpType = (*mEmployeeDequePtr)[itr]->getEmployeeType();
+            if(empTypeParam == sEmpType && (*mEmployeeDequePtr)[itr]->getEmployeeStatus() != STATUS_RESIGNED)
+            {
+                (*mEmployeeDequePtr)[itr]->printAllEmployeeDetails(false);
+                cout<<endl;
+            }
+        }
     }
 }
 
-void XyzEmployeeManager::printAllFullTimeEmployees()
+void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
 {
-    int sNumOfFulltime = mFulltimeEmployeeCount;
-    printEmployeeSummaryByType(TYPE_FULL,0,sNumOfFulltime);
-    cout<<"\n\n"<<endl;
+   
+    int sSizeofDeque = mEmployeeDequePtr?mEmployeeDequePtr->size():0;
+
+    printHeader();
+
+    string sEmpGenderString = getEmployeeGenderFromEnum(empGenderParam);
+
+    for(int itr = 0;itr < sSizeofDeque; itr++)
+    {
+        string sEmpGender = (*mEmployeeDequePtr)[itr]->getEmployeeGender();
+        if(sEmpGenderString == sEmpGender)
+        {
+            (*mEmployeeDequePtr)[itr]->printAllEmployeeDetails(false);
+            cout<<endl;
+        }
+    }
 }
 
-void XyzEmployeeManager::printAllContractorEmployees()
+void XyzEmployeeManager::printEmployeeSummaryByStatus(EmpStatus empStatusParam)
 {
-    int sNumOfConttime = mContractorEmployeeCount;
-    int sStartPos = mFulltimeEmployeeCount;
-    printEmployeeSummaryByType(TYPE_CONTRACTOR,sStartPos,sStartPos+sNumOfConttime);
-    cout<<"\n\n"<<endl;
+   
+    int sSizeofDeque = mEmployeeDequePtr?mEmployeeDequePtr->size():0;
+
+    printHeader();
+
+    for(int itr = 0;itr < sSizeofDeque; itr++)
+    {
+        EmpStatus sEmpStatus = (*mEmployeeDequePtr)[itr]->getEmployeeStatus();
+        if(sEmpStatus == empStatusParam)
+        {
+            (*mEmployeeDequePtr)[itr]->printAllEmployeeDetails(false);
+            cout<<endl;
+        }
+    }
 }
 
-void XyzEmployeeManager::printAllInternEmployees()
+void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
 {
-    int sNumOfIntern = mInterEmployeeCount;
-    int sStartPos = mFulltimeEmployeeCount+mContractorEmployeeCount;
-    printEmployeeSummaryByType(TYPE_INTERN,sStartPos,sStartPos+sNumOfIntern);
-    cout<<"\n\n"<<endl;
-}
-
-void XyzEmployeeManager::removeFullTimeEmployeeByID(string empIDParam)
-{
-    int sNumOfFulltime = mFulltimeEmployeeCount;
+    int sSizeofDeque = mEmployeeDequePtr?mEmployeeDequePtr->size():0;
     XyzEmployeeIF *sEmpPtr = NULL;
-    for(int itr = 0;itr < sNumOfFulltime; itr++)
+    for(int itr = 0;itr < sSizeofDeque; itr++)
     {
         string sEmpid = (*mEmployeeDequePtr)[itr]->getEmployeeId();
         if(sEmpid == empIDParam)
         {
             sEmpPtr = mEmployeeDequePtr->removeElementAtPosition(itr);
             // @Todo: Need to add this employee to resigned employee Deque.
-            delete sEmpPtr;
-            mFulltimeEmployeeCount--;
+            sEmpPtr->setEmployeeStatus(STATUS_RESIGNED);
+            //mEmployeeDequePtr->addElementAtPosition(itr,sEmpPtr);
             break;
         }
     }
 }
 
-void XyzEmployeeManager::removeContractorEmployeeByID(string empIDParam)
-{
-    int sNumOfConttime = mContractorEmployeeCount;
-    int sStartPos = mFulltimeEmployeeCount;
-    XyzEmployeeIF *sEmpPtr = NULL;
-    for(int itr = sStartPos; itr < sStartPos+sNumOfConttime; itr++)
-    {
-        string sEmpid = (*mEmployeeDequePtr)[itr]->getEmployeeId();
-        if(sEmpid == empIDParam)
-        {
-            sEmpPtr = mEmployeeDequePtr->removeElementAtPosition(itr);
-            // @Todo: Need to add this employee to resigned employee Deque.
-            delete sEmpPtr;
-            mContractorEmployeeCount--;
-            break;
-        }
-    }
-}
-
-void XyzEmployeeManager::removeInternEmployeeByID(string empIDParam)
-{
-    int sNumOfIntern = mInterEmployeeCount;
-    int sStartPos = mFulltimeEmployeeCount+mContractorEmployeeCount;
-    XyzEmployeeIF *sEmpPtr = NULL;
-    for(int itr = sStartPos; itr < sStartPos+sNumOfIntern; itr++)
-    {
-        string sEmpid = (*mEmployeeDequePtr)[itr]->getEmployeeId();
-        if(sEmpid == empIDParam)
-        {
-            sEmpPtr = mEmployeeDequePtr->removeElementAtPosition(itr);
-            // @Todo: Need to add this employee to resigned employee Deque.
-            delete sEmpPtr;
-            mInterEmployeeCount--;
-            break;
-        }
-    }
-}
-
-void XyzEmployeeManager::displayEmployeeDetails()
+void XyzEmployeeManager::printEmployeeDetailsById()
 {
     int sSizeofDeque = mEmployeeDequePtr?mEmployeeDequePtr->size():0;
     bool empIDFound = false;
@@ -477,96 +417,60 @@ void XyzEmployeeManager::displayEmployeeDetails()
     }
 }
 
-void XyzEmployeeManager::removeEmployee()
+void XyzEmployeeManager::addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam)
 {
-    int sEmpChoice = 0;
-    string sEmpid;
-    int sRet = 0;
-    cout<<"Please select employee to remove \n1.Full-Time\n2.Contractor\n3.Intern"<<endl;
-    cin>>sEmpChoice;
-
-    if(cin.fail() || (sEmpChoice != 1 && sEmpChoice !=2 && sEmpChoice!=3))
+    
+    for(int itr= 0;itr<numofEmpParam;itr++)
     {
-        cout<<"Invalid choice to remove any employee"<<endl;
-        cin.clear();
-        cin.ignore(INT_MAX, '\n');
-        sRet = E_FAILURE;
-    }
-
-    if(!sRet)
-    {
-        cout<<"Please enter employee ID to remove \n Employee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
-        cin>>sEmpid;
-        if((sEmpid.length() != 8) &&  sEmpid.substr(0,3) != "XYZ")
+        XyzEmployeeIF *sEmpPtr  = NULL;
+        string sEmpName         = getEmployeeNameInRandom();
+        string sEmpGender       = getEmployeeGenderInRandom();
+        int sRandomYear         = getRandomNumber(1970,2003);
+        string sEmpDOB          = generateRandomDate(sRandomYear);
+        sRandomYear             = getRandomNumber(sRandomYear+21,2024);
+        string sEmpDOJ          = generateRandomDate(sRandomYear);
+        string sEmpDOL          = "NA";
+        EmpStatus sEmpStatus    = getEmployeeStatusInRandom();
+        if(isRandom == true)
         {
-            cout<<"Invalid Emp Id entered"<<endl;
-            sRet = E_FAILURE;
-        }
-    }
-
-    if(!sRet)
-    {
-        switch(sEmpChoice)
-        {
-            case TYPE_FULL:
+            int sEmpType            = getRandomNumber(1,3);
+            if(sEmpType == TYPE_CONTRACTOR)
             {
-                removeFullTimeEmployeeByID(sEmpid);
+                sEmpPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                addNewEmployee(sEmpPtr);
             }
-            break;
-            case TYPE_CONTRACTOR:
+            else if (sEmpType == TYPE_FULL)
             {
-                removeContractorEmployeeByID(sEmpid);
+                sEmpPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                addNewEmployee(sEmpPtr);
             }
-            break;
-            case TYPE_INTERN:
+            else
             {
-                removeInternEmployeeByID(sEmpid);
+                sEmpPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                addNewEmployee(sEmpPtr);
             }
-            break;
-            default: 
-            {
-                cout<<"Employee choice is invalid"<<endl;
-                return ;
-            }
-        }
-    }
-
-    printAllEmployeesSummary();
-    return;
-}
-
-void XyzEmployeeManager::testEmployeeGeneration()
-{
-    srand(time(NULL));
-
-    for(int i= 0;i<50;i++)
-    {
-        XyzEmployeeIF *sEmpPtr = NULL;
-        ostringstream sOstringStreamObj;
-        sOstringStreamObj<<setfill('0')<<setw(4)<<i;
-        string sEmpName = sOstringStreamObj.str();
-        string sEmpGender = i%2==0 ?"Male":"Female";
-        string sEmpDOB = generateRandomDate(1970,2003);
-        string sEmpDOJ = generateRandomDate(1990,2003);
-        string sEmpDOL = "NA";
-        EmpStatus sEmpStatus = i%2==0?STATUS_ACTIVE:STATUS_INACTIVE;
-
-        if(i%3 == 0)
-        {
-            sEmpPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-            addNewContractorEmployee(sEmpPtr);
-        }
-        else if (i%3 == 1)
-        {
-            sEmpPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-            addNewFullTimeEmployee(sEmpPtr);
         }
         else
         {
-            sEmpPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-            addNewInternEmployee(sEmpPtr);
-        }
+            if(typeParam == TYPE_CONTRACTOR)
+            {
+                sEmpPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                addNewEmployee(sEmpPtr);
+            }
+            else if (typeParam == TYPE_FULL)
+            {
+                sEmpPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                addNewEmployee(sEmpPtr);
+            }
+            else
+            {
+                sEmpPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                addNewEmployee(sEmpPtr);
+            }
+        } 
     }
+    
+    
 
     cout<<"\n\n"<<endl;    
 }

@@ -18,9 +18,12 @@ public:
     string getCollege();
     string getBranch();
 
+    void print(ostream& ostreamDataParam);
+    void printAllEmployeeDetails(bool printExtraInfoParam);
+
     friend ostream& operator<<(ostream& ostreamDataParam, XyzInternEmloyee& iEmpDataParam);
     friend istream& operator>>(istream& istreamDataParam, XyzInternEmloyee& iEmpDataParam);
-    void print(ostream& ostreamDataParam);
+
 };
 
 #endif

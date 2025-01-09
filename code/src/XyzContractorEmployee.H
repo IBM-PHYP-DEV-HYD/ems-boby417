@@ -16,9 +16,11 @@ public:
     void setAgency(string agencyParam);
     string getAgency();
 
+    void print(ostream& ostreamDataParam);
+    void printAllEmployeeDetails(bool printExtraInfoParam);
+
     friend ostream& operator<<(ostream& ostreamDataParam, XyzContractorEmployee& cEmpDataParam);
     friend istream& operator>>(istream& istreamDataParam, XyzContractorEmployee& cEmpDataParam);
-    void print(ostream& ostreamDataParam);
 };
 
 #endif

@@ -21,6 +21,25 @@ XyzContractorEmployee::~XyzContractorEmployee()
 {
 }
 
+void XyzContractorEmployee::printAllEmployeeDetails(bool printExtraInfoParam)
+{
+    XyzEmployee::printAllEmployeeDetails(printExtraInfoParam);
+    
+    if(this->getEmployeeStatus() != STATUS_RESIGNED)
+    {
+        if(printExtraInfoParam)
+        {
+            printElement("NA", 15);
+        }
+        printElement(this->getAgency(),20);
+        if(printExtraInfoParam)
+        {
+            printElement("NA", 20);
+            printElement("NA", 20);
+        }
+    }
+}
+
 ostream& operator<<(ostream& ostreamDataParam, XyzContractorEmployee& cEmpDataParam)
 { 
     /* Print all the relevant data */

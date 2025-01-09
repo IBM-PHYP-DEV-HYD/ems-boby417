@@ -15,10 +15,12 @@ public:
     void setNoOfLeaves(int nolParam);
     int getNoOfLeaves();
 
+    void print(ostream& ostreamDataParam);
+    void printAllEmployeeDetails(bool printExtraInfoParam);
+
+
     friend ostream& operator<<(ostream& ostreamDataParam, const XyzFullTimeEmployee& fEmpDataParam);
     friend istream& operator>>(istream& istreamDataParam, XyzFullTimeEmployee& fEmpDataParam);
-
-    void print(ostream& ostreamDataParam);
 };
 
 #endif

@@ -22,6 +22,21 @@ XyzInternEmloyee::~XyzInternEmloyee()
 {
 }
 
+void XyzInternEmloyee::printAllEmployeeDetails(bool printExtraInfoParam)
+{
+    XyzEmployee::printAllEmployeeDetails(printExtraInfoParam);
+    if(this->getEmployeeStatus() != STATUS_RESIGNED)
+    {
+        if(printExtraInfoParam)
+        {
+            printElement("NA", 15);
+            printElement("NA", 20);
+        }
+        printElement(this->getCollege(),20);
+        printElement(this->getBranch(),20);
+    }
+}
+
 ostream& operator<<(ostream& ostreamDataParam, XyzInternEmloyee& iEmpDataParam)
 {
     /* Print all the relevant data */

@@ -22,6 +22,23 @@ XyzFullTimeEmployee::~XyzFullTimeEmployee()
 {
 }
 
+void XyzFullTimeEmployee::printAllEmployeeDetails(bool printExtraInfoParam)
+{
+    XyzEmployee::printAllEmployeeDetails(printExtraInfoParam);
+
+    if(this->getEmployeeStatus() != STATUS_RESIGNED)
+    {
+        printElement(this->getNoOfLeaves(),15);
+        if(printExtraInfoParam)
+        {
+            printElement("NA", 20);
+            printElement("NA", 20);
+            printElement("NA", 20);
+        }
+    }
+   
+}
+
 ostream& operator<<(ostream& ostreamDataParam, const XyzFullTimeEmployee& fEmpDataParam)
 {
     /* Print all the relevant data */

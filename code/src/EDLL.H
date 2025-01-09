@@ -81,11 +81,12 @@ TN* EDLL<TN>::removeElementAtPosition(int posParam)
         else
         {
             Node<TN>* sTempNodePtr = getNodeAtPosition(posParam);
-            sTempNodePtr->mPrev->mNext = sTempNodePtr->mNext;
-            sTempNodePtr->mNext->mPrev = sTempNodePtr->mPrev;
+            //sTempNodePtr->mPrev->mNext = sTempNodePtr->mNext;
+            //sTempNodePtr->mNext->mPrev = sTempNodePtr->mPrev;
             sDataPtr = sTempNodePtr->mDataPtr;
-            delete sTempNodePtr;
-            this->mCurrentSize--;
+            //Not deleting the Container position because to add resigned employee here
+            //delete sTempNodePtr;
+            //this->mCurrentSize--;
         }
     }
     return sDataPtr;

@@ -17,13 +17,15 @@ enum ErrorCode
 
 enum EmpStatus
 {
-    STATUS_ACTIVE   = 0x0,
-    STATUS_INACTIVE = 0x1,
-    STATUS_RESIGNED = 0x2,
+    STATUS_NONE     = 0x0,
+    STATUS_ACTIVE   = 0x1,
+    STATUS_INACTIVE = 0x2,
+    STATUS_RESIGNED = 0x3,
 };
 
 enum EmpType
 {
+    TYPE_NONE       = 0x0,
     TYPE_FULL       = 0x1,
     TYPE_CONTRACTOR = 0x2,
     TYPE_INTERN     = 0x3,
@@ -60,6 +62,14 @@ enum Month
 {
     Jan = 1, Feb , Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
 };
+
+inline string firstNameArray[30] = 
+                            {
+                                "Ganesh","Shivani","Chinna","Stella","Abhay","Dhruvika","Ujwal","Avisha","Viswa","Satya",
+                                "Hari","Laxmi","Aryan","Raani","Ram","Mounika","Phani","Paavani" ,"Rudra","Praneetha"
+                                "Gopal","Sravani","Chandu","Vineela","Sanjay" ,"Nidhi","Krishna","Radhika","Tanoj","Bhanu"               
+                            };
+
 
 inline string getContractorAgencyFromEnum(int agencyTypeParam)
 {
@@ -183,14 +193,40 @@ inline int getRandomNumber(int startNumParm,
     int sRandomNumber = sGenerate(sRandomNumberGenerator);
     return sRandomNumber;
 }
-inline string generateRandomDate(int startYearParam, int endYearParam) {
-    int sYear = getRandomNumber(startYearParam,endYearParam);
+inline string generateRandomDate(int sYearParam) {
     int sMonth = getRandomNumber(1,12);
-    int sDaysInMonth = getMaxDateOfMonth(sYear,sMonth);
+    int sDaysInMonth = getMaxDateOfMonth(sYearParam,sMonth);
     int sDateOfMonth = getRandomNumber(1,sDaysInMonth);
     // Output the randomly generated date in format: DD-MM-YYYY
-    string sCompleteDateString = toString(sDateOfMonth,2)+" "+toString(sMonth,2)+" "+toString(sYear,4);
+    string sCompleteDateString = toString(sDateOfMonth,2)+" "+toString(sMonth,2)+" "+toString(sYearParam,4);
     return sCompleteDateString;
+}
+
+inline string  getEmployeeNameInRandom()
+{
+    int sRandFirstNameIndex = getRandomNumber(0,29);
+    string sEmpName = firstNameArray[sRandFirstNameIndex];
+    int sLastNameIndex = getRandomNumber(65,90);
+    string sLastNameString;
+    sLastNameString = (char)sLastNameIndex;
+    sEmpName += " "+sLastNameString;
+    return sEmpName;
+}
+
+inline string  getEmployeeGenderInRandom()
+{
+    int sRandGender = getRandomNumber(1,2);
+    string sEmpGender = getEmployeeGenderFromEnum(sRandGender);
+    return sEmpGender;
+}
+
+
+
+
+inline EmpStatus  getEmployeeStatusInRandom()
+{
+    EmpStatus sRandStatus = static_cast<EmpStatus>(getRandomNumber(1,2));
+    return sRandStatus;
 }
 
 template<typename TN> void printElement(TN templateParam,int width)

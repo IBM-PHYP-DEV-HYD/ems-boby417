@@ -49,6 +49,9 @@ public:
     virtual void setBranch(string branchParam);
     virtual string getCollege();
     virtual string getBranch();
+
+    /*Printing*/
+    virtual void printAllEmployeeDetails(bool printExtraInfoParam);
 };
 
 class ResignedEmployee : public XyzEmployee
