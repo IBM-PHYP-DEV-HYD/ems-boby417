@@ -32,3 +32,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.C
 clean:
 	@echo "Cleaning all the object files and binaries."
 	rm -f core $(OBJECTS) $(BINDIR)/$(TARGET)
+
+run:
+	make clean;make
+	$(BINDIR)/ems
