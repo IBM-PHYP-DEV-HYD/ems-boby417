@@ -62,15 +62,15 @@ void processEmployeeAdding(XyzEmployeeManager *sEmpManger,int choiceParam)
             printEmployeeTypeMenu();
             int sEmpTypeChoice = 0;
             cin>>sEmpTypeChoice;
-            if(cin.fail() || (sEmpTypeChoice<1||sEmpTypeChoice>3) || (sEmpTypeChoice == -1))
+            if(cin.fail() || (sEmpTypeChoice<1||sEmpTypeChoice>3))
             {
-                cout<<"Please enter proper choice"<<endl;
-                cin.clear();
-                cin.ignore();
                 if(sEmpTypeChoice == -1)
                 {
                     exit(0);
                 }
+                cout<<"Please enter proper choice"<<endl;
+                cin.clear();
+                cin.ignore();
                 break;
             }
             sEmpManger->addEmployee(1,false,static_cast<EmpType>(sEmpTypeChoice));
@@ -111,15 +111,15 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
             printEmployeeTypeMenu();
             int sEmpTypeChoice = 0;
             cin>>sEmpTypeChoice;
-            if(cin.fail() || (sEmpTypeChoice<1||sEmpTypeChoice>3) || (sEmpTypeChoice == -1))
+            if(cin.fail() || (sEmpTypeChoice<1||sEmpTypeChoice>3))
             {
-                cout<<"Please enter proper choice"<<endl;
-                cin.clear();
-                cin.ignore();
                 if(sEmpTypeChoice == -1)
                 {
                     exit(0);
                 }
+                cout<<"Please enter proper choice"<<endl;
+                cin.clear();
+                cin.ignore();
                 break;
             }
             sEmpManger->printEmployeeSummaryByType(static_cast<EmpType>(sEmpTypeChoice));
@@ -130,15 +130,15 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
             printEmployeeGenderMenu();
             int sEmployeeGenderChoice = 0;
             cin>>sEmployeeGenderChoice;
-            if(cin.fail() || (sEmployeeGenderChoice<1||sEmployeeGenderChoice>2) || (sEmployeeGenderChoice == -1))
+            if(cin.fail() || (sEmployeeGenderChoice<1||sEmployeeGenderChoice>2))
             {
-                cout<<"Please enter proper choice"<<endl;
-                cin.clear();
-                cin.ignore();
                 if(sEmployeeGenderChoice == -1)
                 {
                     exit(0);
                 }
+                cout<<"Please enter proper choice"<<endl;
+                cin.clear();
+                cin.ignore();
                 break;
             }
             sEmpManger->printEmployeeSummaryByGender(sEmployeeGenderChoice);
@@ -149,15 +149,15 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
             printEmployeeStatusMenu();
             int sEmployeeStatusChoice = 0;
             cin>>sEmployeeStatusChoice;
-            if(cin.fail() || (sEmployeeStatusChoice<1||sEmployeeStatusChoice>2) || (sEmployeeStatusChoice == -1))
+            if(cin.fail() || (sEmployeeStatusChoice<1||sEmployeeStatusChoice>2))
             {
-                cout<<"Please enter proper choice"<<endl;
-                cin.clear();
-                cin.ignore();
                 if(sEmployeeStatusChoice == -1)
                 {
                     exit(0);
                 }
+                cout<<"Please enter proper choice"<<endl;
+                cin.clear();
+                cin.ignore();
                 break;
             }
             sEmpManger->printEmployeeSummaryByStatus(static_cast<EmpStatus>(sEmployeeStatusChoice));
@@ -212,6 +212,10 @@ int main(int argc, const char * argv[])
                     cin>>sEmpAddOptionChoice;
                     if(cin.fail() || (sEmpAddOptionChoice<1||sEmpAddOptionChoice>2))
                     {
+                        if(sEmpAddOptionChoice == -1)
+                        {
+                            exit(0);
+                        }
                         cout<<"Please enter proper choice"<<endl;
                         cin.clear();
                         cin.ignore();
@@ -232,6 +236,10 @@ int main(int argc, const char * argv[])
                     cin>>sEmployeeDetailsChoice;
                     if(cin.fail() || (sEmployeeDetailsChoice<1||sEmployeeDetailsChoice>5))
                     {
+                        if(sEmployeeDetailsChoice == -1)
+                        {
+                            exit(0);
+                        }
                         cout<<"Please enter proper choice"<<endl;
                         cin.clear();
                         cin.ignore();
@@ -258,27 +266,5 @@ int main(int argc, const char * argv[])
         }
 
    } while (true);
-   
-   
-   
-   
-   
-   
-   #if 0    
-    //dummyEDLLTest();
-    
-    // sEmpManger->addNewFullTimeEmployee();
-    // sEmpManger->addNewInternEmployee();
-    // sEmpManger->addNewContractorEmployee();
-    // sEmpManger->printAllEmployeesSummary();
-    sEmpManger->testEmployeeGeneration();
-    sEmpManger->printAllEmployeesSummary();
-    sEmpManger->removeEmployee();
-    sEmpManger->printAllEmployeesSummary();
-    sEmpManger->printEmployeeDetailsById();
-    sEmpManger->printAllContractorEmployees();
-    sEmpManger->printAllFullTimeEmployees();
-    sEmpManger->printAllInternEmployees();
 
-    #endif
 }
