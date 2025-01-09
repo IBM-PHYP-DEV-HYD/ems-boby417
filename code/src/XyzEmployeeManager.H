@@ -15,7 +15,7 @@ class XyzEmployeeManager
 public:
     XyzEmployeeManager();
     ~XyzEmployeeManager(){};
-    EDLL<XyzEmployeeIF> *mEmployeeDequePtr;
+    EDLL<XyzEmployeeIF> *mEmployeeEDLLPtr;
     
     /* Adding new employees */
     void addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTypeParam = TYPE_FULL);
