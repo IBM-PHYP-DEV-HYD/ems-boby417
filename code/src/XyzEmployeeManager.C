@@ -13,6 +13,14 @@ void XyzEmployeeManager::initializeEmployeeDeque()
     }
 }
 
+void XyzEmployeeManager::initializeResignedEmployeeDeque()
+{
+    if(mResignedEmpEdllPtr == NULL)
+    {
+        mResignedEmpEdllPtr = new EDLL<XyzEmployeeIF>();
+    }
+}
+
 template<typename TN>
 static TN* createCommonEmployee(EmpType empTypeParam)
 {
@@ -293,108 +301,127 @@ void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam=STATU
    
 }
 
-void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam,EmpStatus empStatusParam)
+void XyzEmployeeManager::printResignedEmpSummary()
+{
+    int sSizeofEDLL = mResignedEmpEdllPtr ? mResignedEmpEdllPtr->size() : 0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mResignedEmpEdllPtr->getNodeAtPosition(0);
+    printHeader(TYPE_NONE,STATUS_RESIGNED);
+
+    for(int itr = 0;itr < sSizeofEDLL; itr++)
+    {
+        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
+        XyzEmployee *sEmpPtr = static_cast<XyzEmployee*>(sIFPtr);
+        sEmpPtr->printAllEmployeeDetails();
+        cout<<endl;
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
+    }
+}
+
+void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam)
 {
    
-    int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    int sSizeofEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->size() : 0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
 
-    printHeader(empTypeParam,empStatusParam);
+    printHeader(empTypeParam);
 
-    for(int itr = 0;itr < sSizeofDeque; itr++)
+    for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        if((empTypeParam == TYPE_NONE)  && (empStatusParam == STATUS_NONE))
+        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
+        if(empTypeParam == TYPE_NONE)
         {
-            if((*mEmployeeEDLLPtr)[itr]->getEmployeeStatus() != STATUS_RESIGNED)
-            {
-                (*mEmployeeEDLLPtr)[itr]->printAllEmployeeDetails(true);
-                cout<<endl;
-            } 
-        }
-        else if(empStatusParam == STATUS_RESIGNED)
-        {
-            if((*mEmployeeEDLLPtr)[itr]->getEmployeeStatus() == STATUS_RESIGNED)
-            {
-                (*mEmployeeEDLLPtr)[itr]->printAllEmployeeDetails(true);
-                cout<<endl;
-            }
+            
+            sIFPtr->printAllEmployeeDetails();
+            cout<<endl;
         }
         else
         {
-            EmpType sEmpType = (*mEmployeeEDLLPtr)[itr]->getEmployeeType();
-            if(empTypeParam == sEmpType && (*mEmployeeEDLLPtr)[itr]->getEmployeeStatus() != STATUS_RESIGNED)
+            EmpType sEmpType = sIFPtr->getEmployeeType();
+            if(empTypeParam == sEmpType)
             {
-                (*mEmployeeEDLLPtr)[itr]->printAllEmployeeDetails(false);
+                sIFPtr->printEmployeeDetailsByType();
                 cout<<endl;
             }
         }
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }
 
 void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
 {
    
-    int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
 
     printHeader();
 
     string sEmpGenderString = getEmployeeGenderFromEnum(empGenderParam);
 
-    for(int itr = 0;itr < sSizeofDeque; itr++)
+    for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        string sEmpGender = (*mEmployeeEDLLPtr)[itr]->getEmployeeGender();
+        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
+        string sEmpGender = sIFPtr->getEmployeeGender();
         if(sEmpGenderString == sEmpGender)
         {
-            (*mEmployeeEDLLPtr)[itr]->printAllEmployeeDetails(false);
+            sIFPtr->printAllEmployeeDetails();
             cout<<endl;
         }
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }
 
 void XyzEmployeeManager::printEmployeeSummaryByStatus(EmpStatus empStatusParam)
 {
    
-    int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
 
     printHeader();
 
-    for(int itr = 0;itr < sSizeofDeque; itr++)
+    for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        EmpStatus sEmpStatus = (*mEmployeeEDLLPtr)[itr]->getEmployeeStatus();
+        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
+        EmpStatus sEmpStatus = sIFPtr->getEmployeeStatus();
         if(sEmpStatus == empStatusParam)
         {
-            (*mEmployeeEDLLPtr)[itr]->printAllEmployeeDetails(false);
+            sIFPtr->printAllEmployeeDetails();
             cout<<endl;
         }
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }
 
 void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
 {
-    int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
     XyzEmployeeIF *sEmpPtr = NULL;
-    for(int itr = 0;itr < sSizeofDeque; itr++)
+    for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        string sEmpid = (*mEmployeeEDLLPtr)[itr]->getEmployeeId();
+        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
+        string sEmpid = sIFPtr->getEmployeeId();
         if(sEmpid == empIDParam)
         {
             sEmpPtr = mEmployeeEDLLPtr->removeElementAtPosition(itr);
-            // @Todo: Need to add this employee to resigned employee Deque.
+            initializeResignedEmployeeDeque();
             sEmpPtr->setEmployeeStatus(STATUS_RESIGNED);
-            //mEmployeeEDLLPtr->addElementAtPosition(itr,sEmpPtr);
+            mResignedEmpEdllPtr->pushBack(sEmpPtr);
             break;
         }
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }
 
 void XyzEmployeeManager::printEmployeeDetailsById()
 {
     int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
     bool empIDFound = false;
     string sEmpid;
 
     cout<<"\n\nPlease enter employee ID to Search and Display \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
     cin>>sEmpid;
-    if((sEmpid.length() != 8) &&  sEmpid.substr(0,3) != "XYZ")
+    if((sEmpid.length() != MAX_ID_LENGTH) &&  sEmpid.substr(0,3) != "XYZ")
     {
         cout<<"Invalid Emp Id entered"<<endl;
         return;
@@ -402,13 +429,15 @@ void XyzEmployeeManager::printEmployeeDetailsById()
 
     for(int itr = 0;itr < sSizeofDeque; itr++)
     {
-        if((*mEmployeeEDLLPtr)[itr]->getEmployeeId() == sEmpid)
+        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
+        if(sIFPtr->getEmployeeId() == sEmpid)
         {
-            cout<<*(*mEmployeeEDLLPtr)[itr];
+            sIFPtr->printEmployeeSpecificDetails();
             cout<<endl;
             empIDFound = true;
             break;
         }
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 
     if(empIDFound == false)

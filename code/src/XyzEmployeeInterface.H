@@ -39,16 +39,10 @@ public:
     virtual void setBranch(string branchParam) = 0;
     virtual string getCollege() = 0;
     virtual string getBranch() = 0;
-
-    virtual void print(ostream& osParam) = 0;
-    virtual void printAllEmployeeDetails(bool printExtraInfoParam) = 0;
-
-    //Overloading operator<< to work with XyzEmployeeIF* directly
-    friend ostream& operator<<(ostream& ostreamDataParam, XyzEmployeeIF& objParam) 
-    {    
-        objParam.print(ostreamDataParam);
-        return ostreamDataParam;
-    }
+    
+    virtual void printAllEmployeeDetails() = 0;
+    virtual void printEmployeeDetailsByType() = 0;
+    virtual void printEmployeeSpecificDetails() = 0;
 };
 
 #endif

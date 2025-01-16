@@ -15,24 +15,28 @@ class XyzEmployeeManager
 public:
     XyzEmployeeManager();
     ~XyzEmployeeManager(){};
-    EDLL<XyzEmployeeIF> *mEmployeeEDLLPtr;
+    EDLL<XyzEmployeeIF>* mEmployeeEDLLPtr;
+    EDLL<XyzEmployeeIF>* mResignedEmpEdllPtr;
     
     /* Adding new employees */
     void addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTypeParam = TYPE_FULL);
 
-    void printEmployeeSummaryByType(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam = STATUS_NONE);
+    void printEmployeeSummaryByType(EmpType empTypeParam = TYPE_NONE);
     void printEmployeeSummaryByGender(int empGenderParam);
     void printEmployeeSummaryByStatus(EmpStatus empStatusParam);
+    void printEmployeeDetailsById();
+    void printResignedEmpSummary();
 
     void removeEmployeeByID(string empIDParam);
     
-    void printEmployeeDetailsById();
+    
 
     /* Test code generating some random employee data*/
     void addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam= TYPE_NONE);
 
 private:
     void initializeEmployeeDeque();
+    void initializeResignedEmployeeDeque();
     XyzEmployeeIF* createAndGetEmployeeType(int empChoiceParam);
 };
 

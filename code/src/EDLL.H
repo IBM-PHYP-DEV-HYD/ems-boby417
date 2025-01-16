@@ -11,7 +11,7 @@ public:
     void addElementAtPosition(int posParam, TN* elementPtrParam);
     /*It responsibility of user to delete returned pointer*/
     TN* removeElementAtPosition(int posParam);
-private:
+
     Node<TN>* getNodeAtPosition(int posParam);
 
 };
@@ -81,13 +81,11 @@ TN* EDLL<TN>::removeElementAtPosition(int posParam)
         else
         {
             Node<TN>* sTempNodePtr = getNodeAtPosition(posParam);
-            //Not Delinking anything here because to add resigned employee here
-            //sTempNodePtr->mPrev->mNext = sTempNodePtr->mNext;
-            //sTempNodePtr->mNext->mPrev = sTempNodePtr->mPrev;
+            sTempNodePtr->mPrev->mNext = sTempNodePtr->mNext;
+            sTempNodePtr->mNext->mPrev = sTempNodePtr->mPrev;
             sDataPtr = sTempNodePtr->mDataPtr;
-            //Not deleting the Container position because to add resigned employee here
-            //delete sTempNodePtr;
-            //this->mCurrentSize--;
+            delete sTempNodePtr;
+            this->mCurrentSize--;
         }
     }
     return sDataPtr;

@@ -9,6 +9,11 @@
 
 using namespace std;
 
+enum
+{
+    MAX_ID_LENGTH = 8,
+};
+
 enum ErrorCode
 {
     E_SUCCESS = 0,

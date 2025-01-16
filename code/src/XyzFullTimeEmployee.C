@@ -22,41 +22,29 @@ XyzFullTimeEmployee::~XyzFullTimeEmployee()
 {
 }
 
-void XyzFullTimeEmployee::printAllEmployeeDetails(bool printExtraInfoParam)
+void XyzFullTimeEmployee::printAllEmployeeDetails()
 {
-    XyzEmployee::printAllEmployeeDetails(printExtraInfoParam);
+    XyzEmployee::printAllEmployeeDetails();
 
-    if(this->getEmployeeStatus() != STATUS_RESIGNED)
-    {
-        printElement(this->getNoOfLeaves(),15);
-        if(printExtraInfoParam)
-        {
-            printElement("NA", 20);
-            printElement("NA", 20);
-            printElement("NA", 20);
-        }
-    }
-   
+    printElement(this->getNoOfLeaves(),15);
+    printElement("NA", 20);
+    printElement("NA", 20);
+    printElement("NA", 20);
 }
 
-ostream& operator<<(ostream& ostreamDataParam, const XyzFullTimeEmployee& fEmpDataParam)
+void XyzFullTimeEmployee::printEmployeeDetailsByType()
 {
+    XyzEmployee::printAllEmployeeDetails();
+    printElement(this->getNoOfLeaves(),15);
+}
+
+
+void XyzFullTimeEmployee::printEmployeeSpecificDetails()
+{ 
     /* Print all the relevant data */
-    cout<<"\n\nFull-Time Employee Data:"<<endl;
-    printElementIndividual("Employee Name:",fEmpDataParam.mEmpName,20);
-    printElementIndividual("Id:",fEmpDataParam.mEmpid,20);
-    printElementIndividual("Type:",getEmploymentTypeFromEnum(fEmpDataParam.mEmpType),20);
-    printElementIndividual("Status:",getEmploymentStatusFromEnum(fEmpDataParam.mEmpStatus),20);
-    printElementIndividual("Gender:",fEmpDataParam.mEmpGender,20);
-    printElementIndividual("DOB:",fEmpDataParam.mEmpDOB,20);
-    printElementIndividual("DOJ:",fEmpDataParam.mEmpDOJ,20);
-    printElementIndividual("Num of Leaves:",fEmpDataParam.mEmpNOL,20);
-    return ostreamDataParam;
-}
-
-void XyzFullTimeEmployee::print(ostream& ostreamDataParam)
-{
-    ostreamDataParam<<*this;
+    cout<<"\nFull-Time Employee Data:"<<endl;
+    XyzEmployee::printEmployeeSpecificDetails();
+    printElementIndividual("Num of Leaves:",this->mEmpNOL,20);
 }
 
 istream& operator>>(istream& istreamDataParam, XyzFullTimeEmployee& fEmpDataParam)

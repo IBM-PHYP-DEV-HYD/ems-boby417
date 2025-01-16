@@ -74,7 +74,7 @@ string XyzEmployee::getEmployeeId()
     return mEmpid;
 }
 
-void XyzEmployee::printAllEmployeeDetails(bool printExtraInfoParam)
+void XyzEmployee::printAllEmployeeDetails()
 {
     printElement(this->getEmployeeName(),25);
     printElement(this->getEmployeeId(),15);
@@ -84,6 +84,25 @@ void XyzEmployee::printAllEmployeeDetails(bool printExtraInfoParam)
     printElement(this->getEmployeeDOB(),20);
     printElement(this->getEmployeeDOJ(),20);
     printElement(this->getEmployeeDOL(),20);
+}
+
+void XyzEmployee::printEmployeeDetailsByType()
+{
+
+}
+
+void XyzEmployee::printEmployeeSpecificDetails()
+{ 
+    /* Print all the relevant data */
+    cout<<"\n\nContractor Employee Data:"<<endl;
+    printElementIndividual("Employee Name:",this->mEmpName,20);
+    printElementIndividual("Id:",this->mEmpid,20);
+    printElementIndividual("Type:",getEmploymentTypeFromEnum(this->mEmpType),20);
+    printElementIndividual("Status:",getEmploymentStatusFromEnum(this->mEmpStatus),20);
+    printElementIndividual("Gender:",this->mEmpGender,20);
+    printElementIndividual("DOB:",this->mEmpDOB,20);
+    printElementIndividual("DOJ:",this->mEmpDOJ,20);
+    printElementIndividual("DOL:",this->mEmpDOL,20);
 }
 
 void XyzEmployee::setNoOfLeaves(int nolParam) {}

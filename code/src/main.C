@@ -170,7 +170,7 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
         break;
         case 5:
         {
-            sEmpManger->printEmployeeSummaryByType(TYPE_NONE,STATUS_RESIGNED);
+            sEmpManger->printResignedEmpSummary();
         }
         break;
         default:

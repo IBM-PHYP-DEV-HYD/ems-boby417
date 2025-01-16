@@ -22,41 +22,29 @@ XyzInternEmloyee::~XyzInternEmloyee()
 {
 }
 
-void XyzInternEmloyee::printAllEmployeeDetails(bool printExtraInfoParam)
+void XyzInternEmloyee::printAllEmployeeDetails()
 {
-    XyzEmployee::printAllEmployeeDetails(printExtraInfoParam);
-    if(this->getEmployeeStatus() != STATUS_RESIGNED)
-    {
-        if(printExtraInfoParam)
-        {
-            printElement("NA", 15);
-            printElement("NA", 20);
-        }
-        printElement(this->getCollege(),20);
-        printElement(this->getBranch(),20);
-    }
+    XyzEmployee::printAllEmployeeDetails();
+    printElement("NA", 15);
+    printElement("NA", 20);
+    printElement(this->getCollege(),20);
+    printElement(this->getBranch(),20);
 }
 
-ostream& operator<<(ostream& ostreamDataParam, XyzInternEmloyee& iEmpDataParam)
+void XyzInternEmloyee::printEmployeeDetailsByType()
 {
+    XyzEmployee::printAllEmployeeDetails();
+    printElement(this->getCollege(),20);
+    printElement(this->getBranch(),20);
+}
+
+void XyzInternEmloyee::printEmployeeSpecificDetails()
+{ 
     /* Print all the relevant data */
-    cout<<"\n\nIntern Employee Data:"<<endl;
-    printElementIndividual("Employee Name:",iEmpDataParam.mEmpName,20);
-    printElementIndividual("Id:",iEmpDataParam.mEmpid,20);
-    printElementIndividual("Type:",getEmploymentTypeFromEnum(iEmpDataParam.mEmpType),20);
-    printElementIndividual("Status:",getEmploymentStatusFromEnum(iEmpDataParam.mEmpStatus),20);
-    printElementIndividual("Gender:",iEmpDataParam.mEmpGender,20);
-    printElementIndividual("DOB:",iEmpDataParam.mEmpDOB,20);
-    printElementIndividual("DOJ:",iEmpDataParam.mEmpDOJ,20);
-    printElementIndividual("DOL:",iEmpDataParam.mEmpDOL,20);
-    printElementIndividual("Branch:",iEmpDataParam.mEmpBranch,20);
-    printElementIndividual("College:",iEmpDataParam.mEmpCollege,20);
-    return ostreamDataParam;
-}
-
-void XyzInternEmloyee::print(ostream& ostreamDataParam)
-{
-    ostreamDataParam<<*this;
+    cout<<"\nIntern Employee Data:"<<endl;
+    XyzEmployee::printEmployeeSpecificDetails();
+    printElementIndividual("Branch:",this->mEmpBranch,20);
+    printElementIndividual("College:",this->mEmpCollege,20);
 }
 
 istream& operator>>(istream& istreamDataParam, XyzInternEmloyee& iEmpDataParam)

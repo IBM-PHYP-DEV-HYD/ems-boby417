@@ -21,45 +21,30 @@ XyzContractorEmployee::~XyzContractorEmployee()
 {
 }
 
-void XyzContractorEmployee::printAllEmployeeDetails(bool printExtraInfoParam)
+void XyzContractorEmployee::printAllEmployeeDetails()
 {
-    XyzEmployee::printAllEmployeeDetails(printExtraInfoParam);
+    XyzEmployee::printAllEmployeeDetails();
     
-    if(this->getEmployeeStatus() != STATUS_RESIGNED)
-    {
-        if(printExtraInfoParam)
-        {
-            printElement("NA", 15);
-        }
-        printElement(this->getAgency(),20);
-        if(printExtraInfoParam)
-        {
-            printElement("NA", 20);
-            printElement("NA", 20);
-        }
-    }
+    printElement("NA", 15);
+    printElement(this->getAgency(),20);
+    printElement("NA", 20);
+    printElement("NA", 20);  
 }
 
-ostream& operator<<(ostream& ostreamDataParam, XyzContractorEmployee& cEmpDataParam)
+void XyzContractorEmployee::printEmployeeDetailsByType()
+{
+    XyzEmployee::printAllEmployeeDetails();
+    printElement(this->getAgency(),20);
+}
+
+void XyzContractorEmployee::printEmployeeSpecificDetails()
 { 
     /* Print all the relevant data */
     cout<<"\n\nContractor Employee Data:"<<endl;
-    printElementIndividual("Employee Name:",cEmpDataParam.mEmpName,20);
-    printElementIndividual("Id:",cEmpDataParam.mEmpid,20);
-    printElementIndividual("Type:",getEmploymentTypeFromEnum(cEmpDataParam.mEmpType),20);
-    printElementIndividual("Status:",getEmploymentStatusFromEnum(cEmpDataParam.mEmpStatus),20);
-    printElementIndividual("Gender:",cEmpDataParam.mEmpGender,20);
-    printElementIndividual("DOB:",cEmpDataParam.mEmpDOB,20);
-    printElementIndividual("DOJ:",cEmpDataParam.mEmpDOJ,20);
-    printElementIndividual("DOL:",cEmpDataParam.mEmpDOL,20);
-    printElementIndividual("Agency:",cEmpDataParam.mEmpAgency,20);
-    return ostreamDataParam;
+    XyzEmployee::printEmployeeSpecificDetails();
+    printElementIndividual("Agency:",this->mEmpAgency,20);
 }
 
-void XyzContractorEmployee::print(ostream& ostreamDataParam)
-{
-    ostreamDataParam<<*this;
-}
 
 istream& operator>>(istream& istreamDataParam, XyzContractorEmployee& cEmpDataParam)
 {
