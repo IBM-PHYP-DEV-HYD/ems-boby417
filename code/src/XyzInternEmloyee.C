@@ -25,17 +25,21 @@ XyzInternEmloyee::~XyzInternEmloyee()
 void XyzInternEmloyee::printAllEmployeeDetails()
 {
     XyzEmployee::printAllEmployeeDetails();
-    printElement("NA", 15);
-    printElement("NA", 20);
-    printElement(this->getCollege(),20);
-    printElement(this->getBranch(),20);
+    mRecordObj.mPrintAllVar = true;
+    mRecordObj.mEmpNOL =  "NA";
+    mRecordObj.mEmpAgency = "NA";
+    mRecordObj.mEmpCollege = this->getCollege();
+    mRecordObj.mEmpBranch = this->getBranch();
+    mRecordObj.printAll();
 }
 
 void XyzInternEmloyee::printEmployeeDetailsByType()
 {
     XyzEmployee::printAllEmployeeDetails();
-    printElement(this->getCollege(),20);
-    printElement(this->getBranch(),20);
+    mRecordObj.mPrintAllVar = false;
+    mRecordObj.mEmpCollege = this->getCollege();
+    mRecordObj.mEmpBranch = this->getBranch();
+    mRecordObj.printAll();
 }
 
 void XyzInternEmloyee::printEmployeeSpecificDetails()

@@ -24,17 +24,20 @@ XyzContractorEmployee::~XyzContractorEmployee()
 void XyzContractorEmployee::printAllEmployeeDetails()
 {
     XyzEmployee::printAllEmployeeDetails();
-    
-    printElement("NA", 15);
-    printElement(this->getAgency(),20);
-    printElement("NA", 20);
-    printElement("NA", 20);  
+    mRecordObj.mPrintAllVar = true;
+    mRecordObj.mEmpNOL = "NA";
+    mRecordObj.mEmpAgency = this->getAgency();
+    mRecordObj.mEmpCollege = "NA";
+    mRecordObj.mEmpBranch = "NA";
+    mRecordObj.printAll();
 }
 
 void XyzContractorEmployee::printEmployeeDetailsByType()
 {
     XyzEmployee::printAllEmployeeDetails();
-    printElement(this->getAgency(),20);
+    mRecordObj.mPrintAllVar = false;
+    mRecordObj.mEmpAgency = this->getAgency();
+    mRecordObj.printAll();
 }
 
 void XyzContractorEmployee::printEmployeeSpecificDetails()

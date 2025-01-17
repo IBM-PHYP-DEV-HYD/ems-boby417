@@ -11,7 +11,9 @@ using namespace std;
 
 enum
 {
-    MAX_ID_LENGTH = 8,
+    MAX_NAME_LEN = 20,
+    MAX_ID_LEN = 8,
+    MAX_EQ_LEN = 15,
 };
 
 enum ErrorCode

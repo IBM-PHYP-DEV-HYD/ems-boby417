@@ -249,17 +249,20 @@ void XyzEmployeeManager::addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTy
 
 void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam=STATUS_NONE)
 {
-     cout<<"\n\n"<<endl;
-
+    cout<<"\n\n"<<endl;
+    int sSum = 0;
     /* Print the Header */
-    printElement("Employee Name",25);
-    printElement("ID",15);
-    printElement("Type",20);
-    printElement("Status",20);
-    printElement("Gender",20);
-    printElement("Date of birth",20);
-    printElement("Date of joining",20);
-    printElement("Date of Leaving",20);
+    printElement("Employee Name",MAX_NAME_LEN);
+    sSum += MAX_NAME_LEN;
+    printElement("ID",MAX_ID_LEN+7);
+    sSum += MAX_ID_LEN+7;
+    printElement("Type",MAX_EQ_LEN);
+    printElement("Status",MAX_EQ_LEN);
+    printElement("Gender",MAX_EQ_LEN);
+    printElement("Date of birth",MAX_EQ_LEN);
+    printElement("Date of joining",MAX_EQ_LEN);
+    printElement("Date of Leaving",MAX_EQ_LEN);
+    sSum += (6*MAX_EQ_LEN);
     if(empStatusParam != STATUS_RESIGNED)
     {
         if(empTypeParam != TYPE_NONE)
@@ -267,35 +270,40 @@ void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam=STATU
             if(empTypeParam == TYPE_FULL)
             {
                 
-                printElement("Number of Leaves",15);
+                printElement("Number of Leaves",MAX_ID_LEN+7);
+                sSum += MAX_ID_LEN+7;
             }
             else if(empTypeParam == TYPE_CONTRACTOR)
             {
-                printElement("Agency",20);
+                printElement("Agency",MAX_EQ_LEN);
+                sSum += MAX_EQ_LEN;
             }
             else
             {
-                printElement("College",20);
-                printElement("Branch",20);
+                printElement("College",MAX_EQ_LEN);
+                printElement("Branch",MAX_EQ_LEN);
+                sSum += (2*MAX_EQ_LEN);
             }
             cout<<endl;
-            cout << left << setw(220) << setfill('-') <<"-";
+            cout << left << setw(sSum) << setfill('-') <<"-";
             
         }
         else
         {
-            printElement("No of Leaves",15);
-            printElement("Agency",20);
-            printElement("College",20);
-            printElement("Branch",20);
+            printElement("No of Leaves",MAX_ID_LEN+7);
+            sSum += MAX_ID_LEN+7;
+            printElement("Agency",MAX_EQ_LEN);
+            printElement("College",MAX_EQ_LEN);
+            printElement("Branch",MAX_EQ_LEN);
+            sSum += (3*MAX_EQ_LEN);
             cout<<endl;
-            cout << left << setw(240) << setfill('-') <<"-";
+            cout << left << setw(sSum) << setfill('-') <<"-";
         }
     }
     else
     {
         cout<<endl;
-        cout << left << setw(180) << setfill('-') <<"-";
+        cout << left << setw(sSum) << setfill('-') <<"-";
     }
     cout<<endl;
    
@@ -312,7 +320,6 @@ void XyzEmployeeManager::printResignedEmpSummary()
         XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
         XyzEmployee *sEmpPtr = static_cast<XyzEmployee*>(sIFPtr);
         sEmpPtr->printAllEmployeeDetails();
-        cout<<endl;
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }
@@ -332,7 +339,6 @@ void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam)
         {
             
             sIFPtr->printAllEmployeeDetails();
-            cout<<endl;
         }
         else
         {
@@ -340,7 +346,6 @@ void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam)
             if(empTypeParam == sEmpType)
             {
                 sIFPtr->printEmployeeDetailsByType();
-                cout<<endl;
             }
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
@@ -364,7 +369,6 @@ void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
         if(sEmpGenderString == sEmpGender)
         {
             sIFPtr->printAllEmployeeDetails();
-            cout<<endl;
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
@@ -385,7 +389,6 @@ void XyzEmployeeManager::printEmployeeSummaryByStatus(EmpStatus empStatusParam)
         if(sEmpStatus == empStatusParam)
         {
             sIFPtr->printAllEmployeeDetails();
-            cout<<endl;
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
@@ -421,7 +424,7 @@ void XyzEmployeeManager::printEmployeeDetailsById()
 
     cout<<"\n\nPlease enter employee ID to Search and Display \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
     cin>>sEmpid;
-    if((sEmpid.length() != MAX_ID_LENGTH) &&  sEmpid.substr(0,3) != "XYZ")
+    if((sEmpid.length() != MAX_ID_LEN) &&  sEmpid.substr(0,3) != "XYZ")
     {
         cout<<"Invalid Emp Id entered"<<endl;
         return;

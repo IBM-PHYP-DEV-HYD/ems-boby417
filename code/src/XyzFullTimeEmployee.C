@@ -25,17 +25,20 @@ XyzFullTimeEmployee::~XyzFullTimeEmployee()
 void XyzFullTimeEmployee::printAllEmployeeDetails()
 {
     XyzEmployee::printAllEmployeeDetails();
-
-    printElement(this->getNoOfLeaves(),15);
-    printElement("NA", 20);
-    printElement("NA", 20);
-    printElement("NA", 20);
+     mRecordObj.mPrintAllVar = true;
+    mRecordObj.mEmpNOL = to_string(this->getNoOfLeaves());
+    mRecordObj.mEmpAgency = "NA";
+    mRecordObj.mEmpCollege = "NA";
+    mRecordObj.mEmpBranch = "NA";
+    mRecordObj.printAll();
 }
 
 void XyzFullTimeEmployee::printEmployeeDetailsByType()
 {
     XyzEmployee::printAllEmployeeDetails();
-    printElement(this->getNoOfLeaves(),15);
+    mRecordObj.mPrintAllVar = false;
+    mRecordObj.mEmpNOL = to_string(this->getNoOfLeaves());
+    mRecordObj.printAll();
 }
 
 

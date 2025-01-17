@@ -76,14 +76,15 @@ string XyzEmployee::getEmployeeId()
 
 void XyzEmployee::printAllEmployeeDetails()
 {
-    printElement(this->getEmployeeName(),25);
-    printElement(this->getEmployeeId(),15);
-    printElement(getEmploymentTypeFromEnum(this->getEmployeeType()),20);
-    printElement(getEmploymentStatusFromEnum(this->getEmployeeStatus()),20);
-    printElement(this->getEmployeeGender(),20);
-    printElement(this->getEmployeeDOB(),20);
-    printElement(this->getEmployeeDOJ(),20);
-    printElement(this->getEmployeeDOL(),20);
+    
+    mRecordObj.mEmpName = this->getEmployeeName();
+    mRecordObj.mEmpid = this->getEmployeeId();
+    mRecordObj.mEmpType = this->getEmployeeType();
+    mRecordObj.mEmpStatus = this->getEmployeeStatus();
+    mRecordObj.mEmpGender = this->getEmployeeGender();
+    mRecordObj.mEmpDOB = this->getEmployeeDOB();
+    mRecordObj.mEmpDOJ = this->getEmployeeDOJ();
+    mRecordObj.mEmpDOL = this->getEmployeeDOL();
 }
 
 void XyzEmployee::printEmployeeDetailsByType()

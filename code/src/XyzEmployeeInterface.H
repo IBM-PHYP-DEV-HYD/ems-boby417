@@ -3,6 +3,7 @@
 
 #include "Utility.H"
 #include "iostream"
+#include "EmsRecord.H"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ class XyzEmployeeIF
 {
 
 public:
+    EmsRecord mRecordObj;
     XyzEmployeeIF(){}
     virtual ~XyzEmployeeIF(){}
     virtual string getEmployeeName() = 0;
