@@ -13,8 +13,6 @@ XyzContractorEmployee::XyzContractorEmployee(string nameParam,string genderParam
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"C";
     mEmpType = TYPE_CONTRACTOR;
-    /* Default values*/
-    mEmpAgency = getContractorAgencyFromEnum(AGENCY_X);
 }
 
 XyzContractorEmployee::~XyzContractorEmployee()
@@ -45,7 +43,8 @@ void XyzContractorEmployee::printEmployeeSpecificDetails()
     /* Print all the relevant data */
     cout<<"\n\nContractor Employee Data:"<<endl;
     XyzEmployee::printEmployeeSpecificDetails();
-    printElementIndividual("Agency:",this->mEmpAgency,20);
+    mRecordObj.mEmpAgency = this->getAgency();
+    mRecordObj.printContractor();
 }
 
 

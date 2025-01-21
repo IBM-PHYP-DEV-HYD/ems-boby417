@@ -24,15 +24,14 @@ public:
     void printEmployeeSummaryByType(EmpType empTypeParam = TYPE_NONE);
     void printEmployeeSummaryByGender(int empGenderParam);
     void printEmployeeSummaryByStatus(EmpStatus empStatusParam);
-    void printEmployeeDetailsById();
+    void printEmployeeDetailsById(string sEmpidParam);
     void printResignedEmpSummary();
 
     void removeEmployeeByID(string empIDParam);
     
-    
-
-    /* Test code generating some random employee data*/
     void addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam= TYPE_NONE);
+
+    void convertToFullTime(EmpType typeParam, string empIDParam);
 
 private:
     void initializeEmployeeDeque();

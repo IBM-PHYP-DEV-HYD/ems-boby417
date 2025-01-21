@@ -121,11 +121,8 @@ void printEmployeeOtherdetailsMenu(void)
     cout<<"|-----------------------------------------------------------|"<<endl;
     cout<<"| Others Details                                            |"<<endl;
     cout<<"|-----------------------------------------------------------|"<<endl;
-    cout<<"| 1. Add n number of leaves to all the Full-Time employees  |"<<endl;
-    cout<<"| 2. Convert an Employee to Full-Time employee              |"<<endl;
-    cout<<"| 3. Search an Employee by ID                               |"<<endl;
-    cout<<"| 4. Search an Employee by Name                             |"<<endl;
-    cout<<"| 5. Get Active and Resigned Employee Count                 |"<<endl;
+    cout<<"| 1. Convert an Employee to Full-Time employee              |"<<endl;
+    cout<<"| 2. Search an Employee by ID                               |"<<endl;
     cout<<"|-----------------------------------------------------------|"<<endl;
     cout<<"|      Press -1 to exit                                     |"<<endl;
     cout<<"|-----------------------------------------------------------|"<<endl;

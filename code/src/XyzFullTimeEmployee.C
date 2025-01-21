@@ -14,8 +14,21 @@ XyzFullTimeEmployee::XyzFullTimeEmployee(string nameParam,string genderParam,str
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"F";
     mEmpType = TYPE_FULL;
-    /* Default values*/
-    mEmpNOL = 24;
+}
+
+XyzFullTimeEmployee::XyzFullTimeEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam)
+{
+    mNextEmproll++;
+    mEmpName    = xyzEmployeeIfPtrParam->getEmployeeName();
+    string sEmpRollAsString = toString(mNextEmproll,4);
+    mEmpid = "XYZ"+sEmpRollAsString+"F";
+    mEmpGender  = xyzEmployeeIfPtrParam->getEmployeeGender();
+    mEmpDOB     = xyzEmployeeIfPtrParam->getEmployeeDOB();
+    mEmpDOJ     = xyzEmployeeIfPtrParam->getEmployeeDOJ();
+    mEmpDOL     = xyzEmployeeIfPtrParam->getEmployeeDOL();
+    mEmpStatus  = xyzEmployeeIfPtrParam->getEmployeeStatus();
+    mEmpType    = TYPE_FULL;
+    mEmpNOL     = getRandomNumber(10,24);
 }
 
 XyzFullTimeEmployee::~XyzFullTimeEmployee()
@@ -25,7 +38,7 @@ XyzFullTimeEmployee::~XyzFullTimeEmployee()
 void XyzFullTimeEmployee::printAllEmployeeDetails()
 {
     XyzEmployee::printAllEmployeeDetails();
-     mRecordObj.mPrintAllVar = true;
+    mRecordObj.mPrintAllVar = true;
     mRecordObj.mEmpNOL = to_string(this->getNoOfLeaves());
     mRecordObj.mEmpAgency = "NA";
     mRecordObj.mEmpCollege = "NA";
@@ -45,9 +58,9 @@ void XyzFullTimeEmployee::printEmployeeDetailsByType()
 void XyzFullTimeEmployee::printEmployeeSpecificDetails()
 { 
     /* Print all the relevant data */
-    cout<<"\nFull-Time Employee Data:"<<endl;
     XyzEmployee::printEmployeeSpecificDetails();
-    printElementIndividual("Num of Leaves:",this->mEmpNOL,20);
+    mRecordObj.mEmpNOL = to_string(this->getNoOfLeaves());
+    mRecordObj.printFullTime();
 }
 
 istream& operator>>(istream& istreamDataParam, XyzFullTimeEmployee& fEmpDataParam)

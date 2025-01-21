@@ -96,14 +96,14 @@ void XyzEmployee::printEmployeeSpecificDetails()
 { 
     /* Print all the relevant data */
     cout<<"\n\nContractor Employee Data:"<<endl;
-    printElementIndividual("Employee Name:",this->mEmpName,20);
-    printElementIndividual("Id:",this->mEmpid,20);
-    printElementIndividual("Type:",getEmploymentTypeFromEnum(this->mEmpType),20);
-    printElementIndividual("Status:",getEmploymentStatusFromEnum(this->mEmpStatus),20);
-    printElementIndividual("Gender:",this->mEmpGender,20);
-    printElementIndividual("DOB:",this->mEmpDOB,20);
-    printElementIndividual("DOJ:",this->mEmpDOJ,20);
-    printElementIndividual("DOL:",this->mEmpDOL,20);
+    mRecordObj.mEmpName = this->getEmployeeName();
+    mRecordObj.mEmpid = this->getEmployeeId();
+    mRecordObj.mEmpType = this->getEmployeeType();
+    mRecordObj.mEmpStatus = this->getEmployeeStatus();
+    mRecordObj.mEmpGender = this->getEmployeeGender();
+    mRecordObj.mEmpDOB = this->getEmployeeDOB();
+    mRecordObj.mEmpDOJ = this->getEmployeeDOJ();
+    mRecordObj.mEmpDOL = this->getEmployeeDOL();
 }
 
 void XyzEmployee::setNoOfLeaves(int nolParam) {}

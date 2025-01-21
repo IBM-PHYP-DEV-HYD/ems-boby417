@@ -3,51 +3,6 @@
 using namespace std;
 
 
-void dummyEDLLTest()
-{
-    EDLL<int> *ed = new EDLL<int>();
-
-    for(int i = 0;i<10;i++)
-    {
-        int *a = new int();
-        *a = i;
-        ed->pushBack(a);
-    }
-
-    for(int i = 0;i<ed->size();i++)
-    {
-        cout<<*((*ed)[i]) <<endl;
-    }
-    cout<<"First Print Done size = "<<ed->size()<<"\n"<<endl;
-
-    int *a = new int();
-    *a = 10;
-    ed->addElementAtPosition(10,a);
-    for(int i = 0;i<ed->size();i++)
-    {
-        cout<<*((*ed)[i]) <<endl;
-    }
-    cout<<"add Second Print Done size = "<<ed->size()<<"\n"<<endl;
-
-    ed->addElementAtPosition(0,a);
-    for(int i = 0;i<ed->size();i++)
-    {
-        cout<<*((*ed)[i]) <<endl;
-    }
-   cout<<"add Third Print Done size = "<<ed->size()<<"\n"<<endl;
-
-    ed->removeElementAtPosition(0);
-    ed->removeElementAtPosition(10);
-
-    ed->removeElementAtPosition(3);
-    for(int i = 0;i<ed->size();i++)
-    {
-        cout<<*((*ed)[i]) <<endl;
-    }
-    cout<<"3Remove 4th Print Done size = "<<ed->size()<<"\n"<<endl;
-
-}
-
 void processEmployeeAdding(XyzEmployeeManager *sEmpManger,int choiceParam)
 {
     switch(choiceParam)
@@ -89,7 +44,7 @@ void processEmployeeAdding(XyzEmployeeManager *sEmpManger,int choiceParam)
 void processEmployeeRemoving(XyzEmployeeManager *sEmpManger)
 {
     string sEmpid;
-    cout<<"Please enter employee ID to remove \n Employee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
+    cout<<"Please enter employee ID to remove \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
     cin>>sEmpid;
     if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
     {
@@ -184,6 +139,60 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
     }
 }
 
+void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choiceParam)
+{
+    switch(choiceParam)
+    {
+        case 1:
+        {
+            printEmployeeTypeMenu();
+            int sEmpTypeChoice = 0;
+            cin>>sEmpTypeChoice;
+            if(cin.fail() || (sEmpTypeChoice<2||sEmpTypeChoice>3))
+            {
+                if(sEmpTypeChoice == -1)
+                {
+                    exit(0);
+                }
+                cout<<"Please enter proper choice"<<endl;
+                cin.clear();
+                cin.ignore();
+                break;
+            }
+            cout<<"Please enter employee ID to Convert \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
+            string sEmpid;
+            cin>>sEmpid;
+            if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
+            {
+                cout<<"Invalid Emp Id entered"<<endl;
+                break;
+            }
+            sEmpManger->convertToFullTime(static_cast<EmpType>(sEmpTypeChoice),sEmpid);
+        }
+        break;
+        case 2:
+        {
+            cout<<"Please enter employee ID to Search \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
+            string sEmpid;
+            cin>>sEmpid;
+            if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
+            {
+                cout<<"Invalid Emp Id entered"<<endl;
+                break;
+            }
+            sEmpManger->printEmployeeDetailsById(sEmpid);
+        }
+        break;
+        default:
+        {
+            if(choiceParam == -1)
+            {
+                exit(0);
+            }
+        }
+    }
+}
+
 int main(int argc, const char * argv[]) 
 {
 
@@ -251,7 +260,21 @@ int main(int argc, const char * argv[])
                 break;
                 case 4:
                 {
-
+                    printEmployeeOtherdetailsMenu();
+                    int sEmployeeDetailsChoice = 0;
+                    cin>>sEmployeeDetailsChoice;
+                    if(cin.fail() || (sEmployeeDetailsChoice<1||sEmployeeDetailsChoice>2))
+                    {
+                        if(sEmployeeDetailsChoice == -1)
+                        {
+                            exit(0);
+                        }
+                        cout<<"Please enter proper choice"<<endl;
+                        cin.clear();
+                        cin.ignore();
+                        break;
+                    }
+                    processEmployeeOtherdetailsMenu(sEmpManger,sEmployeeDetailsChoice);
                 }
                 break;
                 default:

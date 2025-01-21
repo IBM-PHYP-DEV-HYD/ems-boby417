@@ -25,169 +25,35 @@ template<typename TN>
 static TN* createCommonEmployee(EmpType empTypeParam)
 {
     string sEmpName;
-    string sEmpGender;
-    string sEmpDOB;
-    EmpStatus sEmpStatus;
-    string sEmpDOJ;
-    string sEmpDOL;
-
-
     cout<<"Please enter employee name : "<<endl;
     cin>>sEmpName;
     
-    /* Gender */
-    int sGenderChoice = 0;
-    while(1)
+    string sEmpGender       = getEmployeeGenderInRandom();
+    int sRandomYear         = getRandomNumber(1970,2003);
+    string sEmpDOB          = generateRandomDate(sRandomYear);
+    sRandomYear             = getRandomNumber(sRandomYear+21,2024);
+    string sEmpDOJ          = generateRandomDate(sRandomYear);
+    string sEmpDOL          = "NA";
+    EmpStatus sEmpStatus    = getEmployeeStatusInRandom();
+   
+    TN *sEmpPtr = new  TN(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+    if(empTypeParam == TYPE_CONTRACTOR)
     {
-        cout<<"\nPlease select valid Gender ,\n1.Male\n2.Female"<<endl;
-        cin>>sGenderChoice;
-        if(sGenderChoice == 1 || sGenderChoice == 2)
-        {
-            break;
-        }
-        else
-        {
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-        }
+        string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmpContractorAgency>(getRandomNumber(1,3)));
+        sEmpPtr->setAgency(sEmpAgency);
     }
-    sEmpGender = getEmployeeGenderFromEnum(sGenderChoice);
-
-    /* Date of Birth */
-    while(1)
+    else if (empTypeParam == TYPE_FULL)
     {
-        int sDate = 0;
-        int sMonth = 0;
-        int sYear = 0;
-        cout<<"Collecting the DOB Details: "<<endl;
-        cout<<"Year 1964 - 2003"<<endl;
-        cin>>sYear;
-        if(cin.fail() || sYear >= 2003 || sYear <= 1964)
-        {
-            cout<<"\nInvalid year"<<endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-            continue;
-        }
-        string sYearString = toString(sYear,4);
-        cout<<"Valid Month : 1 - 12"<<endl;
-        cin>>sMonth;
-        if(cin.fail() || sMonth > 12 || sMonth < 1)
-        {
-            cout<<"\nInvalid Month"<<endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-            continue;   
-        }
-        string sMonthString = getMonthStringFromEnum(sMonth);
-        
-        cout<<"Valid Date:"<<endl;
-        cin>>sDate;
-        if(cin.fail() || sDate<1 || sDate>getMaxDateOfMonth(sYear,sMonth))
-        {
-            cout<<"\nInvalid Date"<<endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-            continue;
-        }
-        string sDateString = toString(sDate,2);
-        sEmpDOB = sDateString+" "+sMonthString+" "+sYearString;
-        cout<<sEmpDOB<<endl;
-        break;
-    }
-    
-    /* Employement Status */
-    int sIntEmpStatus = 0;
-    while(1)
-    {
-        cout<<"Please select employement status \n1.Active.\n2.In-Active\n3.Resigned"<<endl;
-        cin>>sIntEmpStatus;
-        if(sIntEmpStatus == 1 || sIntEmpStatus == 2 || sIntEmpStatus == 3)
-        {
-            break;
-        }
-        else
-        {
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-        }
-    }
-
-    sEmpStatus = static_cast<EmpStatus>(sIntEmpStatus);
-
-    /* Date of Joining */
-    int sDate = 0;
-    int sMonth = 0;
-    int sYear = 0;
-    while(1)
-    {
-        cout<<"Collecting the DOJ Details: "<<endl;
-        cout<<"Year 1984 - 2023 "<<endl;
-        cin>>sYear;
-        if(cin.fail() || sYear >= 2024 || sYear <= 1983)
-        {
-            cout<<"\nInvalid year"<<endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-            continue;
-        }
-        string sYearString = toString(sYear,4);
-        cout<<"Valid Month : 1 - 12"<<endl;
-        cin>>sMonth;
-        if(cin.fail() || sMonth > 12 || sMonth < 1)
-        {
-            cout<<"\nInvalid Month"<<endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-            continue;   
-        }
-        string sMonthString = getMonthStringFromEnum(sMonth);
-        
-        cout<<"Valid Date:"<<endl;
-        cin>>sDate;
-        if(cin.fail() || sDate<1 || sDate>getMaxDateOfMonth(sYear,sMonth))
-        {
-            cout<<"\nInvalid Date"<<endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
-            continue;
-        }
-        string sDateString = toString(sDate,2);
-        sEmpDOJ = sDateString+" "+sMonthString+" "+sYearString;
-        cout<<sEmpDOJ<<endl;
-        break;
-    }
-
-    /* Set DOL for both Contractor and Intern */
-    if(empTypeParam == TYPE_FULL)
-    {
-        sEmpDOL = "NA";
-    }
-    else if(empTypeParam == TYPE_CONTRACTOR)
-    {
-        sYear = sYear+1;
-        string sYearString = toString(sYear,4);
-        string sMonthString = getMonthStringFromEnum(sMonth);
-        string sDateString = toString(sDate,2);
-        sEmpDOL = sDateString+" "+sMonthString+" "+sYearString;
+        int sEmpNol = getRandomNumber(10,24);
+        sEmpPtr->setNoOfLeaves(sEmpNol);
     }
     else
     {
-        sMonth = sMonth+6;
-        if(sMonth > 12)
-        {
-            sYear = sYear+1;
-            sMonth = (sMonth%12);
-            sDate = (sMonth == 2 && sDate == 29)?28:sDate;
-        }
-        string sYearString = toString(sYear,4);
-        string sMonthString = getMonthStringFromEnum(sMonth);
-        string sDateString = toString(sDate,2);
-        sEmpDOL = sDateString+" "+sMonthString+" "+sYearString;
-        cout<<sEmpDOL<<endl;
+        string sClg = getInternCollegeAgencyFromEnum(static_cast<InterEmpCollege>(getRandomNumber(1,3)));
+        sEmpPtr->setCollege(sClg);
+        string sBranch = getInternBranchFromEnum(static_cast<InterEmpBranch>(getRandomNumber(1,3)));
+        sEmpPtr->setBranch(sBranch);
     }
-
-    TN *sEmpPtr = new  TN(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
     return sEmpPtr;
 }
 
@@ -312,13 +178,13 @@ void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam=STATU
 void XyzEmployeeManager::printResignedEmpSummary()
 {
     int sSizeofEDLL = mResignedEmpEdllPtr ? mResignedEmpEdllPtr->size() : 0;
-    Node<XyzEmployeeIF>* sFrontOfEDLL = mResignedEmpEdllPtr->getNodeAtPosition(0);
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mResignedEmpEdllPtr ? mResignedEmpEdllPtr->getNodeAtPosition(0) : NULL;
     printHeader(TYPE_NONE,STATUS_RESIGNED);
 
     for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
-        XyzEmployee *sEmpPtr = static_cast<XyzEmployee*>(sIFPtr);
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+        XyzEmployee *sEmpPtr = static_cast<XyzEmployee*>(sEmpIfPtr);
         sEmpPtr->printAllEmployeeDetails();
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
@@ -328,24 +194,24 @@ void XyzEmployeeManager::printEmployeeSummaryByType(EmpType empTypeParam)
 {
    
     int sSizeofEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->size() : 0;
-    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0): NULL;
 
     printHeader(empTypeParam);
 
     for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
         if(empTypeParam == TYPE_NONE)
         {
             
-            sIFPtr->printAllEmployeeDetails();
+            sEmpIfPtr->printAllEmployeeDetails();
         }
         else
         {
-            EmpType sEmpType = sIFPtr->getEmployeeType();
+            EmpType sEmpType = sEmpIfPtr->getEmployeeType();
             if(empTypeParam == sEmpType)
             {
-                sIFPtr->printEmployeeDetailsByType();
+                sEmpIfPtr->printEmployeeDetailsByType();
             }
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
@@ -356,7 +222,7 @@ void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
 {
    
     int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
-    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) :  NULL;
 
     printHeader();
 
@@ -364,11 +230,11 @@ void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
 
     for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
-        string sEmpGender = sIFPtr->getEmployeeGender();
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+        string sEmpGender = sEmpIfPtr->getEmployeeGender();
         if(sEmpGenderString == sEmpGender)
         {
-            sIFPtr->printAllEmployeeDetails();
+            sEmpIfPtr->printAllEmployeeDetails();
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
@@ -378,17 +244,17 @@ void XyzEmployeeManager::printEmployeeSummaryByStatus(EmpStatus empStatusParam)
 {
    
     int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
-    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) : NULL;
 
     printHeader();
 
     for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
-        EmpStatus sEmpStatus = sIFPtr->getEmployeeStatus();
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+        EmpStatus sEmpStatus = sEmpIfPtr->getEmployeeStatus();
         if(sEmpStatus == empStatusParam)
         {
-            sIFPtr->printAllEmployeeDetails();
+            sEmpIfPtr->printAllEmployeeDetails();
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
@@ -397,12 +263,12 @@ void XyzEmployeeManager::printEmployeeSummaryByStatus(EmpStatus empStatusParam)
 void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
 {
     int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
-    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) : NULL;
     XyzEmployeeIF *sEmpPtr = NULL;
     for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
-        string sEmpid = sIFPtr->getEmployeeId();
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+        string sEmpid = sEmpIfPtr->getEmployeeId();
         if(sEmpid == empIDParam)
         {
             sEmpPtr = mEmployeeEDLLPtr->removeElementAtPosition(itr);
@@ -415,27 +281,18 @@ void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
     }
 }
 
-void XyzEmployeeManager::printEmployeeDetailsById()
+void XyzEmployeeManager::printEmployeeDetailsById(string sEmpidParam)
 {
     int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
-    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) : NULL;
     bool empIDFound = false;
-    string sEmpid;
-
-    cout<<"\n\nPlease enter employee ID to Search and Display \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
-    cin>>sEmpid;
-    if((sEmpid.length() != MAX_ID_LEN) &&  sEmpid.substr(0,3) != "XYZ")
-    {
-        cout<<"Invalid Emp Id entered"<<endl;
-        return;
-    }
 
     for(int itr = 0;itr < sSizeofDeque; itr++)
     {
-        XyzEmployeeIF* sIFPtr = sFrontOfEDLL->mDataPtr;
-        if(sIFPtr->getEmployeeId() == sEmpid)
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+        if(sEmpIfPtr->getEmployeeId() == sEmpidParam)
         {
-            sIFPtr->printEmployeeSpecificDetails();
+            sEmpIfPtr->printEmployeeSpecificDetails();
             cout<<endl;
             empIDFound = true;
             break;
@@ -469,16 +326,24 @@ void XyzEmployeeManager::addEmployee(int numofEmpParam,bool isRandom, EmpType ty
             if(sEmpType == TYPE_CONTRACTOR)
             {
                 sEmpPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmpContractorAgency>(getRandomNumber(1,3)));
+                sEmpPtr->setAgency(sEmpAgency);
                 addNewEmployee(sEmpPtr);
             }
             else if (sEmpType == TYPE_FULL)
             {
                 sEmpPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                int sEmpNol = getRandomNumber(10,24);
+                sEmpPtr->setNoOfLeaves(sEmpNol);
                 addNewEmployee(sEmpPtr);
             }
             else
             {
                 sEmpPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                string sClg = getInternCollegeAgencyFromEnum(static_cast<InterEmpCollege>(getRandomNumber(1,3)));
+                sEmpPtr->setCollege(sClg);
+                string sBranch = getInternBranchFromEnum(static_cast<InterEmpBranch>(getRandomNumber(1,3)));
+                sEmpPtr->setBranch(sBranch);
                 addNewEmployee(sEmpPtr);
             }
         }
@@ -487,22 +352,49 @@ void XyzEmployeeManager::addEmployee(int numofEmpParam,bool isRandom, EmpType ty
             if(typeParam == TYPE_CONTRACTOR)
             {
                 sEmpPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmpContractorAgency>(getRandomNumber(1,3)));
+                sEmpPtr->setAgency(sEmpAgency);
                 addNewEmployee(sEmpPtr);
             }
             else if (typeParam == TYPE_FULL)
             {
                 sEmpPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                int sEmpNol = getRandomNumber(10,24);
+                sEmpPtr->setNoOfLeaves(sEmpNol);
                 addNewEmployee(sEmpPtr);
             }
             else
             {
                 sEmpPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                string sClg = getInternCollegeAgencyFromEnum(static_cast<InterEmpCollege>(getRandomNumber(1,3)));
+                sEmpPtr->setCollege(sClg);
+                string sBranch = getInternBranchFromEnum(static_cast<InterEmpBranch>(getRandomNumber(1,3)));
+                sEmpPtr->setBranch(sBranch);
                 addNewEmployee(sEmpPtr);
             }
         } 
     }
     
-    
-
     cout<<"\n\n"<<endl;    
+}
+
+void XyzEmployeeManager::convertToFullTime(EmpType empTypeParam, string empIdParam)
+{
+    int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
+    if(empTypeParam != TYPE_FULL)
+    {
+        for(int itr = 0;itr < sSizeofEDLL; itr++)
+        {
+            XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+            string sEmpid = sEmpIfPtr->getEmployeeId();
+            EmpType sEmpType = sEmpIfPtr->getEmployeeType();
+            if((sEmpType == empTypeParam) && (sEmpid == empIdParam))
+            {
+                XyzFullTimeEmployee *sNewFullTime = new XyzFullTimeEmployee(sEmpIfPtr);
+                sFrontOfEDLL->mDataPtr = sNewFullTime;
+            }
+            sFrontOfEDLL = sFrontOfEDLL->mNext;
+        }
+    }
 }

@@ -23,43 +23,83 @@ public:
     bool mPrintAllVar;
 
     inline void printAll();
+    inline void printFullTime();
+    inline void printCommonRecord();
+    inline void printContractor();
+    inline void printIntern();
 
 };
 
 
 inline void EmsRecord::printAll()
 {
-    cout << "| "<< left << setw(MAX_NAME_LEN) << setfill(' ') <<mEmpName;
-    cout << "| "<< left << setw(MAX_ID_LEN+7) << setfill(' ') <<mEmpid;
-    cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<getEmploymentTypeFromEnum(mEmpType);
-    cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<getEmploymentStatusFromEnum(mEmpStatus);
-    cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpGender;
-    cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpDOB;
-    cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpDOJ;
-    cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpDOL;
+    printElement(mEmpName,MAX_NAME_LEN);
+    printElement(mEmpid,MAX_ID_LEN+7);
+    printElement(mEmpType,MAX_EQ_LEN);
+    printElement(mEmpStatus,MAX_EQ_LEN);
+    printElement(mEmpGender,MAX_EQ_LEN);
+    printElement(mEmpDOB,MAX_EQ_LEN);
+    printElement(mEmpDOJ,MAX_EQ_LEN);
+    printElement(mEmpDOL,MAX_EQ_LEN);
     if(mPrintAllVar == true)
     {
-        cout << "| "<< left << setw(MAX_ID_LEN+7) << setfill(' ') <<mEmpNOL;
-        cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpAgency;
-        cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpCollege;
-        cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpBranch;
+        printElement(mEmpNOL,MAX_ID_LEN+7);
+        printElement(mEmpAgency,MAX_EQ_LEN);
+        printElement(mEmpCollege,MAX_EQ_LEN);
+        printElement(mEmpBranch,MAX_EQ_LEN);
     }
     else
     {
         if(mEmpType == TYPE_FULL)
         {
-            cout << "| "<< left << setw(MAX_ID_LEN+7) << setfill(' ') <<mEmpNOL;
+            printElement(mEmpNOL,MAX_ID_LEN+7);
         }
         else if(mEmpType == TYPE_CONTRACTOR)
         {
-            cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpAgency;
+            printElement(mEmpAgency,MAX_EQ_LEN);
         }
         else if(mEmpType == TYPE_INTERN)
         {
-            cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpCollege;
-            cout << "| "<< left << setw(MAX_EQ_LEN) << setfill(' ')   <<mEmpBranch;
+            printElement(mEmpCollege,MAX_EQ_LEN);
+            printElement(mEmpBranch,MAX_EQ_LEN);
         }
     }
     cout<<endl;
 }
+
+inline void EmsRecord::printCommonRecord()
+{
+    printElementIndividual("Employee Name:",mEmpName,MAX_EQ_LEN);
+    printElementIndividual("Id:",mEmpid,MAX_EQ_LEN);
+    printElementIndividual("Type:",getEmploymentTypeFromEnum(mEmpType),MAX_EQ_LEN);
+    printElementIndividual("Status:",getEmploymentStatusFromEnum(mEmpStatus),MAX_EQ_LEN);
+    printElementIndividual("Gender:",mEmpGender,MAX_EQ_LEN);
+    printElementIndividual("DOB:",mEmpDOB,MAX_EQ_LEN);
+    printElementIndividual("DOJ:",mEmpDOJ,MAX_EQ_LEN);
+    printElementIndividual("DOL:",mEmpDOL,MAX_EQ_LEN);
+}
+
+inline void EmsRecord::printFullTime()
+{
+    cout<<"\nFull-Time Employee Data:"<<endl;
+    printCommonRecord();
+    printElementIndividual("Number Of Leaves:",mEmpNOL,MAX_EQ_LEN);
+}
+
+inline void EmsRecord::printContractor()
+{
+    cout<<"\nContractor Employee Data:"<<endl;
+    printCommonRecord();
+    printElementIndividual("Agency:",mEmpAgency,MAX_EQ_LEN);
+}
+
+inline void EmsRecord::printIntern()
+{
+    cout<<"Intern Employee Data:"<<endl;
+    printCommonRecord();
+    printElementIndividual("College:",mEmpCollege,MAX_EQ_LEN);
+    printElementIndividual("Branch:",mEmpBranch,MAX_EQ_LEN);
+}
+
+
 #endif

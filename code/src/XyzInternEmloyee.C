@@ -13,9 +13,6 @@ XyzInternEmloyee::XyzInternEmloyee(string nameParam,string genderParam,string do
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"I";
     mEmpType = TYPE_INTERN;
-    /* Default values*/
-    mEmpCollege = getInternCollegeAgencyFromEnum(COLLEGE_IIT);
-    mEmpBranch = getInternBranchFromEnum(BRANCH_ECE);
 }
 
 XyzInternEmloyee::~XyzInternEmloyee()
@@ -47,8 +44,9 @@ void XyzInternEmloyee::printEmployeeSpecificDetails()
     /* Print all the relevant data */
     cout<<"\nIntern Employee Data:"<<endl;
     XyzEmployee::printEmployeeSpecificDetails();
-    printElementIndividual("Branch:",this->mEmpBranch,20);
-    printElementIndividual("College:",this->mEmpCollege,20);
+    mRecordObj.mEmpCollege = this->getCollege();
+    mRecordObj.mEmpBranch = this->getBranch();
+    mRecordObj.printIntern();
 }
 
 istream& operator>>(istream& istreamDataParam, XyzInternEmloyee& iEmpDataParam)
