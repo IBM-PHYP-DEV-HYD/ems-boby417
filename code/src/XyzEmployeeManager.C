@@ -244,6 +244,37 @@ void XyzEmployeeManager::printEmployeeDetailsById(string sEmpidParam)
     }
 }
 
+void XyzEmployeeManager::addNumberofLeavesToFullTimeEmployee(string sEmpidParam,int nolParam)
+{
+    int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
+    Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) : NULL;
+    bool empIDFound = false;
+
+    for(int itr = 0;itr < sSizeofDeque; itr++)
+    {
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+        if(sEmpIfPtr->getEmployeeId() == sEmpidParam)
+        {
+            if(sEmpIfPtr->getEmployeeType() != TYPE_FULL)
+            {
+                cout<<"Invalid employee TYPE"<<endl;
+                break;
+            }
+            int sNol = sEmpIfPtr->getNoOfLeaves();
+            sNol += nolParam;
+            sEmpIfPtr->setNoOfLeaves(sNol);
+            empIDFound = true;
+            break;
+        }
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
+    }
+
+    if(empIDFound == false)
+    {
+        cout<<"Employee ID Entered is not found"<<endl;
+    }
+}
+
 void XyzEmployeeManager::addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam)
 {
     

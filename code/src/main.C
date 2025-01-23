@@ -44,7 +44,7 @@ void processEmployeeAdding(XyzEmployeeManager *sEmpManger,int choiceParam)
 void processEmployeeRemoving(XyzEmployeeManager *sEmpManger)
 {
     string sEmpid;
-    cout<<"Please enter employee ID to remove \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
+    cout<<"Please enter employee ID to remove :: Eg: Employee Id XYZ0001F/XYZ0001C/XYZ0001I\n"<<endl;
     cin>>sEmpid;
     if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
     {
@@ -159,7 +159,7 @@ void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choicePa
                 cin.ignore();
                 break;
             }
-            cout<<"Please enter employee ID to Convert \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
+            cout<<"Please enter employee ID to Convert :: Eg: Employee Id XYZ0001C/XYZ0001I\n"<<endl;
             string sEmpid;
             cin>>sEmpid;
             if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
@@ -172,7 +172,7 @@ void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choicePa
         break;
         case 2:
         {
-            cout<<"Please enter employee ID to Search \nEmployee Id example XYZ0001F/XYZ0001C/XYZ0001I"<<endl;
+            cout<<"Please enter employee ID to Search :: Eg: Employee Id XYZ0001F/XYZ0001C/XYZ0001I\n"<<endl;
             string sEmpid;
             cin>>sEmpid;
             if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
@@ -181,6 +181,33 @@ void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choicePa
                 break;
             }
             sEmpManger->printEmployeeDetailsById(sEmpid);
+        }
+        break;
+        case 3:
+        {
+            cout<<"Please enter Full time employee ID to Add leaves :: Eg: Employee Id example XYZ0001F\n"<<endl;
+            string sEmpid;
+            cin>>sEmpid;
+            if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
+            {
+                cout<<"Invalid Emp Id entered"<<endl;
+                break;
+            }
+            cout<<"Number of leaves to be added , must be <=15"<<endl;
+            int sNol;
+            cin>>sNol;
+            if(cin.fail() || (sNol>15))
+            {
+                if(sNol == -1)
+                {
+                    exit(0);
+                }
+                cout<<"Please enter proper choice"<<endl;
+                cin.clear();
+                cin.ignore();
+                break;
+            }
+            sEmpManger->addNumberofLeavesToFullTimeEmployee(sEmpid,sNol);
         }
         break;
         default:
@@ -263,7 +290,7 @@ int main(int argc, const char * argv[])
                     printEmployeeOtherdetailsMenu();
                     int sEmployeeDetailsChoice = 0;
                     cin>>sEmployeeDetailsChoice;
-                    if(cin.fail() || (sEmployeeDetailsChoice<1||sEmployeeDetailsChoice>2))
+                    if(cin.fail() || (sEmployeeDetailsChoice<1||sEmployeeDetailsChoice>3))
                     {
                         if(sEmployeeDetailsChoice == -1)
                         {

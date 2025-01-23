@@ -123,6 +123,7 @@ void printEmployeeOtherdetailsMenu(void)
     cout<<"|-----------------------------------------------------------|"<<endl;
     cout<<"| 1. Convert an Employee to Full-Time employee              |"<<endl;
     cout<<"| 2. Search an Employee by ID                               |"<<endl;
+    cout<<"| 3. Add number of leaves to Full-Time by ID                |"<<endl;
     cout<<"|-----------------------------------------------------------|"<<endl;
     cout<<"|      Press -1 to exit                                     |"<<endl;
     cout<<"|-----------------------------------------------------------|"<<endl;

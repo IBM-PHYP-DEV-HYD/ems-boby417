@@ -28,6 +28,7 @@ public:
     void printResignedEmpSummary();
 
     void removeEmployeeByID(string empIDParam);
+    void addNumberofLeavesToFullTimeEmployee(string sEmpidParam,int nolParam);
     
     void addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam= TYPE_NONE);
 
