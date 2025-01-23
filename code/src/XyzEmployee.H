@@ -16,6 +16,8 @@ protected:
     string mEmpDOJ; /* Date of Joining */
     string mEmpDOL; /* Date of Leaving */
 
+    EmsRecord mRecordObj;
+
 public:
     XyzEmployee();
     virtual ~XyzEmployee(){};

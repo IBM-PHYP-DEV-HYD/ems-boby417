@@ -113,68 +113,6 @@ void XyzEmployeeManager::addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTy
     mEmployeeEDLLPtr->pushBack(sEmpPtr);
 }
 
-void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam=STATUS_NONE)
-{
-    cout<<"\n\n"<<endl;
-    int sSum = 0;
-    /* Print the Header */
-    printElement("Employee Name",MAX_NAME_LEN);
-    sSum += MAX_NAME_LEN;
-    printElement("ID",MAX_ID_LEN+7);
-    sSum += MAX_ID_LEN+7;
-    printElement("Type",MAX_EQ_LEN);
-    printElement("Status",MAX_EQ_LEN);
-    printElement("Gender",MAX_EQ_LEN);
-    printElement("Date of birth",MAX_EQ_LEN);
-    printElement("Date of joining",MAX_EQ_LEN);
-    printElement("Date of Leaving",MAX_EQ_LEN);
-    sSum += (6*MAX_EQ_LEN);
-    if(empStatusParam != STATUS_RESIGNED)
-    {
-        if(empTypeParam != TYPE_NONE)
-        {
-            if(empTypeParam == TYPE_FULL)
-            {
-                
-                printElement("Number of Leaves",MAX_ID_LEN+7);
-                sSum += MAX_ID_LEN+7;
-            }
-            else if(empTypeParam == TYPE_CONTRACTOR)
-            {
-                printElement("Agency",MAX_EQ_LEN);
-                sSum += MAX_EQ_LEN;
-            }
-            else
-            {
-                printElement("College",MAX_EQ_LEN);
-                printElement("Branch",MAX_EQ_LEN);
-                sSum += (2*MAX_EQ_LEN);
-            }
-            cout<<endl;
-            cout << left << setw(sSum) << setfill('-') <<"-";
-            
-        }
-        else
-        {
-            printElement("No of Leaves",MAX_ID_LEN+7);
-            sSum += MAX_ID_LEN+7;
-            printElement("Agency",MAX_EQ_LEN);
-            printElement("College",MAX_EQ_LEN);
-            printElement("Branch",MAX_EQ_LEN);
-            sSum += (3*MAX_EQ_LEN);
-            cout<<endl;
-            cout << left << setw(sSum) << setfill('-') <<"-";
-        }
-    }
-    else
-    {
-        cout<<endl;
-        cout << left << setw(sSum) << setfill('-') <<"-";
-    }
-    cout<<endl;
-   
-}
-
 void XyzEmployeeManager::printResignedEmpSummary()
 {
     int sSizeofEDLL = mResignedEmpEdllPtr ? mResignedEmpEdllPtr->size() : 0;

@@ -13,7 +13,7 @@ enum
 {
     MAX_NAME_LEN = 20,
     MAX_ID_LEN = 8,
-    MAX_EQ_LEN = 15,
+    MAX_EQ_LEN = 16,
 };
 
 enum ErrorCode
@@ -246,21 +246,65 @@ template<typename TN> void printElementIndividual(string str,TN templateParam,in
     cout << left << setw(width) << setfill(' ') << str<<templateParam<<endl;
 }
 
-#define CIN_VALIDATE_BLOCK_BREAK(errLog, ptrToDel, retBreakContinue) \
-    if(cin.fail()) \
-    { \
-        cin.clear(); \
-        cin.ignore(); \
-        if(ptrToDel) \
-        { \
-            delete ptrToDel; \
-            ptrToDel = NULL; \
-        } \
-        cout<<"Invalid input:: "<<errLog<<endl; \
-        if(retBreakContinue == 0) \
-            break; \
-        else if(retBreakContinue == 1)\
-            return E_FAILURE; \
+inline void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusParam=STATUS_NONE)
+{
+    cout<<"\n\n"<<endl;
+    int sSum = 0;
+    /* Print the Header */
+    printElement("Employee Name",MAX_NAME_LEN);
+    sSum += MAX_NAME_LEN;
+    printElement("ID",MAX_ID_LEN+7);
+    sSum += MAX_ID_LEN+7;
+    printElement("Type",MAX_EQ_LEN);
+    printElement("Status",MAX_EQ_LEN);
+    printElement("Gender",MAX_EQ_LEN);
+    printElement("Date of birth",MAX_EQ_LEN);
+    printElement("Date of joining",MAX_EQ_LEN);
+    printElement("Date of Leaving",MAX_EQ_LEN);
+    sSum += (6*MAX_EQ_LEN);
+    if(empStatusParam != STATUS_RESIGNED)
+    {
+        if(empTypeParam != TYPE_NONE)
+        {
+            if(empTypeParam == TYPE_FULL)
+            {
+                
+                printElement("Number of Leaves",MAX_ID_LEN+7);
+                sSum += MAX_ID_LEN+7;
+            }
+            else if(empTypeParam == TYPE_CONTRACTOR)
+            {
+                printElement("Agency",MAX_EQ_LEN);
+                sSum += MAX_EQ_LEN;
+            }
+            else
+            {
+                printElement("College",MAX_EQ_LEN);
+                printElement("Branch",MAX_EQ_LEN);
+                sSum += (2*MAX_EQ_LEN);
+            }
+            cout<<endl;
+            cout << left << setw(sSum+MAX_EQ_LEN) << setfill('-') <<"-";
+        }
+        else
+        {
+            printElement("No of Leaves",MAX_ID_LEN+7);
+            sSum += MAX_ID_LEN+7;
+            printElement("Agency",MAX_EQ_LEN);
+            printElement("College",MAX_EQ_LEN);
+            printElement("Branch",MAX_EQ_LEN);
+            sSum += (4*MAX_EQ_LEN);
+            cout<<endl;
+            cout << left << setw(sSum) << setfill('-') <<"-";
+        }
     }
+    else
+    {
+        cout<<endl;
+        cout << left << setw(sSum) << setfill('-') <<"-";
+    }
+    cout<<endl;
+   
+}
 
 #endif

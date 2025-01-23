@@ -6,6 +6,7 @@
 class XyzContractorEmployee : public XyzEmployee
 {
 public:
+
     XyzContractorEmployee();
     XyzContractorEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus statusParam);
     ~XyzContractorEmployee();

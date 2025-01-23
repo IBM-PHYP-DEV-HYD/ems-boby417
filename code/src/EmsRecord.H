@@ -35,8 +35,8 @@ inline void EmsRecord::printAll()
 {
     printElement(mEmpName,MAX_NAME_LEN);
     printElement(mEmpid,MAX_ID_LEN+7);
-    printElement(mEmpType,MAX_EQ_LEN);
-    printElement(mEmpStatus,MAX_EQ_LEN);
+    printElement(getEmploymentTypeFromEnum(mEmpType),MAX_EQ_LEN);
+    printElement(getEmploymentStatusFromEnum(mEmpStatus),MAX_EQ_LEN);
     printElement(mEmpGender,MAX_EQ_LEN);
     printElement(mEmpDOB,MAX_EQ_LEN);
     printElement(mEmpDOJ,MAX_EQ_LEN);
@@ -83,7 +83,7 @@ inline void EmsRecord::printFullTime()
 {
     cout<<"\nFull-Time Employee Data:"<<endl;
     printCommonRecord();
-    printElementIndividual("Number Of Leaves:",mEmpNOL,MAX_EQ_LEN);
+    printElementIndividual("Num of Leaves:",mEmpNOL,MAX_EQ_LEN);
 }
 
 inline void EmsRecord::printContractor()
