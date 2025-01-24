@@ -56,7 +56,6 @@ public:
     virtual void printAllEmployeeDetails();
     virtual void printEmployeeDetailsByType();
     void  printEmployeeSpecificDetails();
-
 };
 
 class ResignedEmployee : public XyzEmployee

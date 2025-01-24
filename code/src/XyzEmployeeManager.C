@@ -2,115 +2,21 @@
 
 XyzEmployeeManager::XyzEmployeeManager()
 {
+    mEmployeeEDLLPtr    = new EDLL<XyzEmployeeIF>();
+    mResignedEmpEdllPtr = new EDLL<XyzEmployeeIF>();
+}
+
+XyzEmployeeManager::~XyzEmployeeManager()
+{
+    delete mEmployeeEDLLPtr;
     mEmployeeEDLLPtr = NULL;
+    delete mResignedEmpEdllPtr;
+    mResignedEmpEdllPtr = NULL;
 }
 
-void XyzEmployeeManager::initializeEmployeeDeque()
+void XyzEmployeeManager::addNewEmployee(XyzEmployeeIF *empPtrParam)
 {
-    if(mEmployeeEDLLPtr == NULL)
-    {
-        mEmployeeEDLLPtr = new EDLL<XyzEmployeeIF>();
-    }
-}
-
-void XyzEmployeeManager::initializeResignedEmployeeDeque()
-{
-    if(mResignedEmpEdllPtr == NULL)
-    {
-        mResignedEmpEdllPtr = new EDLL<XyzEmployeeIF>();
-    }
-}
-
-template<typename TN>
-static TN* createCommonEmployee(EmpType empTypeParam)
-{
-    string sEmpName;
-    cout<<"Please enter employee name : "<<endl;
-    cin>>sEmpName;
-    
-    string sEmpGender       = getEmployeeGenderInRandom();
-    int sRandomYear         = getRandomNumber(1970,2003);
-    string sEmpDOB          = generateRandomDate(sRandomYear);
-    sRandomYear             = getRandomNumber(sRandomYear+21,2024);
-    string sEmpDOJ          = generateRandomDate(sRandomYear);
-    string sEmpDOL          = "NA";
-    EmpStatus sEmpStatus    = getEmployeeStatusInRandom();
-   
-    TN *sEmpPtr = new  TN(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-    if(empTypeParam == TYPE_CONTRACTOR)
-    {
-        string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmpContractorAgency>(getRandomNumber(1,3)));
-        sEmpPtr->setAgency(sEmpAgency);
-    }
-    else if (empTypeParam == TYPE_FULL)
-    {
-        int sEmpNol = getRandomNumber(10,24);
-        sEmpPtr->setNoOfLeaves(sEmpNol);
-    }
-    else
-    {
-        string sClg = getInternCollegeAgencyFromEnum(static_cast<InterEmpCollege>(getRandomNumber(1,3)));
-        sEmpPtr->setCollege(sClg);
-        string sBranch = getInternBranchFromEnum(static_cast<InterEmpBranch>(getRandomNumber(1,3)));
-        sEmpPtr->setBranch(sBranch);
-    }
-    return sEmpPtr;
-}
-
-XyzEmployeeIF* XyzEmployeeManager::createAndGetEmployeeType(int empChoiceParam)
-{
-    XyzEmployeeIF *sEmpIFPtr = NULL;
-    XyzFullTimeEmployee *sFullEmpPtr = NULL;
-    XyzContractorEmployee *sContractorEmpPtr = NULL;
-    XyzInternEmloyee *sInternEmpPtr = NULL;
-
-    do
-    {
-        switch(empChoiceParam)
-        {
-            case TYPE_FULL:
-            {
-                sFullEmpPtr = createCommonEmployee<XyzFullTimeEmployee>(TYPE_FULL);
-                cin>>*sFullEmpPtr;
-                sEmpIFPtr = sFullEmpPtr;
-            }
-            break;
-            case TYPE_CONTRACTOR:
-            {
-                sContractorEmpPtr = createCommonEmployee<XyzContractorEmployee>(TYPE_CONTRACTOR);
-                cin>>*sContractorEmpPtr;
-                sEmpIFPtr = sContractorEmpPtr;
-            }
-            break;
-            case TYPE_INTERN:
-            {
-                sInternEmpPtr = createCommonEmployee<XyzInternEmloyee>(TYPE_CONTRACTOR);
-                cin>>*sInternEmpPtr;
-                sEmpIFPtr = sInternEmpPtr;
-            }
-            break;
-            default:
-                cout<<"Invalid Type choice"<<endl;
-        }
-    }while(0);
-
-    return sEmpIFPtr;
-}
-
-void XyzEmployeeManager::addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTypeParam)
-{
-    XyzEmployeeIF *sEmpPtr = NULL;
-    if(!empPtrParam)
-    {
-        ADD_PRINT("ADDING FULL TIME EMPLOYEE")
-        sEmpPtr = createAndGetEmployeeType(empTypeParam);
-    }
-    else
-    {
-        sEmpPtr = empPtrParam;
-    }
-    initializeEmployeeDeque();
-    mEmployeeEDLLPtr->pushBack(sEmpPtr);
+    mEmployeeEDLLPtr->pushBack(empPtrParam);
 }
 
 void XyzEmployeeManager::printResignedEmpSummary()
@@ -210,7 +116,6 @@ void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
         if(sEmpid == empIDParam)
         {
             sEmpPtr = mEmployeeEDLLPtr->removeElementAtPosition(itr);
-            initializeResignedEmployeeDeque();
             sEmpPtr->setEmployeeStatus(STATUS_RESIGNED);
             mResignedEmpEdllPtr->pushBack(sEmpPtr);
             break;
@@ -277,74 +182,69 @@ void XyzEmployeeManager::addNumberofLeavesToFullTimeEmployee(string sEmpidParam,
 
 void XyzEmployeeManager::addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam)
 {
-    
-    for(int itr= 0;itr<numofEmpParam;itr++)
+    XyzEmployeeIF *sEmpIfPtr  = NULL;
+    if(isRandom == true)
     {
-        XyzEmployeeIF *sEmpPtr  = NULL;
-        string sEmpName         = getEmployeeNameInRandom();
-        string sEmpGender       = getEmployeeGenderInRandom();
-        int sRandomYear         = getRandomNumber(1970,2003);
-        string sEmpDOB          = generateRandomDate(sRandomYear);
-        sRandomYear             = getRandomNumber(sRandomYear+21,2024);
-        string sEmpDOJ          = generateRandomDate(sRandomYear);
-        string sEmpDOL          = "NA";
-        EmpStatus sEmpStatus    = getEmployeeStatusInRandom();
-        if(isRandom == true)
+        for(int itr= 0;itr<numofEmpParam;itr++)
         {
+            sEmpIfPtr  = NULL;
+            int sNameRandomIndex    = getRandomNumber(0,29);
+            string sEmpName         = getEmployeeNameInRandom(sNameRandomIndex);
+            string sEmpGender       = getEmployeeGenderFromEnum((sNameRandomIndex%2)+1);
+            int sRandomYear         = getRandomNumber(1970,2003);
+            string sEmpDOB          = generateRandomDate(sRandomYear);
+            sRandomYear             = getRandomNumber(sRandomYear+21,2024);
+            string sEmpDOJ          = generateRandomDate(sRandomYear);
+            string sEmpDOL          = "NA";
+            EmpStatus sEmpStatus    = getEmployeeStatusInRandom();
             int sEmpType            = getRandomNumber(1,3);
             if(sEmpType == TYPE_CONTRACTOR)
             {
-                sEmpPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                sEmpIfPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
                 string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmpContractorAgency>(getRandomNumber(1,3)));
-                sEmpPtr->setAgency(sEmpAgency);
-                addNewEmployee(sEmpPtr);
+                sEmpIfPtr->setAgency(sEmpAgency);
+                sEmpDOL     = addMonths(sEmpDOJ,12);
+                sEmpIfPtr->setEmployeeDOL(sEmpDOL);
+                addNewEmployee(sEmpIfPtr);
             }
             else if (sEmpType == TYPE_FULL)
             {
-                sEmpPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                sEmpIfPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
                 int sEmpNol = getRandomNumber(10,24);
-                sEmpPtr->setNoOfLeaves(sEmpNol);
-                addNewEmployee(sEmpPtr);
+                sEmpIfPtr->setNoOfLeaves(sEmpNol);
+                addNewEmployee(sEmpIfPtr);
             }
             else
             {
-                sEmpPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+                sEmpIfPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
                 string sClg = getInternCollegeAgencyFromEnum(static_cast<InterEmpCollege>(getRandomNumber(1,3)));
-                sEmpPtr->setCollege(sClg);
+                sEmpIfPtr->setCollege(sClg);
                 string sBranch = getInternBranchFromEnum(static_cast<InterEmpBranch>(getRandomNumber(1,3)));
-                sEmpPtr->setBranch(sBranch);
-                addNewEmployee(sEmpPtr);
+                sEmpIfPtr->setBranch(sBranch);
+                sEmpDOL     = addMonths(sEmpDOJ,6);
+                sEmpIfPtr->setEmployeeDOL(sEmpDOL);
+                addNewEmployee(sEmpIfPtr);
             }
+        }
+    }
+    else
+    {
+        if(typeParam == TYPE_CONTRACTOR)
+        {
+            sEmpIfPtr = createAnEmployeeOnInputs<XyzContractorEmployee>(TYPE_CONTRACTOR);
+            addNewEmployee(sEmpIfPtr);
+        }
+        else if (typeParam == TYPE_FULL)
+        {
+            sEmpIfPtr = createAnEmployeeOnInputs<XyzFullTimeEmployee>(TYPE_FULL);
+            addNewEmployee(sEmpIfPtr);
         }
         else
         {
-            if(typeParam == TYPE_CONTRACTOR)
-            {
-                sEmpPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-                string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmpContractorAgency>(getRandomNumber(1,3)));
-                sEmpPtr->setAgency(sEmpAgency);
-                addNewEmployee(sEmpPtr);
-            }
-            else if (typeParam == TYPE_FULL)
-            {
-                sEmpPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-                int sEmpNol = getRandomNumber(10,24);
-                sEmpPtr->setNoOfLeaves(sEmpNol);
-                addNewEmployee(sEmpPtr);
-            }
-            else
-            {
-                sEmpPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-                string sClg = getInternCollegeAgencyFromEnum(static_cast<InterEmpCollege>(getRandomNumber(1,3)));
-                sEmpPtr->setCollege(sClg);
-                string sBranch = getInternBranchFromEnum(static_cast<InterEmpBranch>(getRandomNumber(1,3)));
-                sEmpPtr->setBranch(sBranch);
-                addNewEmployee(sEmpPtr);
-            }
-        } 
-    }
-    
-    cout<<"\n\n"<<endl;    
+            sEmpIfPtr = createAnEmployeeOnInputs<XyzInternEmloyee>(TYPE_INTERN);
+            addNewEmployee(sEmpIfPtr);
+        }
+    }  
 }
 
 void XyzEmployeeManager::convertToFullTime(EmpType empTypeParam, string empIdParam)

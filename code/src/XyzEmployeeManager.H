@@ -7,19 +7,16 @@
 #include "XyzContractorEmployee.H"
 #include "XyzInternEmloyee.H"
 
-#define ADD_PRINT(msg) \
-        cout<<"\n\n************** "<<msg<<" **************"<<endl;
-
 class XyzEmployeeManager
 {
 public:
     XyzEmployeeManager();
-    ~XyzEmployeeManager(){};
+    ~XyzEmployeeManager();
     EDLL<XyzEmployeeIF>* mEmployeeEDLLPtr;
     EDLL<XyzEmployeeIF>* mResignedEmpEdllPtr;
     
     /* Adding new employees */
-    void addNewEmployee(XyzEmployeeIF *empPtrParam,EmpType empTypeParam = TYPE_FULL);
+    void addNewEmployee(XyzEmployeeIF *empPtrParam);
 
     void printEmployeeSummaryByType(EmpType empTypeParam = TYPE_NONE);
     void printEmployeeSummaryByGender(int empGenderParam);
@@ -35,8 +32,6 @@ public:
     void convertToFullTime(EmpType typeParam, string empIDParam);
 
 private:
-    void initializeEmployeeDeque();
-    void initializeResignedEmployeeDeque();
     XyzEmployeeIF* createAndGetEmployeeType(int empChoiceParam);
 };
 

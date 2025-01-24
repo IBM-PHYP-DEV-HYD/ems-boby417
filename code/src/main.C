@@ -145,10 +145,10 @@ void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choicePa
     {
         case 1:
         {
-            printEmployeeTypeMenu();
+            printEmployeeTypeForConversionMenu();
             int sEmpTypeChoice = 0;
             cin>>sEmpTypeChoice;
-            if(cin.fail() || (sEmpTypeChoice<2||sEmpTypeChoice>3))
+            if(cin.fail() || (sEmpTypeChoice<1||sEmpTypeChoice>2))
             {
                 if(sEmpTypeChoice == -1)
                 {
@@ -167,7 +167,16 @@ void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choicePa
                 cout<<"Invalid Emp Id entered"<<endl;
                 break;
             }
-            sEmpManger->convertToFullTime(static_cast<EmpType>(sEmpTypeChoice),sEmpid);
+            EmpType sEmpType;
+            if(sEmpTypeChoice == 1)
+            {
+                sEmpType = TYPE_CONTRACTOR;
+            }
+            else
+            {
+                sEmpType = TYPE_INTERN;
+            }
+            sEmpManger->convertToFullTime(sEmpType,sEmpid);
         }
         break;
         case 2:

@@ -6,6 +6,9 @@
 #include <iomanip>
 #include <ctime>
 #include <random>
+#include "printMenu.H"
+
+typedef void (*Functionfunc)(void);
 
 using namespace std;
 
@@ -209,26 +212,15 @@ inline string generateRandomDate(int sYearParam) {
     return sCompleteDateString;
 }
 
-inline string  getEmployeeNameInRandom()
+inline string  getEmployeeNameInRandom(int firstNameIndexParam)
 {
-    int sRandFirstNameIndex = getRandomNumber(0,29);
-    string sEmpName = firstNameArray[sRandFirstNameIndex];
+    string sEmpName = firstNameArray[firstNameIndexParam];
     int sLastNameIndex = getRandomNumber(65,90);
     string sLastNameString;
     sLastNameString = (char)sLastNameIndex;
     sEmpName += " "+sLastNameString;
     return sEmpName;
 }
-
-inline string  getEmployeeGenderInRandom()
-{
-    int sRandGender = getRandomNumber(1,2);
-    string sEmpGender = getEmployeeGenderFromEnum(sRandGender);
-    return sEmpGender;
-}
-
-
-
 
 inline EmpStatus  getEmployeeStatusInRandom()
 {
@@ -305,6 +297,108 @@ inline void printHeader(EmpType empTypeParam = TYPE_NONE,EmpStatus empStatusPara
     }
     cout<<endl;
    
+}
+
+inline string addMonths(string dateStringParam, int numOfMonthParam) {
+    stringstream sStringStream(dateStringParam);
+    int sDay, sMonth, sYear;
+
+    sStringStream >> sDay >> sMonth >> sYear;
+
+    sMonth += numOfMonthParam;
+    if (sMonth > 12) {
+        sYear += sMonth / 12;
+        sMonth %= 12;
+    }
+
+    string result = toString(sDay,2) + " " + toString(sMonth,2) + " " + toString(sYear,4);
+    return result;
+}
+
+inline int funcToDoWhileOnUserInputs(Functionfunc fnParam, int lowerLimit, int UpperLimit,string Err)
+{
+    int sLoopExit = 0;
+    int sChoice;
+
+    do
+    {
+        if(fnParam != NULL)
+        {
+            fnParam();
+        }
+        cin>>sChoice;
+        if(cin.fail() || (sChoice<lowerLimit||sChoice>UpperLimit))
+        {
+            if(sChoice == -1)
+            {
+                exit(0);
+            }
+            cout<<Err<<endl;
+            cin.clear();
+            cin.ignore();
+        }
+        else
+        {
+            sLoopExit = 1;
+        }
+    }while(sLoopExit == 0);
+
+    return sChoice;
+}
+
+
+template<typename TN>
+inline TN* createAnEmployeeOnInputs(EmpType empTypeParam)
+{
+    string sEmpName;
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout<<"Please enter employee name : "<<endl;
+    getline(cin,sEmpName);
+    
+    int sEmpGenderChoice;
+    sEmpGenderChoice        = funcToDoWhileOnUserInputs(printEmployeeGenderMenu,1,2,"Please enter proper choice for selecting gender");
+    string sEmpGender       = getEmployeeGenderFromEnum(sEmpGenderChoice);
+
+    int sRandomYear         = getRandomNumber(1970,2003);
+    string sEmpDOB          = generateRandomDate(sRandomYear);
+    sRandomYear             = getRandomNumber(sRandomYear+21,2024);
+    string sEmpDOJ          = generateRandomDate(sRandomYear);
+    string sEmpDOL           = "NA";
+
+    int sEmpStatusChoice;
+    sEmpStatusChoice = funcToDoWhileOnUserInputs(printEmployeeStatusMenu,1,2,"Please enter proper choice for selecting Status");
+    EmpStatus sEmpStatus    = static_cast<EmpStatus>(sEmpStatusChoice);
+   
+    TN *sEmpPtr = new  TN(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+    if(empTypeParam == TYPE_CONTRACTOR)
+    {
+        int sEmpAgencyChoice;
+        sEmpAgencyChoice = funcToDoWhileOnUserInputs(printEmployeeAgencyMenu,1,2,"Please enter proper choice for selecting Agency");
+        string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmpContractorAgency>(sEmpAgencyChoice));
+        sEmpPtr->setAgency(sEmpAgency);
+        sEmpDOL     = addMonths(sEmpDOJ,12);
+        sEmpPtr->setEmployeeDOL(sEmpDOL);
+    }
+    else if (empTypeParam == TYPE_FULL)
+    {
+        int sEmpNol  = getRandomNumber(10,24);
+        sEmpPtr->setNoOfLeaves(sEmpNol);
+    }
+    else
+    {
+        int sClgChoice;
+        sClgChoice = funcToDoWhileOnUserInputs(printStudentCollegeMenu,1,3,"Please enter proper choice for selecting College");
+        string sClg = getInternCollegeAgencyFromEnum(static_cast<InterEmpCollege>(sClgChoice));
+        sEmpPtr->setCollege(sClg);
+        int sBranchChoice;
+        sBranchChoice = funcToDoWhileOnUserInputs(printStudentBranchMenu,1,3,"Please enter proper choice for selecting Branch");
+        string sBranch = getInternBranchFromEnum(static_cast<InterEmpBranch>(sBranchChoice));
+        sEmpPtr->setBranch(sBranch);
+        sEmpDOL     = addMonths(sEmpDOJ,6);
+        sEmpPtr->setEmployeeDOL(sEmpDOL);
+    }
+    return sEmpPtr;
 }
 
 #endif

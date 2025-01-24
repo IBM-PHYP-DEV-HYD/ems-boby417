@@ -25,7 +25,7 @@ XyzFullTimeEmployee::XyzFullTimeEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam)
     mEmpGender  = xyzEmployeeIfPtrParam->getEmployeeGender();
     mEmpDOB     = xyzEmployeeIfPtrParam->getEmployeeDOB();
     mEmpDOJ     = xyzEmployeeIfPtrParam->getEmployeeDOJ();
-    mEmpDOL     = xyzEmployeeIfPtrParam->getEmployeeDOL();
+    mEmpDOL     = "NA";
     mEmpStatus  = xyzEmployeeIfPtrParam->getEmployeeStatus();
     mEmpType    = TYPE_FULL;
     mEmpNOL     = getRandomNumber(10,24);
@@ -61,23 +61,6 @@ void XyzFullTimeEmployee::printEmployeeSpecificDetails()
     XyzEmployee::printEmployeeSpecificDetails();
     mRecordObj.mEmpNOL = to_string(this->getNoOfLeaves());
     mRecordObj.printFullTime();
-}
-
-istream& operator>>(istream& istreamDataParam, XyzFullTimeEmployee& fEmpDataParam)
-{
-    //fEmpDataParam.pSetCommonEmpAttributes(TYPE_FULL,fEmpDataParam.mNextEmproll);
-    cin.ignore(INT_MAX,'\n');
-    cout<<"Number of Leaves :"<<endl;
-    int sNol = 12;
-    cin>>sNol;
-    if(cin.fail() || sNol<10)
-    {
-        sNol = 12;
-        cin.clear();
-        cin.ignore(INT_MAX,'\n');
-    }
-    fEmpDataParam.setNoOfLeaves(sNol);
-    return istreamDataParam;
 }
 
 void XyzFullTimeEmployee::setNoOfLeaves(int nolParam)

@@ -49,46 +49,6 @@ void XyzInternEmloyee::printEmployeeSpecificDetails()
     mRecordObj.printIntern();
 }
 
-istream& operator>>(istream& istreamDataParam, XyzInternEmloyee& iEmpDataParam)
-{
-
-    cin.ignore(INT_MAX,'\n');
-    int sCollege = 0;
-    int sBranch = 0;
-    
-    /*Get College*/
-    while(1)
-    {
-        cout<<"Select College:\n1.College-IIT\n2.College-NIT\n3.College-MIT"<<endl;
-        cin>>sCollege;
-        if(cin.fail() || (sCollege<1||sCollege>3))
-        {
-            cin.clear();
-            cin.ignore(INT_MAX,'\n');
-            continue;
-        }
-        iEmpDataParam.mEmpCollege = getInternCollegeAgencyFromEnum(sCollege);
-        break;
-    }
-
-    /*Get College*/
-    while(1)
-    {
-        cout<<"Select Branch:\n1.CSE\n2.CSIT\n3.ECE"<<endl;
-        cin>>sBranch;
-        if(cin.fail() || (sBranch<1||sBranch>3))
-        {
-            cin.clear();
-            cin.ignore(INT_MAX,'\n');
-            continue;
-        }
-        iEmpDataParam.mEmpBranch = getInternBranchFromEnum(sBranch);
-        break;
-    }
-    
-    return istreamDataParam;
-}
-
 void XyzInternEmloyee::setCollege(string clgParam)
 {
     mEmpCollege = clgParam;

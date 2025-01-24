@@ -47,29 +47,6 @@ void XyzContractorEmployee::printEmployeeSpecificDetails()
     mRecordObj.printContractor();
 }
 
-
-istream& operator>>(istream& istreamDataParam, XyzContractorEmployee& cEmpDataParam)
-{
-    cin.ignore(INT_MAX,'\n');
-    int sAgency = 0;
-    
-    while(1)
-    {
-        cout<<"Please Select Proper Agency \n1.Agency-X\n2.Agency-Y\n3.Agency-Z"<<endl;
-        cin>>sAgency;
-        if(cin.fail() || (sAgency<1||sAgency>3))
-        {
-            cin.clear();
-            cin.ignore(INT_MAX,'\n');
-            continue;
-        }
-        cEmpDataParam.mEmpAgency = getContractorAgencyFromEnum(sAgency);
-        break;
-    }
-    
-    return istreamDataParam;
-}
-
 void XyzContractorEmployee::setAgency(string agencyParam)
 {
     mEmpAgency = agencyParam;

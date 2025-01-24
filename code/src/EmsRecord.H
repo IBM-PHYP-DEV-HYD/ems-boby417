@@ -101,5 +101,4 @@ inline void EmsRecord::printIntern()
     printElementIndividual("Branch:",mEmpBranch,MAX_EQ_LEN);
 }
 
-
 #endif

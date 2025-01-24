@@ -1,11 +1,12 @@
 #ifndef PRINTMENU_H
 #define PRINTMENU_H
+#pragma once
 #include "iostream"
 
 
 using namespace std;
 
-void printMainMenu(void)
+inline void printMainMenu(void)
 {
     cout<<endl<<endl;
     cout<<"|----------------------------------|"<<endl;
@@ -21,7 +22,7 @@ void printMainMenu(void)
     cout<<endl<<endl;
 }
 
-void printEmployeeAddOptions(void)
+inline void printEmployeeAddOptions(void)
 {
     cout<<endl<<endl;
     cout<<"|----------------------------------|"<<endl;
@@ -35,7 +36,7 @@ void printEmployeeAddOptions(void)
     cout<<endl<<endl;
 }
 
-void printEmployeeGenderMenu(void)
+inline void printEmployeeGenderMenu(void)
 {
     cout<<endl<<endl;
     cout<<"|----------------------------------|"<<endl;
@@ -49,22 +50,65 @@ void printEmployeeGenderMenu(void)
     cout<<endl<<endl;
 }
 
-void printEmployeeStatusMenu(void)
+inline void printEmployeeStatusMenu(void)
 {
     cout<<endl<<endl;
     cout<<"|----------------------------------|"<<endl;
     cout<<"| Choose any option below.         |"<<endl;
     cout<<"|----------------------------------|"<<endl;
-    cout<<"| 1. Active                          |"<<endl;
-    cout<<"| 2. In-Active                        |"<<endl;
+    cout<<"| 1. Active                        |"<<endl;
+    cout<<"| 2. In-Active                     |"<<endl;
     cout<<"-----------------------------------|"<<endl;
     cout<<"|   Press -1 to Exit.              |"<<endl;
     cout<<"|----------------------------------|"<<endl;
     cout<<endl<<endl;
 }
 
+inline void printEmployeeAgencyMenu(void)
+{
+    cout<<endl<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| Choose any option below.         |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| 1. AGENCY-X                      |"<<endl;
+    cout<<"| 2. AGENCY-X                      |"<<endl;
+    cout<<"-----------------------------------|"<<endl;
+    cout<<"|   Press -1 to Exit.              |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<endl<<endl;
+}
 
-void printEmployeeTypeMenu(void)
+inline void printStudentCollegeMenu(void)
+{
+    cout<<endl<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| Choose any option below.         |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| 1. COLLEGE_IIT                   |"<<endl;
+    cout<<"| 2. COLLEGE_NIT                   |"<<endl;
+    cout<<"| 3. COLLEGE_MIT                   |"<<endl;
+    cout<<"-----------------------------------|"<<endl;
+    cout<<"|   Press -1 to Exit.              |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<endl<<endl;
+}
+
+inline void printStudentBranchMenu(void)
+{
+    cout<<endl<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| Choose any option below.         |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| 1. BRANCH_CSE                    |"<<endl;
+    cout<<"| 2. BRANCH_CSIT                   |"<<endl;
+    cout<<"| 3. BRANCH_ECE                    |"<<endl;
+    cout<<"-----------------------------------|"<<endl;
+    cout<<"|   Press -1 to Exit.              |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<endl<<endl;
+}
+
+inline void printEmployeeTypeMenu(void)
 {
     cout<<endl<<endl;
     cout<<"|----------------------------------|"<<endl;
@@ -79,26 +123,21 @@ void printEmployeeTypeMenu(void)
     cout<<endl<<endl;
 }
 
-/*
-void printRemovemenu(void)
+inline void printEmployeeTypeForConversionMenu(void)
 {
     cout<<endl<<endl;
-    cout<<"|--------------------------------------|"<<endl;
-    cout<<"| Choose option to remove              |"<<endl;
-    cout<<"|--------------------------------------|"<<endl;
-    cout<<"| 1. Remove All employees              |"<<endl;
-    cout<<"| 2. Remove based on Type.             |"<<endl;
-    cout<<"| 3. Remove based on Gender            |"<<endl;
-    cout<<"| 4. Remove based on Status            |"<<endl;
-    cout<<"| 5. Remove based on ID.               |"<<endl;
-    cout<<"|--------------------------------------|"<<endl;
-    cout<<"|      Press -1 to exit                |"<<endl;
-    cout<<"|--------------------------------------|"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| Choose Employee Type To Convert  |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"| 1. Contractor Employee           |"<<endl;
+    cout<<"| 2. Intern Employee               |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
+    cout<<"|      Press -1 to exit            |"<<endl;
+    cout<<"|----------------------------------|"<<endl;
     cout<<endl<<endl;
 }
-*/
 
-void printEmployeedetailsMenu(void)
+inline void printEmployeedetailsMenu(void)
 {
     cout<<endl<<endl;
     cout<<"|--------------------------------------|"<<endl;
@@ -115,7 +154,7 @@ void printEmployeedetailsMenu(void)
     cout<<endl<<endl;
 }
 
-void printEmployeeOtherdetailsMenu(void)
+inline void printEmployeeOtherdetailsMenu(void)
 {
     cout<<endl<<endl;
     cout<<"|-----------------------------------------------------------|"<<endl;
@@ -129,4 +168,5 @@ void printEmployeeOtherdetailsMenu(void)
     cout<<"|-----------------------------------------------------------|"<<endl;
     cout<<endl<<endl;
 }
+
 #endif

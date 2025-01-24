@@ -22,9 +22,6 @@ public:
     void printAllEmployeeDetails();
     void printEmployeeDetailsByType();
     void printEmployeeSpecificDetails();
-
-    friend istream& operator>>(istream& istreamDataParam, XyzInternEmloyee& iEmpDataParam);
-
 };
 
 #endif

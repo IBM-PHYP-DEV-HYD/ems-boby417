@@ -19,8 +19,6 @@ public:
     void printAllEmployeeDetails();
     void printEmployeeDetailsByType();
     void printEmployeeSpecificDetails();
-
-    friend istream& operator>>(istream& istreamDataParam, XyzFullTimeEmployee& fEmpDataParam);
 };
 
 #endif
