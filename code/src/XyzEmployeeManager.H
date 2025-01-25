@@ -18,18 +18,18 @@ public:
     /* Adding new employees */
     void addNewEmployee(XyzEmployeeIF *empPtrParam);
 
-    void printEmployeeSummaryByType(EmpType empTypeParam = TYPE_NONE);
+    void printEmployeeSummaryByType(EmsUtility::EmpType empTypeParam = EmsUtility::TYPE_NONE);
     void printEmployeeSummaryByGender(int empGenderParam);
-    void printEmployeeSummaryByStatus(EmpStatus empStatusParam);
+    void printEmployeeSummaryByStatus(EmsUtility::EmpStatus empStatusParam);
     void printEmployeeDetailsById(string sEmpidParam);
     void printResignedEmpSummary();
 
     void removeEmployeeByID(string empIDParam);
     void addNumberofLeavesToFullTimeEmployee(string sEmpidParam,int nolParam);
     
-    void addEmployee(int numofEmpParam,bool isRandom, EmpType typeParam= TYPE_NONE);
+    void addEmployee(int numofEmpParam,bool isRandom, EmsUtility::EmpType typeParam= EmsUtility::TYPE_NONE);
 
-    void convertToFullTime(EmpType typeParam, string empIDParam);
+    void convertToFullTime(EmsUtility::EmpType typeParam, string empIDParam);
 
 private:
     XyzEmployeeIF* createAndGetEmployeeType(int empChoiceParam);

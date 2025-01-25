@@ -8,7 +8,7 @@ class XyzFullTimeEmployee : public XyzEmployee
 public:
     XyzFullTimeEmployee();
     ~XyzFullTimeEmployee();
-    XyzFullTimeEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus statusParam);
+    XyzFullTimeEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam);
     XyzFullTimeEmployee(XyzEmployeeIF *xyzEmployeeIfPtrParam);
 
     int mEmpNOL; /* Number of Leaves */

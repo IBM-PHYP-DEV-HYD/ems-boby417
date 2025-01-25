@@ -11,8 +11,8 @@ protected:
     string mEmpid;
     string mEmpGender;
     string mEmpDOB; /* Date of Birth */
-    EmpType mEmpType;
-    EmpStatus mEmpStatus;
+    EmsUtility::EmpType mEmpType;
+    EmsUtility::EmpStatus mEmpStatus;
     string mEmpDOJ; /* Date of Joining */
     string mEmpDOL; /* Date of Leaving */
 
@@ -21,16 +21,16 @@ protected:
 public:
     XyzEmployee();
     virtual ~XyzEmployee(){};
-    XyzEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus empStatusParam);
+    XyzEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus empStatusParam);
 
     string getEmployeeName();
     string getEmployeeGender();
     string getEmployeeDOB();
 
-    EmpType getEmployeeType();
-    void setEmployeeType(EmpType empTypeParam);
-    EmpStatus getEmployeeStatus();
-    void setEmployeeStatus(EmpStatus empStatusParam);
+    EmsUtility::EmpType getEmployeeType();
+    void setEmployeeType(EmsUtility::EmpType empTypeParam);
+    EmsUtility::EmpStatus getEmployeeStatus();
+    void setEmployeeStatus(EmsUtility::EmpStatus empStatusParam);
     string getEmployeeDOJ();
     void setEmployeeDOJ(string joiningDateParam);
     string getEmployeeDOL();

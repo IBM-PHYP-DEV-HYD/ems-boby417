@@ -7,12 +7,12 @@ XyzContractorEmployee::XyzContractorEmployee()
     mNextEmproll++;
 }
 
-XyzContractorEmployee::XyzContractorEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus statusParam):XyzEmployee(nameParam,genderParam,dobParam,dojParam,dolParam,statusParam)
+XyzContractorEmployee::XyzContractorEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam):XyzEmployee(nameParam,genderParam,dobParam,dojParam,dolParam,statusParam)
 {
     mNextEmproll++;
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"C";
-    mEmpType = TYPE_CONTRACTOR;
+    mEmpType = EmsUtility::TYPE_CONTRACTOR;
 }
 
 XyzContractorEmployee::~XyzContractorEmployee()

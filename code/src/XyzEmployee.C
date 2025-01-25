@@ -5,7 +5,7 @@ XyzEmployee::XyzEmployee()
     
 }
 
-XyzEmployee::XyzEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus empStatusParam)
+XyzEmployee::XyzEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus empStatusParam)
 {
     mEmpName   = nameParam;
     mEmpGender = genderParam;
@@ -30,22 +30,22 @@ string XyzEmployee::getEmployeeDOB()
     return mEmpDOB;
 }
 
-EmpType XyzEmployee::getEmployeeType()
+EmsUtility::EmpType XyzEmployee::getEmployeeType()
 {
     return mEmpType;
 }
 
-void XyzEmployee::setEmployeeType(EmpType empTypeParam)
+void XyzEmployee::setEmployeeType(EmsUtility::EmpType empTypeParam)
 {
     mEmpType = empTypeParam;
 }
 
-EmpStatus XyzEmployee::getEmployeeStatus()
+EmsUtility::EmpStatus XyzEmployee::getEmployeeStatus()
 {
     return mEmpStatus;
 }
 
-void XyzEmployee::setEmployeeStatus(EmpStatus empStatusParam)
+void XyzEmployee::setEmployeeStatus(EmsUtility::EmpStatus empStatusParam)
 {
     mEmpStatus = empStatusParam;
 }

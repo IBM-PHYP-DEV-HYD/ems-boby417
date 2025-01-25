@@ -8,12 +8,12 @@ XyzFullTimeEmployee::XyzFullTimeEmployee()
     mNextEmproll++;
 }
 
-XyzFullTimeEmployee::XyzFullTimeEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus statusParam):XyzEmployee(nameParam,genderParam,dobParam,dojParam,dolParam,statusParam)
+XyzFullTimeEmployee::XyzFullTimeEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam):XyzEmployee(nameParam,genderParam,dobParam,dojParam,dolParam,statusParam)
 {
     mNextEmproll++;
     string sEmpRollAsString = toString(mNextEmproll,4);
     mEmpid = "XYZ"+sEmpRollAsString+"F";
-    mEmpType = TYPE_FULL;
+    mEmpType = EmsUtility::TYPE_FULL;
 }
 
 XyzFullTimeEmployee::XyzFullTimeEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam)
@@ -27,7 +27,7 @@ XyzFullTimeEmployee::XyzFullTimeEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam)
     mEmpDOJ     = xyzEmployeeIfPtrParam->getEmployeeDOJ();
     mEmpDOL     = "NA";
     mEmpStatus  = xyzEmployeeIfPtrParam->getEmployeeStatus();
-    mEmpType    = TYPE_FULL;
+    mEmpType    = EmsUtility::TYPE_FULL;
     mEmpNOL     = getRandomNumber(10,24);
 }
 

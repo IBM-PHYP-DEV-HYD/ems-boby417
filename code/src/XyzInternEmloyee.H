@@ -7,7 +7,7 @@ class XyzInternEmloyee: public XyzEmployee
 {
 public:
     XyzInternEmloyee();
-    XyzInternEmloyee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmpStatus statusParam);
+    XyzInternEmloyee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam);
     ~XyzInternEmloyee();
 
     string mEmpCollege;

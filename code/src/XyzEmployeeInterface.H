@@ -18,10 +18,10 @@ public:
     virtual string getEmployeeGender() = 0;
     virtual string getEmployeeDOB() = 0;
 
-    virtual EmpType getEmployeeType() = 0;
-    virtual void setEmployeeType(EmpType empTypeParam) = 0;
-    virtual EmpStatus getEmployeeStatus() = 0;
-    virtual void setEmployeeStatus(EmpStatus empStatusParam) = 0;
+    virtual EmsUtility::EmpType getEmployeeType() = 0;
+    virtual void setEmployeeType(EmsUtility::EmpType empTypeParam) = 0;
+    virtual EmsUtility::EmpStatus getEmployeeStatus() = 0;
+    virtual void setEmployeeStatus(EmsUtility::EmpStatus empStatusParam) = 0;
     virtual string getEmployeeDOJ() = 0;
     virtual void setEmployeeDOJ(string joiningDateParam) = 0;
     virtual string getEmployeeDOL() =  0;
