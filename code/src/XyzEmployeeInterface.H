@@ -1,8 +1,6 @@
 #ifndef XyzEmployeeIF_H
 #define XyzEmployeeIF_H
 
-#include "Utility.H"
-#include "iostream"
 #include "EmsRecord.H"
 
 using namespace std;
@@ -42,6 +40,7 @@ public:
     virtual string getBranch() = 0;
     
     virtual void printAllEmployeeDetails() = 0;
+    virtual void printAllResignedEmployees() = 0;
     virtual void printEmployeeDetailsByType() = 0;
     virtual void printEmployeeSpecificDetails() = 0;
 };

@@ -23,6 +23,7 @@ public:
     bool mPrintAllVar;
 
     inline void printAll();
+    inline void printAllCommon();
     inline void printFullTime();
     inline void printCommonRecord();
     inline void printContractor();
@@ -30,8 +31,7 @@ public:
 
 };
 
-
-inline void EmsRecord::printAll()
+inline void EmsRecord::printAllCommon()
 {
     printElement(mEmpName,EmsUtility::MAX_NAME_LEN);
     printElement(mEmpid,EmsUtility::MAX_ID_LEN+7);
@@ -41,6 +41,10 @@ inline void EmsRecord::printAll()
     printElement(mEmpDOB,EmsUtility::MAX_EQ_LEN);
     printElement(mEmpDOJ,EmsUtility::MAX_EQ_LEN);
     printElement(mEmpDOL,EmsUtility::MAX_EQ_LEN);
+}
+
+inline void EmsRecord::printAll()
+{
     if(mPrintAllVar == true)
     {
         printElement(mEmpNOL,EmsUtility::MAX_ID_LEN+7);

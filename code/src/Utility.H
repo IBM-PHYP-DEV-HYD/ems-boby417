@@ -1,11 +1,10 @@
 #ifndef Utility_H
 #define Utility_H
 
-#include "iostream"
 #include <sstream>
 #include <iomanip>
-#include <ctime>
 #include <random>
+#include <chrono>
 #include "printMenu.H"
 
 typedef void (*Functionfunc)(void);
@@ -14,7 +13,6 @@ typedef void (*Functionfunc)(void);
 #define RETIREMENT_AGE 60
 #define CURR_YEAR 2025
 #define MIN_DATE 1
-
 
 using namespace std;
 
@@ -86,6 +84,36 @@ namespace EmsUtility
         BRANCH_ECE = 0x3,
     };
 
+    enum MainMenuEnum
+    {
+        ADDEMP          = 0x01,
+        REMOVEEMP       = 0x02,
+        PRINT_DETAILS   = 0x03,
+        OTHER_DETAILS   = 0x04,
+    };
+
+    enum AddEmpMenuEnum
+    {
+        RANDOM          = 0x01,
+        DEFINED         = 0x02,
+    };
+
+    enum PrintinEmpMenuEnum
+    {
+        TYPE          = 0x01,
+        GENDER        = 0x02,
+        STATUS        = 0x03,
+        ALL           = 0x04,
+        RESIGNED      = 0x05,
+    };
+
+    enum OtherDetailsEnum
+    {
+        CONVERT          = 0x01,
+        SEARCH           = 0x02,
+        ADD_LEAVES       = 0x03,
+    };
+
     enum Month
     {
         Jan = 1, Feb , Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
@@ -99,8 +127,17 @@ namespace EmsUtility
                             };
 }
 
-
-
+inline string getDateStringFromChrono()
+{
+    auto sNow = chrono::system_clock::now();
+    time_t sTime = chrono::system_clock::to_time_t(sNow);
+    tm* sTimePtr = localtime(&sTime);
+    ostringstream sOstringStream;
+    sOstringStream << setw(2) << setfill('0') << sTimePtr->tm_mday << " "
+        << setw(2) << setfill('0') << sTimePtr->tm_mon + 1 << " "  // tm_mon is 0-based
+        << sTimePtr->tm_year + 1900;  // tm_year is years since 1900
+    return sOstringStream.str();
+}
 
 inline string getContractorAgencyFromEnum(int agencyTypeParam)
 {
@@ -143,7 +180,7 @@ inline string getEmploymentTypeFromEnum(int empTypeParam)
         case EmsUtility::TYPE_FULL:         return "Full-Time";
         case EmsUtility::TYPE_CONTRACTOR:   return "Contractor";
         case EmsUtility::TYPE_INTERN:       return "Intern";
-        default:                return "";
+        default:                return "Unknown";
     }
 }
 
@@ -154,7 +191,7 @@ inline string getEmploymentStatusFromEnum(int empStatusParam)
         case EmsUtility::STATUS_ACTIVE:     return "Active";
         case EmsUtility::STATUS_INACTIVE:   return "In-Active";
         case EmsUtility::STATUS_RESIGNED:   return "Resigned";
-        default:                return "";
+        default:                return "Unknown";
     }
 }
 
@@ -164,7 +201,7 @@ inline string getEmployeeGenderFromEnum(int empGenderParam)
     {
         case EmsUtility::MALE:     return "Male";
         case EmsUtility::FEMALE:   return "Female";
-        default:       return "";
+        default:       return "Unknown";
     }
 }
 
@@ -172,19 +209,19 @@ inline string getMonthStringFromEnum(int monthParam)
 {
     switch (monthParam)
     {
-    case EmsUtility::Jan: return "EmsUtility::Jan";
-    case EmsUtility::Feb: return "EmsUtility::Feb";
-    case EmsUtility::Mar: return "EmsUtility::Mar";
-    case EmsUtility::Apr: return "EmsUtility::Apr";
-    case EmsUtility::May: return "EmsUtility::May";
-    case EmsUtility::Jun: return "EmsUtility::Jun";
-    case EmsUtility::Jul: return "EmsUtility::Jul";
-    case EmsUtility::Aug: return "EmsUtility::Aug";
-    case EmsUtility::Sep: return "EmsUtility::Sep";
-    case EmsUtility::Oct: return "EmsUtility::Oct";
-    case EmsUtility::Nov: return "EmsUtility::Nov";
-    case EmsUtility::Dec: return "EmsUtility::Dec";
-    default: return "";
+    case EmsUtility::Jan: return "Jan";
+    case EmsUtility::Feb: return "Feb";
+    case EmsUtility::Mar: return "Mar";
+    case EmsUtility::Apr: return "Apr";
+    case EmsUtility::May: return "May";
+    case EmsUtility::Jun: return "Jun";
+    case EmsUtility::Jul: return "Jul";
+    case EmsUtility::Aug: return "Aug";
+    case EmsUtility::Sep: return "Sep";
+    case EmsUtility::Oct: return "Oct";
+    case EmsUtility::Nov: return "Nov";
+    case EmsUtility::Dec: return "Dec";
+    default: return "Unknown";
     }
 }
 
@@ -321,7 +358,7 @@ inline void printHeader(EmsUtility::EmpType empTypeParam = EmsUtility::TYPE_NONE
     else
     {
         cout<<endl;
-        cout << left << setw(sSum) << setfill('-') <<"-";
+        cout << left << setw(sSum+EmsUtility::MAX_EQ_LEN) << setfill('-') <<"-";
     }
     cout<<endl;
    
@@ -459,7 +496,7 @@ inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, str
         int sDOJMonth           = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::Jan,EmsUtility::Dec,"Please enter proper DOJ Month");
         cout<<"Enter DOJ Day : ";
         int sDOJDay             = funcToDoWhileOnUserInputs(true,NULL,MIN_DATE,getMaxDateOfMonth(sDOJYear,sDOJMonth),"Please enter proper DOJ Day");
-        sEmpDOJ          = toString(sDOJDay,2)+" "+toString(sDOJMonth,2)+" "+toString(sDOJYear,4);
+        sEmpDOJ                 = toString(sDOJDay,2)+" "+toString(sDOJMonth,2)+" "+toString(sDOJYear,4);
 
         int sEmpStatusChoice;
         sEmpStatusChoice = funcToDoWhileOnUserInputs(true,printEmployeeStatusMenu,1,2,"Please enter proper choice for selecting Status");
@@ -482,7 +519,7 @@ inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, str
         int sDOJMonth           = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::Jan,EmsUtility::Dec,"Please enter proper DOJ Month");
         cout<<"Enter DOJ Day : ";
         int sDOJDay             = funcToDoWhileOnUserInputs(true,NULL,MIN_DATE,getMaxDateOfMonth(sDOJYear,sDOJMonth),"Please enter proper DOJ Day");
-        sEmpDOJ          = toString(sDOJDay,2)+" "+toString(sDOJMonth,2)+" "+toString(sDOJYear,4);
+        sEmpDOJ                 = toString(sDOJDay,2)+" "+toString(sDOJMonth,2)+" "+toString(sDOJYear,4);
 
         sEmpStatus = EmsUtility::STATUS_ACTIVE;
     }
@@ -490,7 +527,7 @@ inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, str
     if(empTypeParam == EmsUtility::TYPE_CONTRACTOR)
     {
         int sEmpAgencyChoice;
-        sEmpAgencyChoice        = funcToDoWhileOnUserInputs(true,printEmployeeAgencyMenu,1,2,"Please enter proper choice for selecting Agency");
+        sEmpAgencyChoice        = funcToDoWhileOnUserInputs(true,printEmployeeAgencyMenu,EmsUtility::AGENCY_X,EmsUtility::AGENCY_Z,"Please enter proper choice for selecting Agency");
         sEmpAgency              = getContractorAgencyFromEnum(static_cast<EmsUtility::EmpContractorAgency>(sEmpAgencyChoice));
         sEmpDOL                 = addMonths(sEmpDOJ,12);
 
@@ -498,7 +535,7 @@ inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, str
     else if (empTypeParam == EmsUtility::TYPE_FULL)
     {
         sEmpNol             = getRandomNumber(10,24);
-        sEmpDOL                 = "NA";
+        sEmpDOL             = "NA";
     }
     else
     {

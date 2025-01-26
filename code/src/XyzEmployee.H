@@ -1,7 +1,6 @@
 #ifndef XyzEmployee_H
 #define XyzEmployee_H
 
-#include "Utility.H"
 #include "XyzEmployeeInterface.H"
 
 class XyzEmployee : public XyzEmployeeIF
@@ -20,7 +19,9 @@ protected:
 
 public:
     XyzEmployee();
+    XyzEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam);
     virtual ~XyzEmployee(){};
+    
     XyzEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus empStatusParam);
 
     string getEmployeeName();
@@ -54,6 +55,7 @@ public:
 
     /*Printing*/
     virtual void printAllEmployeeDetails();
+    virtual void printAllResignedEmployees();
     virtual void printEmployeeDetailsByType();
     void  printEmployeeSpecificDetails();
 };

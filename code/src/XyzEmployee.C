@@ -15,6 +15,18 @@ XyzEmployee::XyzEmployee(string nameParam,string genderParam,string dobParam,str
     mEmpStatus = empStatusParam;
 }
 
+XyzEmployee::XyzEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam)
+{
+    mEmpName    = xyzEmployeeIfPtrParam->getEmployeeName();
+    mEmpid      =  xyzEmployeeIfPtrParam->getEmployeeId()  ;
+    mEmpGender  = xyzEmployeeIfPtrParam->getEmployeeGender();
+    mEmpDOB     = xyzEmployeeIfPtrParam->getEmployeeDOB();
+    mEmpDOJ     = xyzEmployeeIfPtrParam->getEmployeeDOJ();
+    mEmpDOL     = xyzEmployeeIfPtrParam->getEmployeeDOL();
+    mEmpStatus  = xyzEmployeeIfPtrParam->getEmployeeStatus();
+    mEmpType    = EmsUtility::TYPE_NONE;
+}
+
 string XyzEmployee::getEmployeeName()
 {
     return mEmpName;
@@ -77,14 +89,29 @@ string XyzEmployee::getEmployeeId()
 void XyzEmployee::printAllEmployeeDetails()
 {
     
-    mRecordObj.mEmpName = this->getEmployeeName();
-    mRecordObj.mEmpid = this->getEmployeeId();
-    mRecordObj.mEmpType = this->getEmployeeType();
-    mRecordObj.mEmpStatus = this->getEmployeeStatus();
-    mRecordObj.mEmpGender = this->getEmployeeGender();
-    mRecordObj.mEmpDOB = this->getEmployeeDOB();
-    mRecordObj.mEmpDOJ = this->getEmployeeDOJ();
-    mRecordObj.mEmpDOL = this->getEmployeeDOL();
+    mRecordObj.mEmpName     = this->getEmployeeName();
+    mRecordObj.mEmpid       = this->getEmployeeId();
+    mRecordObj.mEmpType     = this->getEmployeeType();
+    mRecordObj.mEmpStatus   = this->getEmployeeStatus();
+    mRecordObj.mEmpGender   = this->getEmployeeGender();
+    mRecordObj.mEmpDOB      = this->getEmployeeDOB();
+    mRecordObj.mEmpDOJ      = this->getEmployeeDOJ();
+    mRecordObj.mEmpDOL      = this->getEmployeeDOL();
+    mRecordObj.printAllCommon();
+}
+
+void XyzEmployee::printAllResignedEmployees()
+{
+    mRecordObj.mEmpName     = this->getEmployeeName();
+    mRecordObj.mEmpid       = this->getEmployeeId();
+    mRecordObj.mEmpType     = this->getEmployeeType();
+    mRecordObj.mEmpStatus   = this->getEmployeeStatus();
+    mRecordObj.mEmpGender   = this->getEmployeeGender();
+    mRecordObj.mEmpDOB      = this->getEmployeeDOB();
+    mRecordObj.mEmpDOJ      = this->getEmployeeDOJ();
+    mRecordObj.mEmpDOL      = this->getEmployeeDOL();
+    mRecordObj.printAllCommon();
+    cout<<endl;
 }
 
 void XyzEmployee::printEmployeeDetailsByType()

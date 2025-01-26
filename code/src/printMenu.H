@@ -1,10 +1,8 @@
 #ifndef PRINTMENU_H
 #define PRINTMENU_H
-#pragma once
-#include "iostream"
-
 
 using namespace std;
+#include "iostream"
 
 inline void printMainMenu(void)
 {
@@ -70,8 +68,9 @@ inline void printEmployeeAgencyMenu(void)
     cout<<"|----------------------------------|"<<endl;
     cout<<"| Choose any option below.         |"<<endl;
     cout<<"|----------------------------------|"<<endl;
-    cout<<"| 1. AGENCY-X                      |"<<endl;
-    cout<<"| 2. AGENCY-X                      |"<<endl;
+    cout<<"| 1. AGENCY_X                      |"<<endl;
+    cout<<"| 2. AGENCY_Y                      |"<<endl;
+    cout<<"| 3. AGENCY_Z                      |"<<endl;
     cout<<"-----------------------------------|"<<endl;
     cout<<"|   Press -1 to Exit.              |"<<endl;
     cout<<"|----------------------------------|"<<endl;

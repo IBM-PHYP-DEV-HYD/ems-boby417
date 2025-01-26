@@ -47,7 +47,7 @@ void XyzEmployeeManager::printResignedEmpSummary()
     {
         XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
         XyzEmployee *sEmpPtr = static_cast<XyzEmployee*>(sEmpIfPtr);
-        sEmpPtr->printAllEmployeeDetails();
+        sEmpPtr->printAllResignedEmployees();
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }
@@ -126,16 +126,19 @@ void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
 {
     int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
     Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) : NULL;
-    XyzEmployeeIF *sEmpPtr = NULL;
+
     for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
         XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
         string sEmpid = sEmpIfPtr->getEmployeeId();
         if(sEmpid == empIDParam)
         {
-            sEmpPtr = mEmployeeEDLLPtr->removeElementAtPosition(itr);
-            sEmpPtr->setEmployeeStatus(EmsUtility::STATUS_RESIGNED);
-            mResignedEmpEdllPtr->pushBack(sEmpPtr);
+            sEmpIfPtr = mEmployeeEDLLPtr->removeElementAtPosition(itr);
+            sEmpIfPtr->setEmployeeStatus(EmsUtility::STATUS_RESIGNED);
+            sEmpIfPtr->setEmployeeDOL(getDateStringFromChrono());
+            XyzEmployee *sEmpPtr = new XyzEmployee(sEmpIfPtr);
+            mResignedEmpEdllPtr->pushBack(static_cast<XyzEmployee*>(sEmpPtr));
+            delete sEmpIfPtr;
             break;
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
