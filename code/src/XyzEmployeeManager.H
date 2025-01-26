@@ -16,7 +16,8 @@ public:
     EDLL<XyzEmployeeIF>* mResignedEmpEdllPtr;
     
     /* Adding new employees */
-    void addNewEmployee(XyzEmployeeIF *empPtrParam);
+    void addNewEmployee(EmsUtility::EmpType empTypeParam,string sEmpName,string sEmpGender,string sEmpDOB,
+                                string sEmpDOJ,string sEmpDOL,EmsUtility::EmpStatus sEmpStatus,int sEmpNol,string sEmpAgency,string sEmpClg, string sEmpBranch);
 
     void printEmployeeSummaryByType(EmsUtility::EmpType empTypeParam = EmsUtility::TYPE_NONE);
     void printEmployeeSummaryByGender(int empGenderParam);
@@ -26,10 +27,8 @@ public:
 
     void removeEmployeeByID(string empIDParam);
     void addNumberofLeavesToFullTimeEmployee(string sEmpidParam,int nolParam);
-    
-    void addEmployee(int numofEmpParam,bool isRandom, EmsUtility::EmpType typeParam= EmsUtility::TYPE_NONE);
 
-    void convertToFullTime(EmsUtility::EmpType typeParam, string empIDParam);
+    void convertToFullTime(string empIDParam);
 
 private:
     XyzEmployeeIF* createAndGetEmployeeType(int empChoiceParam);

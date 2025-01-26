@@ -2,35 +2,44 @@
 #include "printMenu.H"
 using namespace std;
 
-
-void processEmployeeAdding(XyzEmployeeManager *sEmpManger,int choiceParam)
+void processEmployeeAdding(XyzEmployeeManager *sEmpManager,int choiceParam)
 {
+    string sEmpName,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpGender,sEmpAgency,sEmpClg,sEmpBranch;
+    EmsUtility::EmpStatus sEmpStatus;
+    int sEmpNol,sEmpType=0;
+
     switch(choiceParam)
     {
         case 1:
         {
             cout<<"Enter Number of Random Employees to Create: ";
             int sNumofRandomEmployees = funcToDoWhileOnUserInputs(true,NULL,1,100,"Please Enter: ");
-            sEmpManger->addEmployee(sNumofRandomEmployees,true);
+            for(int itr = 0;itr<sNumofRandomEmployees;itr++)
+            {
+                getEmployeeDetailsInRandom(sEmpType,sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
+                sEmpManager->addNewEmployee(static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
+            }
         }
         break;
         case 2:
         {
-            int sEmpTypeChoice = funcToDoWhileOnUserInputs(false,printEmployeeTypeMenu,1,3,"Please select Type: ");
-            if(sEmpTypeChoice != EmsUtility::E_UNEXPECTED)
+            sEmpType = funcToDoWhileOnUserInputs(false,printEmployeeTypeMenu,1,3,"Please select Type: ");
+            if(sEmpType != EmsUtility::E_UNEXPECTED)
             {
-                sEmpManger->addEmployee(1,false,static_cast<EmsUtility::EmpType>(sEmpTypeChoice));
+                getEmployeeDetailsOnUserInputs(static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
+                sEmpManager->addNewEmployee(static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
             }
         }
         break;
         default:
         {
-            
+            //Do-Nothing
         }
+        break;
     }
 }
 
-void processEmployeeRemoving(XyzEmployeeManager *sEmpManger)
+void processEmployeeRemoving(XyzEmployeeManager *sEmpManager)
 {
     string sEmpid;
     cout<<"Please enter employee ID to remove :: Eg: Employee Id XYZ0001F/XYZ0001C/XYZ0001I\n"<<endl;
@@ -41,12 +50,11 @@ void processEmployeeRemoving(XyzEmployeeManager *sEmpManger)
     }
     else
     {
-        sEmpManger->removeEmployeeByID(sEmpid);
+        sEmpManager->removeEmployeeByID(sEmpid);
     }
-    
 }
 
-void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choiceParam)
+void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManager,int choiceParam)
 {
     switch(choiceParam)
     {
@@ -55,7 +63,7 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
             int sEmpTypeChoice = funcToDoWhileOnUserInputs(false,printEmployeeTypeMenu,1,3,"Please Select: ");
             if(sEmpTypeChoice != EmsUtility::E_UNEXPECTED)
             {
-                sEmpManger->printEmployeeSummaryByType(static_cast<EmsUtility::EmpType>(sEmpTypeChoice));
+                sEmpManager->printEmployeeSummaryByType(static_cast<EmsUtility::EmpType>(sEmpTypeChoice));
             }  
         }
         break;
@@ -64,7 +72,7 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
             int sEmployeeGenderChoice = funcToDoWhileOnUserInputs(false,printEmployeeGenderMenu,1,2,"Please select Gender: ");
             if(sEmployeeGenderChoice != EmsUtility::E_UNEXPECTED)
             {
-                sEmpManger->printEmployeeSummaryByGender(sEmployeeGenderChoice);
+                sEmpManager->printEmployeeSummaryByGender(sEmployeeGenderChoice);
             } 
         }
         break;
@@ -73,55 +81,43 @@ void processEmployeeDetailsPrinting(XyzEmployeeManager *sEmpManger,int choicePar
             int sEmployeeStatusChoice = funcToDoWhileOnUserInputs(false,printEmployeeStatusMenu,1,2,"Please select Status: ");
             if(sEmployeeStatusChoice != EmsUtility::E_UNEXPECTED)
             {
-                sEmpManger->printEmployeeSummaryByStatus(static_cast<EmsUtility::EmpStatus>(sEmployeeStatusChoice));
+                sEmpManager->printEmployeeSummaryByStatus(static_cast<EmsUtility::EmpStatus>(sEmployeeStatusChoice));
             } 
         }
         break;
         case 4:
         {
-            sEmpManger->printEmployeeSummaryByType();
+            sEmpManager->printEmployeeSummaryByType();
         }
         break;
         case 5:
         {
-            sEmpManger->printResignedEmpSummary();
+            sEmpManager->printResignedEmpSummary();
         }
         break;
         default:
         {
+            //Do-Nothing
         }
-    
+        break;
     }
 }
 
-void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choiceParam)
+void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManager,int choiceParam)
 {
     switch(choiceParam)
     {
         case 1:
         {
-            int sEmpTypeChoice = funcToDoWhileOnUserInputs(false,printEmployeeTypeForConversionMenu,1,2,"Enter Employee Type: ");
-            if(sEmpTypeChoice != EmsUtility::E_UNEXPECTED)
+            cout<<"Please enter employee ID to Convert :: Eg: Employee Id XYZ0001C/XYZ0001I\n"<<endl;
+            string sEmpid;
+            cin>>sEmpid;
+            if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
             {
-                cout<<"Please enter employee ID to Convert :: Eg: Employee Id XYZ0001C/XYZ0001I\n"<<endl;
-                string sEmpid;
-                cin>>sEmpid;
-                if((sEmpid.length() != 8) ||  sEmpid.substr(0,3) != "XYZ")
-                {
-                    cout<<"Invalid Emp Id entered"<<endl;
-                    break;
-                }
-                EmsUtility::EmpType sEmpType;
-                if(sEmpTypeChoice == 1)
-                {
-                    sEmpType = EmsUtility::TYPE_CONTRACTOR;
-                }
-                else
-                {
-                    sEmpType = EmsUtility::TYPE_INTERN;
-                }
-                sEmpManger->convertToFullTime(sEmpType,sEmpid);
+                cout<<"Invalid Emp Id entered"<<endl;
+                break;
             }
+            sEmpManager->convertToFullTime(sEmpid);
         }
         break;
         case 2:
@@ -134,7 +130,7 @@ void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choicePa
                 cout<<"Invalid Emp Id entered"<<endl;
                 break;
             }
-            sEmpManger->printEmployeeDetailsById(sEmpid);
+            sEmpManager->printEmployeeDetailsById(sEmpid);
         }
         break;
         case 3:
@@ -151,24 +147,22 @@ void processEmployeeOtherdetailsMenu(XyzEmployeeManager *sEmpManger,int choicePa
             int sNol = funcToDoWhileOnUserInputs(false,NULL,5,15,"Please enter :");
             if(sNol != EmsUtility::E_UNEXPECTED)
             {
-                sEmpManger->addNumberofLeavesToFullTimeEmployee(sEmpid,sNol);
+                sEmpManager->addNumberofLeavesToFullTimeEmployee(sEmpid,sNol);
             }
         }
         break;
         default:
         {
-            if(choiceParam == EmsUtility::E_UNEXPECTED)
-            {
-                exit(0);
-            }
+           //Do-Nothing
         }
+        break;
     }
 }
 
 int main(int argc, const char * argv[]) 
 {
 
-   XyzEmployeeManager *sEmpManger = new XyzEmployeeManager();
+   XyzEmployeeManager *sEmpManager = new XyzEmployeeManager();
    int sMainMenuChoice = 0;
    
    do
@@ -181,13 +175,13 @@ int main(int argc, const char * argv[])
                 int sEmpAddOptionChoice = funcToDoWhileOnUserInputs(false,printEmployeeAddOptions,1,2,"Please Select: ");
                 if(sEmpAddOptionChoice != EmsUtility::E_UNEXPECTED)
                 {
-                    processEmployeeAdding(sEmpManger,sEmpAddOptionChoice);
+                    processEmployeeAdding(sEmpManager,sEmpAddOptionChoice);
                 }
             }
             break;
             case 2:
             {
-                processEmployeeRemoving(sEmpManger);
+                processEmployeeRemoving(sEmpManager);
             }
             break;
             case 3:
@@ -195,7 +189,7 @@ int main(int argc, const char * argv[])
                 int sEmployeeDetailsChoice = funcToDoWhileOnUserInputs(false,printEmployeedetailsMenu,1,5,"Please Select: ");
                 if(sEmployeeDetailsChoice != EmsUtility::E_UNEXPECTED)
                 {   
-                    processEmployeeDetailsPrinting(sEmpManger,sEmployeeDetailsChoice);
+                    processEmployeeDetailsPrinting(sEmpManager,sEmployeeDetailsChoice);
                 }
             }
             break;
@@ -204,12 +198,13 @@ int main(int argc, const char * argv[])
                 int sEmployeeDetailsChoice = funcToDoWhileOnUserInputs(false,printEmployeeOtherdetailsMenu,1,3,"Please Select: ");
                 if(sEmployeeDetailsChoice != EmsUtility::E_UNEXPECTED)
                 {
-                    processEmployeeOtherdetailsMenu(sEmpManger,sEmployeeDetailsChoice);
+                    processEmployeeOtherdetailsMenu(sEmpManager,sEmployeeDetailsChoice);
                 }
             }
             break;
             default:
             {
+                //Do-Nothing
             }
             break;
         }

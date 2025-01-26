@@ -14,9 +14,27 @@ XyzEmployeeManager::~XyzEmployeeManager()
     mResignedEmpEdllPtr = NULL;
 }
 
-void XyzEmployeeManager::addNewEmployee(XyzEmployeeIF *empPtrParam)
+void XyzEmployeeManager::addNewEmployee(EmsUtility::EmpType empTypeParam, string sEmpName,string sEmpGender,string sEmpDOB,
+            string sEmpDOJ,string sEmpDOL,EmsUtility::EmpStatus sEmpStatus,int sEmpNol,string sEmpAgency,string sEmpClg, string sEmpBranch)
 {
-    mEmployeeEDLLPtr->pushBack(empPtrParam);
+    XyzEmployeeIF *sEmpIfPtr = NULL;
+    if(empTypeParam == EmsUtility::TYPE_FULL)
+    {
+        sEmpIfPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+        sEmpIfPtr->setNoOfLeaves(sEmpNol);
+    }
+    else if (empTypeParam == EmsUtility::TYPE_CONTRACTOR)
+    {
+        sEmpIfPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+        sEmpIfPtr->setAgency(sEmpAgency);
+    }
+    else
+    {
+        sEmpIfPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
+        sEmpIfPtr->setCollege(sEmpClg);
+        sEmpIfPtr->setBranch(sEmpBranch);
+    }
+    mEmployeeEDLLPtr->pushBack(sEmpIfPtr);
 }
 
 void XyzEmployeeManager::printResignedEmpSummary()
@@ -180,101 +198,21 @@ void XyzEmployeeManager::addNumberofLeavesToFullTimeEmployee(string sEmpidParam,
     }
 }
 
-void XyzEmployeeManager::addEmployee(int numofEmpParam,bool isRandom, EmsUtility::EmpType typeParam)
-{
-    XyzEmployeeIF *sEmpIfPtr  = NULL;
-    if(isRandom == true)
-    {
-        for(int itr= 0;itr<numofEmpParam;itr++)
-        {
-            sEmpIfPtr  = NULL;
-            int sNameRandomIndex    = getRandomNumber(0,29);
-            string sEmpName         = getEmployeeNameInRandom(sNameRandomIndex);
-            string sEmpGender       = getEmployeeGenderFromEnum((sNameRandomIndex%2)+1);
-            int sEmpType            = getRandomNumber(EmsUtility::TYPE_FULL,EmsUtility::TYPE_INTERN);
-            if(sEmpType == EmsUtility::TYPE_CONTRACTOR)
-            {
-                int sRandomYear         = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
-                string sEmpDOB          = generateRandomDate(sRandomYear);
-                sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
-                string sEmpDOJ          = generateRandomDate(sRandomYear);
-                string sEmpDOL          = "NA";
-                EmsUtility::EmpStatus sEmpStatus    = getEmployeeStatusInRandom();
-                sEmpIfPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-                string sEmpAgency = getContractorAgencyFromEnum(static_cast<EmsUtility::EmpContractorAgency>(getRandomNumber(1,3)));
-                sEmpIfPtr->setAgency(sEmpAgency);
-                sEmpDOL     = addMonths(sEmpDOJ,12);
-                sEmpIfPtr->setEmployeeDOL(sEmpDOL);
-                addNewEmployee(sEmpIfPtr);
-            }
-            else if (sEmpType == EmsUtility::TYPE_FULL)
-            {
-                int sRandomYear         = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
-                string sEmpDOB          = generateRandomDate(sRandomYear);
-                sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
-                string sEmpDOJ          = generateRandomDate(sRandomYear);
-                string sEmpDOL          = "NA";
-                EmsUtility::EmpStatus sEmpStatus    = getEmployeeStatusInRandom();
-                sEmpIfPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-                int sEmpNol = getRandomNumber(10,24);
-                sEmpIfPtr->setNoOfLeaves(sEmpNol);
-                addNewEmployee(sEmpIfPtr);
-            }
-            else
-            {
-                int sRandomYear         = getRandomNumber(EmsUtility::MIN_DOB_YEAR_FOR_INTERN,EmsUtility::MAX_DOB_YEAR_FOR_INTERN);
-                string sEmpDOB          = generateRandomDate(sRandomYear);
-                string sEmpDOJ          = generateRandomDate(CURR_YEAR);
-                string sEmpDOL          = "NA";
-                EmsUtility::EmpStatus sEmpStatus    = EmsUtility::STATUS_ACTIVE;
-                sEmpIfPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-                string sClg = getInternCollegeAgencyFromEnum(static_cast<EmsUtility::InterEmpCollege>(getRandomNumber(1,3)));
-                sEmpIfPtr->setCollege(sClg);
-                string sBranch = getInternBranchFromEnum(static_cast<EmsUtility::InternEmpBranch>(getRandomNumber(1,3)));
-                sEmpIfPtr->setBranch(sBranch);
-                sEmpDOL     = addMonths(sEmpDOJ,6);
-                sEmpIfPtr->setEmployeeDOL(sEmpDOL);
-                addNewEmployee(sEmpIfPtr);
-            }
-        }
-    }
-    else
-    {
-        if(typeParam == EmsUtility::TYPE_CONTRACTOR)
-        {
-            sEmpIfPtr = createAnEmployeeOnInputs<XyzContractorEmployee>(EmsUtility::TYPE_CONTRACTOR);
-            addNewEmployee(sEmpIfPtr);
-        }
-        else if (typeParam == EmsUtility::TYPE_FULL)
-        {
-            sEmpIfPtr = createAnEmployeeOnInputs<XyzFullTimeEmployee>(EmsUtility::TYPE_FULL);
-            addNewEmployee(sEmpIfPtr);
-        }
-        else
-        {
-            sEmpIfPtr = createAnEmployeeOnInputs<XyzInternEmloyee>(EmsUtility::TYPE_INTERN);
-            addNewEmployee(sEmpIfPtr);
-        }
-    }  
-}
-
-void XyzEmployeeManager::convertToFullTime(EmsUtility::EmpType empTypeParam, string empIdParam)
+void XyzEmployeeManager::convertToFullTime(string empIdParam)
 {
     int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
     Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr->getNodeAtPosition(0);
-    if(empTypeParam != EmsUtility::TYPE_FULL)
+
+    for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
-        for(int itr = 0;itr < sSizeofEDLL; itr++)
+        XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
+        string sEmpid = sEmpIfPtr->getEmployeeId();
+        EmsUtility::EmpType sEmpType = sEmpIfPtr->getEmployeeType();
+        if((sEmpType != EmsUtility::TYPE_FULL) && (sEmpid == empIdParam))
         {
-            XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
-            string sEmpid = sEmpIfPtr->getEmployeeId();
-            EmsUtility::EmpType sEmpType = sEmpIfPtr->getEmployeeType();
-            if((sEmpType == empTypeParam) && (sEmpid == empIdParam))
-            {
-                XyzFullTimeEmployee *sNewFullTime = new XyzFullTimeEmployee(sEmpIfPtr);
-                sFrontOfEDLL->mDataPtr = sNewFullTime;
-            }
-            sFrontOfEDLL = sFrontOfEDLL->mNext;
+            XyzFullTimeEmployee *sNewFullTime = new XyzFullTimeEmployee(sEmpIfPtr);
+            sFrontOfEDLL->mDataPtr = sNewFullTime;
         }
+        sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }

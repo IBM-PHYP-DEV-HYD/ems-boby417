@@ -9,6 +9,7 @@
 #include "printMenu.H"
 
 typedef void (*Functionfunc)(void);
+
 #define MIN_AGE_REQUIRED_TO_DO_JOB 21
 #define RETIREMENT_AGE 60
 #define CURR_YEAR 2025
@@ -84,20 +85,21 @@ namespace EmsUtility
         BRANCH_CSIT = 0x2,
         BRANCH_ECE = 0x3,
     };
+
+    enum Month
+    {
+        Jan = 1, Feb , Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
+    };
+
+    inline string firstNameArray[30] =
+                            {
+                                "Ganesh","Shivani","Chinna","Stella","Abhay","Dhruvika","Ujwal","Avisha","Viswa","Satya",
+                                "Hari","Laxmi","Aryan","Raani","Ram","Mounika","Phani","Paavani" ,"Rudra","Praneetha",
+                                "Gopal","Sravani","Chandu","Vineela","Sanjay" ,"Nidhi","Krishna","Radhika","Tanoj","Bhanu"               
+                            };
 }
 
 
-enum Month 
-{
-    Jan = 1, Feb , Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
-};
-
-inline string firstNameArray[30] = 
-                            {
-                                "Ganesh","Shivani","Chinna","Stella","Abhay","Dhruvika","Ujwal","Avisha","Viswa","Satya",
-                                "Hari","Laxmi","Aryan","Raani","Ram","Mounika","Phani","Paavani" ,"Rudra","Praneetha"
-                                "Gopal","Sravani","Chandu","Vineela","Sanjay" ,"Nidhi","Krishna","Radhika","Tanoj","Bhanu"               
-                            };
 
 
 inline string getContractorAgencyFromEnum(int agencyTypeParam)
@@ -170,18 +172,18 @@ inline string getMonthStringFromEnum(int monthParam)
 {
     switch (monthParam)
     {
-    case Jan: return "Jan";
-    case Feb: return "Feb";
-    case Mar: return "Mar";
-    case Apr: return "Apr";
-    case May: return "May";
-    case Jun: return "Jun";
-    case Jul: return "Jul";
-    case Aug: return "Aug";
-    case Sep: return "Sep";
-    case Oct: return "Oct";
-    case Nov: return "Nov";
-    case Dec: return "Dec";
+    case EmsUtility::Jan: return "EmsUtility::Jan";
+    case EmsUtility::Feb: return "EmsUtility::Feb";
+    case EmsUtility::Mar: return "EmsUtility::Mar";
+    case EmsUtility::Apr: return "EmsUtility::Apr";
+    case EmsUtility::May: return "EmsUtility::May";
+    case EmsUtility::Jun: return "EmsUtility::Jun";
+    case EmsUtility::Jul: return "EmsUtility::Jul";
+    case EmsUtility::Aug: return "EmsUtility::Aug";
+    case EmsUtility::Sep: return "EmsUtility::Sep";
+    case EmsUtility::Oct: return "EmsUtility::Oct";
+    case EmsUtility::Nov: return "EmsUtility::Nov";
+    case EmsUtility::Dec: return "EmsUtility::Dec";
     default: return "";
     }
 }
@@ -190,18 +192,18 @@ inline int getMaxDateOfMonth(int yearParam,int monthParam)
 {
   switch (monthParam)
   {
-    case Jan: return 31;
-    case Feb: return (yearParam%400==0) || ((yearParam%100!=0)&&(yearParam%4==0))? 29 : 28;
-    case Mar: return 31;
-    case Apr: return 30;
-    case May: return 31;
-    case Jun: return 30;
-    case Jul: return 31;
-    case Aug: return 31;
-    case Sep: return 30;
-    case Oct: return 31;
-    case Nov: return 30;
-    case Dec: return 31;
+    case EmsUtility::Jan: return 31;
+    case EmsUtility::Feb: return (yearParam%400==0) || ((yearParam%100!=0)&&(yearParam%4==0))? 29 : 28;
+    case EmsUtility::Mar: return 31;
+    case EmsUtility::Apr: return 30;
+    case EmsUtility::May: return 31;
+    case EmsUtility::Jun: return 30;
+    case EmsUtility::Jul: return 31;
+    case EmsUtility::Aug: return 31;
+    case EmsUtility::Sep: return 30;
+    case EmsUtility::Oct: return 31;
+    case EmsUtility::Nov: return 30;
+    case EmsUtility::Dec: return 31;
     default: return 0;
   }
 }
@@ -233,18 +235,25 @@ inline string generateRandomDate(int sYearParam) {
 
 inline string  getEmployeeNameInRandom(int firstNameIndexParam)
 {
-    string sEmpName = firstNameArray[firstNameIndexParam];
-    int sLastNameIndex = getRandomNumber(65,90);
+    string sEmpName = EmsUtility::firstNameArray[firstNameIndexParam];
     string sLastNameString;
-    sLastNameString = (char)sLastNameIndex;
+    int sIndexMax = getRandomNumber(5,8);
+    for(int itr = 0;itr<sIndexMax;itr++)
+    {
+        int sLastNameIndex;
+        if(itr == 0)
+        {
+            sLastNameIndex = getRandomNumber(65,90);
+        }
+        else
+        {
+            sLastNameIndex = getRandomNumber(97,122);
+        }
+        sLastNameString += (char)sLastNameIndex;
+    }
+
     sEmpName += " "+sLastNameString;
     return sEmpName;
-}
-
-inline EmsUtility::EmpStatus  getEmployeeStatusInRandom()
-{
-    EmsUtility::EmpStatus sRandStatus = static_cast<EmsUtility::EmpStatus>(getRandomNumber(1,2));
-    return sRandStatus;
 }
 
 template<typename TN> void printElement(TN templateParam,int width)
@@ -372,18 +381,58 @@ inline int funcToDoWhileOnUserInputs(bool repeatMenuParam,Functionfunc fnParam, 
     return sChoice;
 }
 
-
-template<typename TN>
-inline TN* createAnEmployeeOnInputs(EmsUtility::EmpType empTypeParam)
+inline void getEmployeeDetailsInRandom(int& empTypeParam, string& sEmpName,string& sEmpGender,string& sEmpDOB,
+                    string& sEmpDOJ,string& sEmpDOL,EmsUtility::EmpStatus& sEmpStatus,
+                    int& sEmpNol,string& sEmpAgency,string& sEmpClg, string& sEmpBranch)
 {
-    string sEmpName,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpGender,sEmpAgency;
-    EmsUtility::EmpStatus sEmpStatus;
-    TN *sEmpPtr = NULL;
 
+    int sNameRandomIndex,sRandomYear;
+
+    sNameRandomIndex            = getRandomNumber(0,29);
+    sEmpName                    = getEmployeeNameInRandom(sNameRandomIndex);
+    sEmpGender                  = getEmployeeGenderFromEnum((sNameRandomIndex%2)+1);
+    empTypeParam                = getRandomNumber(EmsUtility::TYPE_FULL,EmsUtility::TYPE_INTERN);
+    if(empTypeParam == EmsUtility::TYPE_CONTRACTOR)
+    {
+        sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
+        sEmpDOB                 = generateRandomDate(sRandomYear);
+        sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
+        sEmpDOJ                 = generateRandomDate(sRandomYear);
+        sEmpDOL                 = addMonths(sEmpDOJ,12);
+        sEmpStatus              = static_cast<EmsUtility::EmpStatus>(getRandomNumber(EmsUtility::STATUS_ACTIVE,EmsUtility::STATUS_INACTIVE));
+        sEmpAgency              = getContractorAgencyFromEnum(static_cast<EmsUtility::EmpContractorAgency>(getRandomNumber(EmsUtility::AGENCY_X,EmsUtility::AGENCY_Z)));
+    }
+    else if (empTypeParam == EmsUtility::TYPE_FULL)
+    {
+        sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
+        sEmpDOB                 = generateRandomDate(sRandomYear);
+        sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
+        sEmpDOJ                 = generateRandomDate(sRandomYear);
+        sEmpDOL                 = "NA";
+        sEmpStatus              = static_cast<EmsUtility::EmpStatus>(getRandomNumber(EmsUtility::STATUS_ACTIVE,EmsUtility::STATUS_INACTIVE));
+        sEmpNol                 = getRandomNumber(10,24);
+    }
+    else
+    {
+        sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR_FOR_INTERN,EmsUtility::MAX_DOB_YEAR_FOR_INTERN);
+        sEmpDOB                 = generateRandomDate(sRandomYear);
+        sEmpDOJ                 = generateRandomDate(CURR_YEAR);
+        sEmpDOL                 = addMonths(sEmpDOJ,6);
+        sEmpStatus              = EmsUtility::STATUS_ACTIVE;
+        sEmpClg                 = getInternCollegeAgencyFromEnum(static_cast<EmsUtility::InterEmpCollege>(getRandomNumber(EmsUtility::COLLEGE_IIT,EmsUtility::COLLEGE_MIT)));
+        sEmpBranch              = getInternBranchFromEnum(static_cast<EmsUtility::InternEmpBranch>(getRandomNumber(EmsUtility::BRANCH_CSE,EmsUtility::BRANCH_ECE)));
+    }
+
+}
+
+inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, string& sEmpName,string& sEmpGender,string& sEmpDOB,
+                    string& sEmpDOJ,string& sEmpDOL,EmsUtility::EmpStatus& sEmpStatus,
+                    int& sEmpNol,string& sEmpAgency,string& sEmpClg, string& sEmpBranch)
+
+{
 
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    
     
     cout<<"Please enter employee name : "<<endl;
     getline(cin,sEmpName);
@@ -391,7 +440,6 @@ inline TN* createAnEmployeeOnInputs(EmsUtility::EmpType empTypeParam)
     int sEmpGenderChoice;
     sEmpGenderChoice        = funcToDoWhileOnUserInputs(true,printEmployeeGenderMenu,1,2,"Please enter proper choice for selecting gender");
     sEmpGender              = getEmployeeGenderFromEnum(sEmpGenderChoice);
-    sEmpDOL                 = "NA";
     
     if(empTypeParam != EmsUtility::TYPE_INTERN)
     {
@@ -399,7 +447,7 @@ inline TN* createAnEmployeeOnInputs(EmsUtility::EmpType empTypeParam)
         cout<<"Enter Dob Year : ";
         int sDOBYear            = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR,"Please enter proper DOB Year");
         cout<<"Enter Dob Month : ";
-        int sDOBMonth           = funcToDoWhileOnUserInputs(true,NULL,Jan,Dec,"Please enter proper DOB Month");
+        int sDOBMonth           = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::Jan,EmsUtility::Dec,"Please enter proper DOB Month");
         cout<<"Enter Dob Day : ";
         int sDOBDay             = funcToDoWhileOnUserInputs(true,NULL,MIN_DATE,getMaxDateOfMonth(sDOBYear,sDOBMonth),"Please enter proper DOB Day");
         sEmpDOB          = toString(sDOBDay,2)+" "+toString(sDOBMonth,2)+" "+toString(sDOBYear,4);
@@ -408,7 +456,7 @@ inline TN* createAnEmployeeOnInputs(EmsUtility::EmpType empTypeParam)
         cout<<"Enter DOJ Year : ";
         int sDOJYear            = funcToDoWhileOnUserInputs(true,NULL,sDOBYear+MIN_AGE_REQUIRED_TO_DO_JOB,EmsUtility::MAX_DOJ_YEAR,"Please enter proper DOJ Year");
         cout<<"Enter DOJ Month : ";
-        int sDOJMonth           = funcToDoWhileOnUserInputs(true,NULL,Jan,Dec,"Please enter proper DOJ Month");
+        int sDOJMonth           = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::Jan,EmsUtility::Dec,"Please enter proper DOJ Month");
         cout<<"Enter DOJ Day : ";
         int sDOJDay             = funcToDoWhileOnUserInputs(true,NULL,MIN_DATE,getMaxDateOfMonth(sDOJYear,sDOJMonth),"Please enter proper DOJ Day");
         sEmpDOJ          = toString(sDOJDay,2)+" "+toString(sDOJMonth,2)+" "+toString(sDOJYear,4);
@@ -423,7 +471,7 @@ inline TN* createAnEmployeeOnInputs(EmsUtility::EmpType empTypeParam)
         cout<<"Enter Intern DOB Year : ";
         int sDOBYear            = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::MIN_DOB_YEAR_FOR_INTERN,EmsUtility::MAX_DOB_YEAR_FOR_INTERN,"Please enter proper DOB Year");
         cout<<"Enter DOB Month : ";
-        int sDOBMonth           = funcToDoWhileOnUserInputs(true,NULL,Jan,Dec,"Please enter proper DOB Month");
+        int sDOBMonth           = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::Jan,EmsUtility::Dec,"Please enter proper DOB Month");
         cout<<"Enter DOB Day : ";
         int sDOBDay             = funcToDoWhileOnUserInputs(true,NULL,MIN_DATE,getMaxDateOfMonth(sDOBYear,sDOBMonth),"Please enter proper DOB Day");
         sEmpDOB          = toString(sDOBDay,2)+" "+toString(sDOBMonth,2)+" "+toString(sDOBYear,4);
@@ -431,7 +479,7 @@ inline TN* createAnEmployeeOnInputs(EmsUtility::EmpType empTypeParam)
         /* Collecting Date of Joining for intern in current year*/
         int sDOJYear            = CURR_YEAR;
         cout<<"Enter DOJ Month : ";
-        int sDOJMonth           = funcToDoWhileOnUserInputs(true,NULL,Jan,Dec,"Please enter proper DOJ Month");
+        int sDOJMonth           = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::Jan,EmsUtility::Dec,"Please enter proper DOJ Month");
         cout<<"Enter DOJ Day : ";
         int sDOJDay             = funcToDoWhileOnUserInputs(true,NULL,MIN_DATE,getMaxDateOfMonth(sDOJYear,sDOJMonth),"Please enter proper DOJ Day");
         sEmpDOJ          = toString(sDOJDay,2)+" "+toString(sDOJMonth,2)+" "+toString(sDOJYear,4);
@@ -439,38 +487,29 @@ inline TN* createAnEmployeeOnInputs(EmsUtility::EmpType empTypeParam)
         sEmpStatus = EmsUtility::STATUS_ACTIVE;
     }
 
-    sEmpPtr = new  TN(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-
-   
     if(empTypeParam == EmsUtility::TYPE_CONTRACTOR)
     {
         int sEmpAgencyChoice;
-        sEmpAgencyChoice = funcToDoWhileOnUserInputs(true,printEmployeeAgencyMenu,1,2,"Please enter proper choice for selecting Agency");
-        sEmpAgency = getContractorAgencyFromEnum(static_cast<EmsUtility::EmpContractorAgency>(sEmpAgencyChoice));
-        sEmpPtr->setAgency(sEmpAgency);
-        sEmpDOL     = addMonths(sEmpDOJ,12);
-        sEmpPtr->setEmployeeDOL(sEmpDOL);
+        sEmpAgencyChoice        = funcToDoWhileOnUserInputs(true,printEmployeeAgencyMenu,1,2,"Please enter proper choice for selecting Agency");
+        sEmpAgency              = getContractorAgencyFromEnum(static_cast<EmsUtility::EmpContractorAgency>(sEmpAgencyChoice));
+        sEmpDOL                 = addMonths(sEmpDOJ,12);
+
     }
     else if (empTypeParam == EmsUtility::TYPE_FULL)
     {
-        int sEmpNol  = getRandomNumber(10,24);
-        sEmpPtr->setNoOfLeaves(sEmpNol);
+        sEmpNol             = getRandomNumber(10,24);
+        sEmpDOL                 = "NA";
     }
     else
     {
         int sClgChoice;
-        sClgChoice = funcToDoWhileOnUserInputs(true,printStudentCollegeMenu,1,3,"Please enter proper choice for selecting College");
-        string sClg = getInternCollegeAgencyFromEnum(static_cast<EmsUtility::InterEmpCollege>(sClgChoice));
-        sEmpPtr->setCollege(sClg);
+        sClgChoice              = funcToDoWhileOnUserInputs(true,printStudentCollegeMenu,1,3,"Please enter proper choice for selecting College");
+        sEmpClg                 = getInternCollegeAgencyFromEnum(static_cast<EmsUtility::InterEmpCollege>(sClgChoice));
         int sBranchChoice;
-        sBranchChoice = funcToDoWhileOnUserInputs(true,printStudentBranchMenu,1,3,"Please enter proper choice for selecting Branch");
-        string sBranch = getInternBranchFromEnum(static_cast<EmsUtility::InternEmpBranch>(sBranchChoice));
-        sEmpPtr->setBranch(sBranch);
-        sEmpDOL     = addMonths(sEmpDOJ,6);
-        sEmpPtr->setEmployeeDOL(sEmpDOL);
+        sBranchChoice           = funcToDoWhileOnUserInputs(true,printStudentBranchMenu,1,3,"Please enter proper choice for selecting Branch");
+        sEmpBranch              = getInternBranchFromEnum(static_cast<EmsUtility::InternEmpBranch>(sBranchChoice));
+        sEmpDOL                 = addMonths(sEmpDOJ,6);
     }
-
-    return sEmpPtr;
 }
 
 #endif

@@ -84,9 +84,9 @@ inline void printStudentCollegeMenu(void)
     cout<<"|----------------------------------|"<<endl;
     cout<<"| Choose any option below.         |"<<endl;
     cout<<"|----------------------------------|"<<endl;
-    cout<<"| 1. EmsUtility::COLLEGE_IIT                   |"<<endl;
-    cout<<"| 2. EmsUtility::COLLEGE_NIT                   |"<<endl;
-    cout<<"| 3. EmsUtility::COLLEGE_MIT                   |"<<endl;
+    cout<<"| 1.COLLEGE_IIT                    |"<<endl;
+    cout<<"| 2.COLLEGE_NIT                    |"<<endl;
+    cout<<"| 3.COLLEGE_MIT                    |"<<endl;
     cout<<"-----------------------------------|"<<endl;
     cout<<"|   Press -1 to Exit.              |"<<endl;
     cout<<"|----------------------------------|"<<endl;
@@ -99,9 +99,9 @@ inline void printStudentBranchMenu(void)
     cout<<"|----------------------------------|"<<endl;
     cout<<"| Choose any option below.         |"<<endl;
     cout<<"|----------------------------------|"<<endl;
-    cout<<"| 1. EmsUtility::BRANCH_CSE                    |"<<endl;
-    cout<<"| 2. EmsUtility::BRANCH_CSIT                   |"<<endl;
-    cout<<"| 3. EmsUtility::BRANCH_ECE                    |"<<endl;
+    cout<<"| 1.BRANCH_CSE                     |"<<endl;
+    cout<<"| 2.BRANCH_CSIT                    |"<<endl;
+    cout<<"| 3.BRANCH_ECE                     |"<<endl;
     cout<<"-----------------------------------|"<<endl;
     cout<<"|   Press -1 to Exit.              |"<<endl;
     cout<<"|----------------------------------|"<<endl;
