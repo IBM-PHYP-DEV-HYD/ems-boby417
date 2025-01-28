@@ -8,18 +8,21 @@ class XyzContractorEmployee : public XyzEmployee
 public:
 
     XyzContractorEmployee();
-    XyzContractorEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam);
+    XyzContractorEmployee(string idParam,string nameParam,
+                        string genderParam,string dobParam,
+                        string dojParam,string dolParam,
+                        EmsUtility::EmpStatus statusParam,
+                        string agencyParam);
     ~XyzContractorEmployee();
     
     string mEmpAgency;
-    static long mNextEmproll;
 
     void setAgency(string agencyParam);
     string getAgency();
 
-    void printAllEmployeeDetails();
-    void printEmployeeDetailsByType();
-    void printEmployeeSpecificDetails();
+    void printAllEmployeeDetails(EmsRecord& emsRecordParam);
+    void printEmployeeDetailsByType(EmsRecord& emsRecordParam);
+    void printEmployeeSpecificDetails(EmsRecord& emsRecordParam);
 };
 
 #endif

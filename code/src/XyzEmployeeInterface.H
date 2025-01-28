@@ -39,10 +39,10 @@ public:
     virtual string getCollege() = 0;
     virtual string getBranch() = 0;
     
-    virtual void printAllEmployeeDetails() = 0;
-    virtual void printAllResignedEmployees() = 0;
-    virtual void printEmployeeDetailsByType() = 0;
-    virtual void printEmployeeSpecificDetails() = 0;
+    virtual void printAllEmployeeDetails(EmsRecord& emsRecordParam) = 0;
+    virtual void printAllResignedEmployees(EmsRecord&  emsRecordParam) = 0;
+    virtual void printEmployeeDetailsByType(EmsRecord& emsRecordParam) = 0;
+    virtual void printEmployeeSpecificDetails(EmsRecord& emsRecordParam) = 0;
 };
 
 #endif

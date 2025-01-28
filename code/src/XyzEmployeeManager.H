@@ -16,8 +16,10 @@ public:
     EDLL<XyzEmployeeIF>* mResignedEmpEdllPtr;
     
     /* Adding new employees */
-    void addNewEmployee(EmsUtility::EmpType empTypeParam,string sEmpName,string sEmpGender,string sEmpDOB,
-                                string sEmpDOJ,string sEmpDOL,EmsUtility::EmpStatus sEmpStatus,int sEmpNol,string sEmpAgency,string sEmpClg, string sEmpBranch);
+    void addNewEmployee(string& sEmpid,EmsUtility::EmpType empTypeParam,
+                        string sEmpName,string sEmpGender,string sEmpDOB,
+                        string sEmpDOJ,string sEmpDOL,EmsUtility::EmpStatus sEmpStatus,
+                        int sEmpNol,string sEmpAgency,string sEmpClg, string sEmpBranch);
 
     void printEmployeeSummaryByType(EmsUtility::EmpType empTypeParam = EmsUtility::TYPE_NONE);
     void printEmployeeSummaryByGender(int empGenderParam);

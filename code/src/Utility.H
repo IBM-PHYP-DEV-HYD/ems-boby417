@@ -418,19 +418,20 @@ inline int funcToDoWhileOnUserInputs(bool repeatMenuParam,Functionfunc fnParam, 
     return sChoice;
 }
 
-inline void getEmployeeDetailsInRandom(int& empTypeParam, string& sEmpName,string& sEmpGender,string& sEmpDOB,
+inline void getEmployeeDetailsInRandom(string& sEmpid,int& empTypeParam, string& sEmpName,string& sEmpGender,string& sEmpDOB,
                     string& sEmpDOJ,string& sEmpDOL,EmsUtility::EmpStatus& sEmpStatus,
                     int& sEmpNol,string& sEmpAgency,string& sEmpClg, string& sEmpBranch)
 {
 
-    int sNameRandomIndex,sRandomYear;
-
+    int sNameRandomIndex,sRandomYear,sEmpIdRandNum;
+    sEmpIdRandNum               = getRandomNumber(0,9999);
     sNameRandomIndex            = getRandomNumber(0,29);
     sEmpName                    = getEmployeeNameInRandom(sNameRandomIndex);
     sEmpGender                  = getEmployeeGenderFromEnum((sNameRandomIndex%2)+1);
     empTypeParam                = getRandomNumber(EmsUtility::TYPE_FULL,EmsUtility::TYPE_INTERN);
     if(empTypeParam == EmsUtility::TYPE_CONTRACTOR)
     {
+        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"C";
         sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
         sEmpDOB                 = generateRandomDate(sRandomYear);
         sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
@@ -441,6 +442,7 @@ inline void getEmployeeDetailsInRandom(int& empTypeParam, string& sEmpName,strin
     }
     else if (empTypeParam == EmsUtility::TYPE_FULL)
     {
+        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"F";
         sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
         sEmpDOB                 = generateRandomDate(sRandomYear);
         sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
@@ -451,6 +453,7 @@ inline void getEmployeeDetailsInRandom(int& empTypeParam, string& sEmpName,strin
     }
     else
     {
+        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"I";
         sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR_FOR_INTERN,EmsUtility::MAX_DOB_YEAR_FOR_INTERN);
         sEmpDOB                 = generateRandomDate(sRandomYear);
         sEmpDOJ                 = generateRandomDate(CURR_YEAR);
@@ -462,25 +465,26 @@ inline void getEmployeeDetailsInRandom(int& empTypeParam, string& sEmpName,strin
 
 }
 
-inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, string& sEmpName,string& sEmpGender,string& sEmpDOB,
+inline void getEmployeeDetailsOnUserInputs(string& sEmpid,EmsUtility::EmpType empTypeParam, string& sEmpName,string& sEmpGender,string& sEmpDOB,
                     string& sEmpDOJ,string& sEmpDOL,EmsUtility::EmpStatus& sEmpStatus,
                     int& sEmpNol,string& sEmpAgency,string& sEmpClg, string& sEmpBranch)
 
 {
-
+    int sEmpIdRandNum;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     
     cout<<"Please enter employee name : "<<endl;
     getline(cin,sEmpName);
-    
+
+    sEmpIdRandNum               = getRandomNumber(0,9999);
     int sEmpGenderChoice;
     sEmpGenderChoice        = funcToDoWhileOnUserInputs(true,printEmployeeGenderMenu,1,2,"Please enter proper choice for selecting gender");
     sEmpGender              = getEmployeeGenderFromEnum(sEmpGenderChoice);
     
     if(empTypeParam != EmsUtility::TYPE_INTERN)
     {
-         /* Collecting Date of Birth */
+        /* Collecting Date of Birth */
         cout<<"Enter Dob Year : ";
         int sDOBYear            = funcToDoWhileOnUserInputs(true,NULL,EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR,"Please enter proper DOB Year");
         cout<<"Enter Dob Month : ";
@@ -530,10 +534,12 @@ inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, str
         sEmpAgencyChoice        = funcToDoWhileOnUserInputs(true,printEmployeeAgencyMenu,EmsUtility::AGENCY_X,EmsUtility::AGENCY_Z,"Please enter proper choice for selecting Agency");
         sEmpAgency              = getContractorAgencyFromEnum(static_cast<EmsUtility::EmpContractorAgency>(sEmpAgencyChoice));
         sEmpDOL                 = addMonths(sEmpDOJ,12);
+        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"C";
 
     }
     else if (empTypeParam == EmsUtility::TYPE_FULL)
     {
+        sEmpid              = "XYZ"+to_string(sEmpIdRandNum)+"F";
         sEmpNol             = getRandomNumber(10,24);
         sEmpDOL             = "NA";
     }
@@ -546,6 +552,7 @@ inline void getEmployeeDetailsOnUserInputs(EmsUtility::EmpType empTypeParam, str
         sBranchChoice           = funcToDoWhileOnUserInputs(true,printStudentBranchMenu,1,3,"Please enter proper choice for selecting Branch");
         sEmpBranch              = getInternBranchFromEnum(static_cast<EmsUtility::InternEmpBranch>(sBranchChoice));
         sEmpDOL                 = addMonths(sEmpDOJ,6);
+        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"I";
     }
 }
 

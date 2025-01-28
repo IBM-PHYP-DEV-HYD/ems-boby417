@@ -8,17 +8,18 @@ class XyzFullTimeEmployee : public XyzEmployee
 public:
     XyzFullTimeEmployee();
     ~XyzFullTimeEmployee();
-    XyzFullTimeEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam);
+    XyzFullTimeEmployee(string idParam,string nameParam,string genderParam,
+                        string dobParam,string dojParam,string dolParam,
+                        EmsUtility::EmpStatus statusParam, int nolParam);
     XyzFullTimeEmployee(XyzEmployeeIF *xyzEmployeeIfPtrParam);
 
     int mEmpNOL; /* Number of Leaves */
-    static long mNextEmproll;
     void setNoOfLeaves(int nolParam);
     int getNoOfLeaves();
 
-    void printAllEmployeeDetails();
-    void printEmployeeDetailsByType();
-    void printEmployeeSpecificDetails();
+    void printAllEmployeeDetails(EmsRecord& emsRecordParam);
+    void printEmployeeDetailsByType(EmsRecord& emsRecordParam);
+    void printEmployeeSpecificDetails(EmsRecord& emsRecordParam);
 };
 
 #endif

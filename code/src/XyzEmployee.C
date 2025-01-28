@@ -5,20 +5,26 @@ XyzEmployee::XyzEmployee()
     
 }
 
-XyzEmployee::XyzEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus empStatusParam)
+XyzEmployee::XyzEmployee(string idParam,string nameParam,
+                        string genderParam,string dobParam,
+                        string dojParam,string dolParam,
+                        EmsUtility::EmpStatus empStatusParam,
+                        EmsUtility::EmpType empTypeParam):
+                        mEmpName (nameParam),
+                        mEmpid (idParam),
+                        mEmpGender (genderParam),
+                        mEmpDOB (dobParam),
+                        mEmpType (empTypeParam),
+                        mEmpStatus (empStatusParam),
+                        mEmpDOJ (dojParam),
+                        mEmpDOL (dolParam)
 {
-    mEmpName   = nameParam;
-    mEmpGender = genderParam;
-    mEmpDOB    = dobParam;
-    mEmpDOJ    = dojParam;
-    mEmpDOL    = dolParam;
-    mEmpStatus = empStatusParam;
 }
 
 XyzEmployee::XyzEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam)
 {
     mEmpName    = xyzEmployeeIfPtrParam->getEmployeeName();
-    mEmpid      =  xyzEmployeeIfPtrParam->getEmployeeId()  ;
+    mEmpid      = xyzEmployeeIfPtrParam->getEmployeeId()  ;
     mEmpGender  = xyzEmployeeIfPtrParam->getEmployeeGender();
     mEmpDOB     = xyzEmployeeIfPtrParam->getEmployeeDOB();
     mEmpDOJ     = xyzEmployeeIfPtrParam->getEmployeeDOJ();
@@ -86,51 +92,51 @@ string XyzEmployee::getEmployeeId()
     return mEmpid;
 }
 
-void XyzEmployee::printAllEmployeeDetails()
+void XyzEmployee::printAllEmployeeDetails(EmsRecord& emsRecordParam)
 {
     
-    mRecordObj.mEmpName     = this->getEmployeeName();
-    mRecordObj.mEmpid       = this->getEmployeeId();
-    mRecordObj.mEmpType     = this->getEmployeeType();
-    mRecordObj.mEmpStatus   = this->getEmployeeStatus();
-    mRecordObj.mEmpGender   = this->getEmployeeGender();
-    mRecordObj.mEmpDOB      = this->getEmployeeDOB();
-    mRecordObj.mEmpDOJ      = this->getEmployeeDOJ();
-    mRecordObj.mEmpDOL      = this->getEmployeeDOL();
-    mRecordObj.printAllCommon();
+    emsRecordParam.mEmpName     = this->getEmployeeName();
+    emsRecordParam.mEmpid       = this->getEmployeeId();
+    emsRecordParam.mEmpType     = this->getEmployeeType();
+    emsRecordParam.mEmpStatus   = this->getEmployeeStatus();
+    emsRecordParam.mEmpGender   = this->getEmployeeGender();
+    emsRecordParam.mEmpDOB      = this->getEmployeeDOB();
+    emsRecordParam.mEmpDOJ      = this->getEmployeeDOJ();
+    emsRecordParam.mEmpDOL      = this->getEmployeeDOL();
+    emsRecordParam.printAllCommon();
 }
 
-void XyzEmployee::printAllResignedEmployees()
+void XyzEmployee::printAllResignedEmployees(EmsRecord& emsRecordParam)
 {
-    mRecordObj.mEmpName     = this->getEmployeeName();
-    mRecordObj.mEmpid       = this->getEmployeeId();
-    mRecordObj.mEmpType     = this->getEmployeeType();
-    mRecordObj.mEmpStatus   = this->getEmployeeStatus();
-    mRecordObj.mEmpGender   = this->getEmployeeGender();
-    mRecordObj.mEmpDOB      = this->getEmployeeDOB();
-    mRecordObj.mEmpDOJ      = this->getEmployeeDOJ();
-    mRecordObj.mEmpDOL      = this->getEmployeeDOL();
-    mRecordObj.printAllCommon();
+    emsRecordParam.mEmpName     = this->getEmployeeName();
+    emsRecordParam.mEmpid       = this->getEmployeeId();
+    emsRecordParam.mEmpType     = this->getEmployeeType();
+    emsRecordParam.mEmpStatus   = this->getEmployeeStatus();
+    emsRecordParam.mEmpGender   = this->getEmployeeGender();
+    emsRecordParam.mEmpDOB      = this->getEmployeeDOB();
+    emsRecordParam.mEmpDOJ      = this->getEmployeeDOJ();
+    emsRecordParam.mEmpDOL      = this->getEmployeeDOL();
+    emsRecordParam.printAllCommon();
     cout<<endl;
 }
 
-void XyzEmployee::printEmployeeDetailsByType()
+void XyzEmployee::printEmployeeDetailsByType(EmsRecord& recordParam)
 {
 
 }
 
-void XyzEmployee::printEmployeeSpecificDetails()
+void XyzEmployee::printEmployeeSpecificDetails(EmsRecord& recordParam)
 { 
     /* Print all the relevant data */
     cout<<"\n\nContractor Employee Data:"<<endl;
-    mRecordObj.mEmpName = this->getEmployeeName();
-    mRecordObj.mEmpid = this->getEmployeeId();
-    mRecordObj.mEmpType = this->getEmployeeType();
-    mRecordObj.mEmpStatus = this->getEmployeeStatus();
-    mRecordObj.mEmpGender = this->getEmployeeGender();
-    mRecordObj.mEmpDOB = this->getEmployeeDOB();
-    mRecordObj.mEmpDOJ = this->getEmployeeDOJ();
-    mRecordObj.mEmpDOL = this->getEmployeeDOL();
+    recordParam.mEmpName = this->getEmployeeName();
+    recordParam.mEmpid = this->getEmployeeId();
+    recordParam.mEmpType = this->getEmployeeType();
+    recordParam.mEmpStatus = this->getEmployeeStatus();
+    recordParam.mEmpGender = this->getEmployeeGender();
+    recordParam.mEmpDOB = this->getEmployeeDOB();
+    recordParam.mEmpDOJ = this->getEmployeeDOJ();
+    recordParam.mEmpDOL = this->getEmployeeDOL();
 }
 
 void XyzEmployee::setNoOfLeaves(int nolParam) {}

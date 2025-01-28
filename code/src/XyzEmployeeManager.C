@@ -14,31 +14,30 @@ XyzEmployeeManager::~XyzEmployeeManager()
     mResignedEmpEdllPtr = NULL;
 }
 
-void XyzEmployeeManager::addNewEmployee(EmsUtility::EmpType empTypeParam, string sEmpName,string sEmpGender,string sEmpDOB,
-            string sEmpDOJ,string sEmpDOL,EmsUtility::EmpStatus sEmpStatus,int sEmpNol,string sEmpAgency,string sEmpClg, string sEmpBranch)
+void XyzEmployeeManager::addNewEmployee(string& sEmpid,EmsUtility::EmpType empTypeParam,
+                        string sEmpName,string sEmpGender,string sEmpDOB,
+                        string sEmpDOJ,string sEmpDOL,EmsUtility::EmpStatus sEmpStatus,
+                        int sEmpNol,string sEmpAgency,string sEmpClg, string sEmpBranch)
 {
     XyzEmployeeIF *sEmpIfPtr = NULL;
     if(empTypeParam == EmsUtility::TYPE_FULL)
     {
-        sEmpIfPtr = new  XyzFullTimeEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-        sEmpIfPtr->setNoOfLeaves(sEmpNol);
+        sEmpIfPtr = new  XyzFullTimeEmployee(sEmpid,sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol);
     }
     else if (empTypeParam == EmsUtility::TYPE_CONTRACTOR)
     {
-        sEmpIfPtr = new  XyzContractorEmployee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-        sEmpIfPtr->setAgency(sEmpAgency);
+        sEmpIfPtr = new  XyzContractorEmployee(sEmpid,sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpAgency);
     }
     else
     {
-        sEmpIfPtr = new  XyzInternEmloyee(sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus);
-        sEmpIfPtr->setCollege(sEmpClg);
-        sEmpIfPtr->setBranch(sEmpBranch);
+        sEmpIfPtr = new  XyzInternEmloyee(sEmpid,sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpClg,sEmpBranch);
     }
     mEmployeeEDLLPtr->pushBack(sEmpIfPtr);
 }
 
 void XyzEmployeeManager::printResignedEmpSummary()
 {
+    EmsRecord sRecordObj;
     int sSizeofEDLL = mResignedEmpEdllPtr ? mResignedEmpEdllPtr->size() : 0;
     Node<XyzEmployeeIF>* sFrontOfEDLL = mResignedEmpEdllPtr ? mResignedEmpEdllPtr->getNodeAtPosition(0) : NULL;
     printHeader(EmsUtility::TYPE_NONE,EmsUtility::STATUS_RESIGNED);
@@ -46,8 +45,7 @@ void XyzEmployeeManager::printResignedEmpSummary()
     for(int itr = 0;itr < sSizeofEDLL; itr++)
     {
         XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
-        XyzEmployee *sEmpPtr = static_cast<XyzEmployee*>(sEmpIfPtr);
-        sEmpPtr->printAllResignedEmployees();
+        sEmpIfPtr->printAllResignedEmployees(sRecordObj);
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
 }
@@ -57,6 +55,7 @@ void XyzEmployeeManager::printEmployeeSummaryByType(EmsUtility::EmpType empTypeP
    
     int sSizeofEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->size() : 0;
     Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0): NULL;
+    EmsRecord sRecordObj;
 
     printHeader(empTypeParam);
 
@@ -66,14 +65,14 @@ void XyzEmployeeManager::printEmployeeSummaryByType(EmsUtility::EmpType empTypeP
         if(empTypeParam == EmsUtility::TYPE_NONE)
         {
             
-            sEmpIfPtr->printAllEmployeeDetails();
+            sEmpIfPtr->printAllEmployeeDetails(sRecordObj);
         }
         else
         {
             EmsUtility::EmpType sEmpType = sEmpIfPtr->getEmployeeType();
             if(empTypeParam == sEmpType)
             {
-                sEmpIfPtr->printEmployeeDetailsByType();
+                sEmpIfPtr->printEmployeeDetailsByType(sRecordObj);
             }
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
@@ -83,6 +82,7 @@ void XyzEmployeeManager::printEmployeeSummaryByType(EmsUtility::EmpType empTypeP
 void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
 {
    
+    EmsRecord sRecordObj;
     int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
     Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) :  NULL;
 
@@ -96,7 +96,7 @@ void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
         string sEmpGender = sEmpIfPtr->getEmployeeGender();
         if(sEmpGenderString == sEmpGender)
         {
-            sEmpIfPtr->printAllEmployeeDetails();
+            sEmpIfPtr->printAllEmployeeDetails(sRecordObj);
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
@@ -105,6 +105,7 @@ void XyzEmployeeManager::printEmployeeSummaryByGender(int empGenderParam)
 void XyzEmployeeManager::printEmployeeSummaryByStatus(EmsUtility::EmpStatus empStatusParam)
 {
    
+    EmsRecord sRecordObj;
     int sSizeofEDLL = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
     Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) : NULL;
 
@@ -116,7 +117,7 @@ void XyzEmployeeManager::printEmployeeSummaryByStatus(EmsUtility::EmpStatus empS
         EmsUtility::EmpStatus sEmpStatus = sEmpIfPtr->getEmployeeStatus();
         if(sEmpStatus == empStatusParam)
         {
-            sEmpIfPtr->printAllEmployeeDetails();
+            sEmpIfPtr->printAllEmployeeDetails(sRecordObj);
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
     }
@@ -136,9 +137,7 @@ void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
             sEmpIfPtr = mEmployeeEDLLPtr->removeElementAtPosition(itr);
             sEmpIfPtr->setEmployeeStatus(EmsUtility::STATUS_RESIGNED);
             sEmpIfPtr->setEmployeeDOL(getDateStringFromChrono());
-            XyzEmployee *sEmpPtr = new XyzEmployee(sEmpIfPtr);
-            mResignedEmpEdllPtr->pushBack(static_cast<XyzEmployee*>(sEmpPtr));
-            delete sEmpIfPtr;
+            mResignedEmpEdllPtr->pushBack(sEmpIfPtr);
             break;
         }
         sFrontOfEDLL = sFrontOfEDLL->mNext;
@@ -147,6 +146,7 @@ void XyzEmployeeManager::removeEmployeeByID(string empIDParam)
 
 void XyzEmployeeManager::printEmployeeDetailsById(string sEmpidParam)
 {
+    EmsRecord sRecordObj;
     int sSizeofDeque = mEmployeeEDLLPtr?mEmployeeEDLLPtr->size():0;
     Node<XyzEmployeeIF>* sFrontOfEDLL = mEmployeeEDLLPtr ? mEmployeeEDLLPtr->getNodeAtPosition(0) : NULL;
     bool empIDFound = false;
@@ -156,7 +156,7 @@ void XyzEmployeeManager::printEmployeeDetailsById(string sEmpidParam)
         XyzEmployeeIF* sEmpIfPtr = sFrontOfEDLL->mDataPtr;
         if(sEmpIfPtr->getEmployeeId() == sEmpidParam)
         {
-            sEmpIfPtr->printEmployeeSpecificDetails();
+            sEmpIfPtr->printEmployeeSpecificDetails(sRecordObj);
             cout<<endl;
             empIDFound = true;
             break;

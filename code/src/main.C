@@ -4,7 +4,7 @@ using namespace std;
 
 void processEmployeeAdding(XyzEmployeeManager *sEmpManager,int choiceParam)
 {
-    string sEmpName,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpGender,sEmpAgency,sEmpClg,sEmpBranch;
+    string sEmpid,sEmpName,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpGender,sEmpAgency,sEmpClg,sEmpBranch;
     EmsUtility::EmpStatus sEmpStatus;
     int sEmpNol,sEmpType=0;
 
@@ -16,8 +16,8 @@ void processEmployeeAdding(XyzEmployeeManager *sEmpManager,int choiceParam)
             int sNumofRandomEmployees = funcToDoWhileOnUserInputs(true,NULL,1,100,"Please Enter: ");
             for(int itr = 0;itr<sNumofRandomEmployees;itr++)
             {
-                getEmployeeDetailsInRandom(sEmpType,sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
-                sEmpManager->addNewEmployee(static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
+                getEmployeeDetailsInRandom(sEmpid,sEmpType,sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
+                sEmpManager->addNewEmployee(sEmpid,static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
             }
         }
         break;
@@ -26,8 +26,8 @@ void processEmployeeAdding(XyzEmployeeManager *sEmpManager,int choiceParam)
             sEmpType = funcToDoWhileOnUserInputs(false,printEmployeeTypeMenu,1,3,"Please select Type: ");
             if(sEmpType != EmsUtility::E_UNEXPECTED)
             {
-                getEmployeeDetailsOnUserInputs(static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
-                sEmpManager->addNewEmployee(static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
+                getEmployeeDetailsOnUserInputs(sEmpid,static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
+                sEmpManager->addNewEmployee(sEmpid,static_cast<EmsUtility::EmpType>(sEmpType),sEmpName,sEmpGender,sEmpDOB,sEmpDOJ,sEmpDOL,sEmpStatus,sEmpNol,sEmpAgency,sEmpClg,sEmpBranch);
             }
         }
         break;

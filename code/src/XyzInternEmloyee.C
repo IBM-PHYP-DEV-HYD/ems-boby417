@@ -1,52 +1,61 @@
 #include "XyzInternEmloyee.H"
 
-long XyzInternEmloyee::mNextEmproll = 0;
 
 XyzInternEmloyee::XyzInternEmloyee()
 {
-    mNextEmproll++;
 }
 
-XyzInternEmloyee::XyzInternEmloyee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam):XyzEmployee(nameParam,genderParam,dobParam,dojParam,dolParam,statusParam)
+XyzInternEmloyee::XyzInternEmloyee(string idParam, string nameParam,
+                    string genderParam,string dobParam,
+                    string dojParam,string dolParam,
+                    EmsUtility::EmpStatus statusParam,
+                    string clgParam, string branchParam)
+                    :XyzEmployee(
+                    idParam,
+                    nameParam,
+                    genderParam,
+                    dobParam,
+                    dojParam,
+                    dolParam,
+                    statusParam,
+                    EmsUtility::TYPE_INTERN),
+                    mEmpCollege(clgParam),
+                    mEmpBranch(branchParam)
 {
-    mNextEmproll++;
-    string sEmpRollAsString = toString(mNextEmproll,4);
-    mEmpid = "XYZ"+sEmpRollAsString+"I";
-    mEmpType = EmsUtility::TYPE_INTERN;
 }
 
 XyzInternEmloyee::~XyzInternEmloyee()
 {
 }
 
-void XyzInternEmloyee::printAllEmployeeDetails()
+void XyzInternEmloyee::printAllEmployeeDetails(EmsRecord& emsRecordParam)
 {
-    XyzEmployee::printAllEmployeeDetails();
-    mRecordObj.mPrintAllVar = true;
-    mRecordObj.mEmpNOL =  "NA";
-    mRecordObj.mEmpAgency = "NA";
-    mRecordObj.mEmpCollege = this->getCollege();
-    mRecordObj.mEmpBranch = this->getBranch();
-    mRecordObj.printAll();
+    XyzEmployee::printAllEmployeeDetails(emsRecordParam);
+    emsRecordParam.mPrintAllVar = true;
+    emsRecordParam.mEmpNOL =  "NA";
+    emsRecordParam.mEmpAgency = "NA";
+    emsRecordParam.mEmpCollege = this->getCollege();
+    emsRecordParam.mEmpBranch = this->getBranch();
+    emsRecordParam.printAll();
 }
 
-void XyzInternEmloyee::printEmployeeDetailsByType()
+void XyzInternEmloyee::printEmployeeDetailsByType(EmsRecord& emsRecordParam)
 {
-    XyzEmployee::printAllEmployeeDetails();
-    mRecordObj.mPrintAllVar = false;
-    mRecordObj.mEmpCollege = this->getCollege();
-    mRecordObj.mEmpBranch = this->getBranch();
-    mRecordObj.printAll();
+    XyzEmployee::printAllEmployeeDetails(emsRecordParam);
+    emsRecordParam.mPrintAllVar = false;
+    emsRecordParam.mEmpCollege = this->getCollege();
+    emsRecordParam.mEmpBranch = this->getBranch();
+    emsRecordParam.printAll();
 }
 
-void XyzInternEmloyee::printEmployeeSpecificDetails()
+void XyzInternEmloyee::printEmployeeSpecificDetails(EmsRecord& emsRecordParam)
 { 
     /* Print all the relevant data */
     cout<<"\nIntern Employee Data:"<<endl;
-    XyzEmployee::printEmployeeSpecificDetails();
-    mRecordObj.mEmpCollege = this->getCollege();
-    mRecordObj.mEmpBranch = this->getBranch();
-    mRecordObj.printIntern();
+    XyzEmployee::printEmployeeSpecificDetails(emsRecordParam);
+    emsRecordParam.mEmpCollege = this->getCollege();
+    emsRecordParam.mEmpBranch = this->getBranch();
+    emsRecordParam.printIntern();
 }
 
 void XyzInternEmloyee::setCollege(string clgParam)

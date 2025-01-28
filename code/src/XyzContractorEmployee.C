@@ -1,50 +1,57 @@
 #include "XyzContractorEmployee.H"
 
-long XyzContractorEmployee::mNextEmproll = 0;
-
 XyzContractorEmployee::XyzContractorEmployee()
 {
-    mNextEmproll++;
 }
 
-XyzContractorEmployee::XyzContractorEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus statusParam):XyzEmployee(nameParam,genderParam,dobParam,dojParam,dolParam,statusParam)
+ XyzContractorEmployee::XyzContractorEmployee(string idParam,string nameParam,
+                        string genderParam,string dobParam,
+                        string dojParam,string dolParam,
+                        EmsUtility::EmpStatus statusParam,
+                        string agencyParam)
+                        :XyzEmployee(
+                        idParam,
+                        nameParam,
+                        genderParam,
+                        dobParam,
+                        dojParam,
+                        dolParam,
+                        statusParam,
+                        EmsUtility::TYPE_CONTRACTOR),
+                        mEmpAgency(agencyParam)
 {
-    mNextEmproll++;
-    string sEmpRollAsString = toString(mNextEmproll,4);
-    mEmpid = "XYZ"+sEmpRollAsString+"C";
-    mEmpType = EmsUtility::TYPE_CONTRACTOR;
 }
 
 XyzContractorEmployee::~XyzContractorEmployee()
 {
 }
 
-void XyzContractorEmployee::printAllEmployeeDetails()
+void XyzContractorEmployee::printAllEmployeeDetails(EmsRecord& emsRecordParam)
 {
-    XyzEmployee::printAllEmployeeDetails();
-    mRecordObj.mPrintAllVar = true;
-    mRecordObj.mEmpNOL = "NA";
-    mRecordObj.mEmpAgency = this->getAgency();
-    mRecordObj.mEmpCollege = "NA";
-    mRecordObj.mEmpBranch = "NA";
-    mRecordObj.printAll();
+    XyzEmployee::printAllEmployeeDetails(emsRecordParam);
+    emsRecordParam.mPrintAllVar = true;
+    emsRecordParam.mEmpNOL = "NA";
+    emsRecordParam.mEmpAgency = this->getAgency();
+    emsRecordParam.mEmpCollege = "NA";
+    emsRecordParam.mEmpBranch = "NA";
+    emsRecordParam.printAll();
 }
 
-void XyzContractorEmployee::printEmployeeDetailsByType()
+void XyzContractorEmployee::printEmployeeDetailsByType(EmsRecord& emsRecordParam)
 {
-    XyzEmployee::printAllEmployeeDetails();
-    mRecordObj.mPrintAllVar = false;
-    mRecordObj.mEmpAgency = this->getAgency();
-    mRecordObj.printAll();
+    XyzEmployee::printAllEmployeeDetails(emsRecordParam);
+    emsRecordParam.mPrintAllVar = false;
+    emsRecordParam.mEmpAgency = this->getAgency();
+    emsRecordParam.printAll();
 }
 
-void XyzContractorEmployee::printEmployeeSpecificDetails()
+void XyzContractorEmployee::printEmployeeSpecificDetails(EmsRecord& emsRecordParam)
 { 
     /* Print all the relevant data */
     cout<<"\n\nContractor Employee Data:"<<endl;
-    XyzEmployee::printEmployeeSpecificDetails();
-    mRecordObj.mEmpAgency = this->getAgency();
-    mRecordObj.printContractor();
+    XyzEmployee::printEmployeeSpecificDetails(emsRecordParam);
+    emsRecordParam.mEmpAgency = this->getAgency();
+    emsRecordParam.printContractor();
 }
 
 void XyzContractorEmployee::setAgency(string agencyParam)

@@ -15,14 +15,15 @@ protected:
     string mEmpDOJ; /* Date of Joining */
     string mEmpDOL; /* Date of Leaving */
 
-    EmsRecord mRecordObj;
-
 public:
     XyzEmployee();
     XyzEmployee(XyzEmployeeIF* xyzEmployeeIfPtrParam);
     virtual ~XyzEmployee(){};
     
-    XyzEmployee(string nameParam,string genderParam,string dobParam,string dojParam,string dolParam,EmsUtility::EmpStatus empStatusParam);
+    XyzEmployee(string idParam,string nameParam,string genderParam,
+                string dobParam,string dojParam,string dolParam,
+                EmsUtility::EmpStatus empStatusParam,
+                EmsUtility::EmpType empTypeParam);
 
     string getEmployeeName();
     string getEmployeeGender();
@@ -54,10 +55,10 @@ public:
     virtual string getBranch();
 
     /*Printing*/
-    virtual void printAllEmployeeDetails();
-    virtual void printAllResignedEmployees();
-    virtual void printEmployeeDetailsByType();
-    void  printEmployeeSpecificDetails();
+    virtual void printAllEmployeeDetails(EmsRecord& recordParam);
+    virtual void printAllResignedEmployees(EmsRecord& recordParam);
+    virtual void printEmployeeDetailsByType(EmsRecord& recordParam);
+    void  printEmployeeSpecificDetails(EmsRecord& ecordParam);
 };
 
 class ResignedEmployee : public XyzEmployee
