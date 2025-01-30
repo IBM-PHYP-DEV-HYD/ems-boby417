@@ -24,10 +24,8 @@ public:
 
     inline void printAll();
     inline void printAllCommon();
-    inline void printFullTime();
     inline void printCommonRecord();
-    inline void printContractor();
-    inline void printIntern();
+    inline void printSpecificByType();
 
 };
 
@@ -45,6 +43,7 @@ inline void EmsRecord::printAllCommon()
 
 inline void EmsRecord::printAll()
 {
+    printAllCommon();
     if(mPrintAllVar == true)
     {
         printElement(mEmpNOL,EmsUtility::MAX_ID_LEN+7);
@@ -83,26 +82,39 @@ inline void EmsRecord::printCommonRecord()
     printElementIndividual("DOL:",mEmpDOL,EmsUtility::MAX_EQ_LEN);
 }
 
-inline void EmsRecord::printFullTime()
+inline void EmsRecord::printSpecificByType()
 {
-    cout<<"\nFull-Time Employee Data:"<<endl;
-    printCommonRecord();
-    printElementIndividual("Num of Leaves:",mEmpNOL,EmsUtility::MAX_EQ_LEN);
-}
 
-inline void EmsRecord::printContractor()
-{
-    cout<<"\nContractor Employee Data:"<<endl;
-    printCommonRecord();
-    printElementIndividual("Agency:",mEmpAgency,EmsUtility::MAX_EQ_LEN);
-}
 
-inline void EmsRecord::printIntern()
-{
-    cout<<"Intern Employee Data:"<<endl;
+    if(mEmpType == EmsUtility::TYPE_FULL)
+    {
+        cout<<"FullTime Employee Data:"<<endl;
+    } 
+    else if(mEmpType == EmsUtility::TYPE_CONTRACTOR)
+    {
+        cout<<"Contractor Employee Data:"<<endl;
+    }
+    else
+    {
+        cout<<"Intern Employee Data:"<<endl;
+    }
+   
     printCommonRecord();
-    printElementIndividual("College:",mEmpCollege,EmsUtility::MAX_EQ_LEN);
-    printElementIndividual("Branch:",mEmpBranch,EmsUtility::MAX_EQ_LEN);
+    
+    if(mEmpType == EmsUtility::TYPE_FULL)
+    {
+        printElementIndividual("Num of Leaves:",mEmpNOL,EmsUtility::MAX_EQ_LEN);
+    } 
+    else if(mEmpType == EmsUtility::TYPE_CONTRACTOR)
+    {
+        printElementIndividual("Agency:",mEmpAgency,EmsUtility::MAX_EQ_LEN);
+    }
+    else
+    {
+        printElementIndividual("College:",mEmpCollege,EmsUtility::MAX_EQ_LEN);
+        printElementIndividual("Branch:",mEmpBranch,EmsUtility::MAX_EQ_LEN);
+    }
+
 }
 
 #endif

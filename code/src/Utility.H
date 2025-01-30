@@ -14,6 +14,8 @@ typedef void (*Functionfunc)(void);
 #define CURR_YEAR 2025
 #define MIN_DATE 1
 
+#define MAX_EMPID 9999
+
 using namespace std;
 
 namespace EmsUtility
@@ -424,14 +426,14 @@ inline void getEmployeeDetailsInRandom(string& sEmpid,int& empTypeParam, string&
 {
 
     int sNameRandomIndex,sRandomYear,sEmpIdRandNum;
-    sEmpIdRandNum               = getRandomNumber(0,9999);
+    sEmpIdRandNum               = getRandomNumber(0,MAX_EMPID);
     sNameRandomIndex            = getRandomNumber(0,29);
     sEmpName                    = getEmployeeNameInRandom(sNameRandomIndex);
     sEmpGender                  = getEmployeeGenderFromEnum((sNameRandomIndex%2)+1);
     empTypeParam                = getRandomNumber(EmsUtility::TYPE_FULL,EmsUtility::TYPE_INTERN);
     if(empTypeParam == EmsUtility::TYPE_CONTRACTOR)
     {
-        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"C";
+        sEmpid                  = "XYZ"+toString(sEmpIdRandNum,4)+"C";
         sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
         sEmpDOB                 = generateRandomDate(sRandomYear);
         sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
@@ -442,7 +444,7 @@ inline void getEmployeeDetailsInRandom(string& sEmpid,int& empTypeParam, string&
     }
     else if (empTypeParam == EmsUtility::TYPE_FULL)
     {
-        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"F";
+        sEmpid                  = "XYZ"+toString(sEmpIdRandNum,4)+"F";
         sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR,EmsUtility::MAX_DOB_YEAR);
         sEmpDOB                 = generateRandomDate(sRandomYear);
         sRandomYear             = getRandomNumber(sRandomYear+MIN_AGE_REQUIRED_TO_DO_JOB,CURR_YEAR);
@@ -453,7 +455,7 @@ inline void getEmployeeDetailsInRandom(string& sEmpid,int& empTypeParam, string&
     }
     else
     {
-        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"I";
+        sEmpid                  = "XYZ"+toString(sEmpIdRandNum,4)+"I";
         sRandomYear             = getRandomNumber(EmsUtility::MIN_DOB_YEAR_FOR_INTERN,EmsUtility::MAX_DOB_YEAR_FOR_INTERN);
         sEmpDOB                 = generateRandomDate(sRandomYear);
         sEmpDOJ                 = generateRandomDate(CURR_YEAR);
@@ -477,7 +479,7 @@ inline void getEmployeeDetailsOnUserInputs(string& sEmpid,EmsUtility::EmpType em
     cout<<"Please enter employee name : "<<endl;
     getline(cin,sEmpName);
 
-    sEmpIdRandNum               = getRandomNumber(0,9999);
+    sEmpIdRandNum               = getRandomNumber(0,MAX_EMPID);
     int sEmpGenderChoice;
     sEmpGenderChoice        = funcToDoWhileOnUserInputs(true,printEmployeeGenderMenu,1,2,"Please enter proper choice for selecting gender");
     sEmpGender              = getEmployeeGenderFromEnum(sEmpGenderChoice);
@@ -534,12 +536,12 @@ inline void getEmployeeDetailsOnUserInputs(string& sEmpid,EmsUtility::EmpType em
         sEmpAgencyChoice        = funcToDoWhileOnUserInputs(true,printEmployeeAgencyMenu,EmsUtility::AGENCY_X,EmsUtility::AGENCY_Z,"Please enter proper choice for selecting Agency");
         sEmpAgency              = getContractorAgencyFromEnum(static_cast<EmsUtility::EmpContractorAgency>(sEmpAgencyChoice));
         sEmpDOL                 = addMonths(sEmpDOJ,12);
-        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"C";
+        sEmpid                  = "XYZ"+toString(sEmpIdRandNum,4)+"C";
 
     }
     else if (empTypeParam == EmsUtility::TYPE_FULL)
     {
-        sEmpid              = "XYZ"+to_string(sEmpIdRandNum)+"F";
+        sEmpid              = "XYZ"+toString(sEmpIdRandNum,4)+"F";
         sEmpNol             = getRandomNumber(10,24);
         sEmpDOL             = "NA";
     }
@@ -552,7 +554,7 @@ inline void getEmployeeDetailsOnUserInputs(string& sEmpid,EmsUtility::EmpType em
         sBranchChoice           = funcToDoWhileOnUserInputs(true,printStudentBranchMenu,1,3,"Please enter proper choice for selecting Branch");
         sEmpBranch              = getInternBranchFromEnum(static_cast<EmsUtility::InternEmpBranch>(sBranchChoice));
         sEmpDOL                 = addMonths(sEmpDOJ,6);
-        sEmpid                  = "XYZ"+to_string(sEmpIdRandNum)+"I";
+        sEmpid                  = "XYZ"+toString(sEmpIdRandNum,4)+"I";
     }
 }
 

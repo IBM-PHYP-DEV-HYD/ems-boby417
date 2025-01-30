@@ -55,10 +55,10 @@ public:
     virtual string getBranch();
 
     /*Printing*/
-    virtual void printAllEmployeeDetails(EmsRecord& recordParam);
-    virtual void printAllResignedEmployees(EmsRecord& recordParam);
-    virtual void printEmployeeDetailsByType(EmsRecord& recordParam);
-    void  printEmployeeSpecificDetails(EmsRecord& ecordParam);
+    virtual void fillAllEmployeeDetails(EmsRecord& recordParam);
+    virtual void fillAllResignedEmployees(EmsRecord& recordParam);
+    virtual void fillEmployeeDetailsByType(EmsRecord& recordParam);
+    void  fillEmployeeSpecificDetails(EmsRecord& ecordParam);
 };
 
 class ResignedEmployee : public XyzEmployee

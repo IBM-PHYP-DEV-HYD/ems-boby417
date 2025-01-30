@@ -5,7 +5,7 @@
 #include "XyzEmployeeInterface.H"
 #include "XyzFullTimeEmployee.H"
 #include "XyzContractorEmployee.H"
-#include "XyzInternEmloyee.H"
+#include "XyzInternEmployee.H"
 
 class XyzEmployeeManager
 {

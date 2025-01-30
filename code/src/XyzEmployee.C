@@ -5,9 +5,12 @@ XyzEmployee::XyzEmployee()
     
 }
 
-XyzEmployee::XyzEmployee(string idParam,string nameParam,
-                        string genderParam,string dobParam,
-                        string dojParam,string dolParam,
+XyzEmployee::XyzEmployee(string idParam,
+                        string nameParam,
+                        string genderParam,
+                        string dobParam,
+                        string dojParam,
+                        string dolParam,
                         EmsUtility::EmpStatus empStatusParam,
                         EmsUtility::EmpType empTypeParam):
                         mEmpName (nameParam),
@@ -92,7 +95,7 @@ string XyzEmployee::getEmployeeId()
     return mEmpid;
 }
 
-void XyzEmployee::printAllEmployeeDetails(EmsRecord& emsRecordParam)
+void XyzEmployee::fillAllEmployeeDetails(EmsRecord& emsRecordParam)
 {
     
     emsRecordParam.mEmpName     = this->getEmployeeName();
@@ -103,10 +106,9 @@ void XyzEmployee::printAllEmployeeDetails(EmsRecord& emsRecordParam)
     emsRecordParam.mEmpDOB      = this->getEmployeeDOB();
     emsRecordParam.mEmpDOJ      = this->getEmployeeDOJ();
     emsRecordParam.mEmpDOL      = this->getEmployeeDOL();
-    emsRecordParam.printAllCommon();
 }
 
-void XyzEmployee::printAllResignedEmployees(EmsRecord& emsRecordParam)
+void XyzEmployee::fillAllResignedEmployees(EmsRecord& emsRecordParam)
 {
     emsRecordParam.mEmpName     = this->getEmployeeName();
     emsRecordParam.mEmpid       = this->getEmployeeId();
@@ -116,19 +118,16 @@ void XyzEmployee::printAllResignedEmployees(EmsRecord& emsRecordParam)
     emsRecordParam.mEmpDOB      = this->getEmployeeDOB();
     emsRecordParam.mEmpDOJ      = this->getEmployeeDOJ();
     emsRecordParam.mEmpDOL      = this->getEmployeeDOL();
-    emsRecordParam.printAllCommon();
-    cout<<endl;
 }
 
-void XyzEmployee::printEmployeeDetailsByType(EmsRecord& recordParam)
+void XyzEmployee::fillEmployeeDetailsByType(EmsRecord& recordParam)
 {
 
 }
 
-void XyzEmployee::printEmployeeSpecificDetails(EmsRecord& recordParam)
+void XyzEmployee::fillEmployeeSpecificDetails(EmsRecord& recordParam)
 { 
-    /* Print all the relevant data */
-    cout<<"\n\nContractor Employee Data:"<<endl;
+    /* fill all the relevant data */
     recordParam.mEmpName = this->getEmployeeName();
     recordParam.mEmpid = this->getEmployeeId();
     recordParam.mEmpType = this->getEmployeeType();
